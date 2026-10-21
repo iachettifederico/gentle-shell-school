@@ -1,0 +1,150 @@
+---
+
+plugins:
+  - rubocop-rails
+  - rubocop-erb
+
+require:
+  - ./lib/rubocop/cop/domain/no_public_attribute_readers
+  - ./lib/rubocop/cop/rails/helper_method_after_definition
+  - ./lib/rubocop/cop/rails/no_helper_method
+  - ./lib/rubocop/cop/rails/no_helper_methods_in_view_modules
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  ExtraDetails: false
+  Exclude:
+  - ".git/**/*"
+  - bin/**/*
+  - ".bundle/**/*"
+  - "vendor/**/*"
+  - tmp/**/*
+  - db/**/*.rb
+
+Layout/CommentIndentation:
+  Enabled: false
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: never
+
+Style/GlobalStdStream:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Layout/LineLength:
+  Exclude:
+  - app/views/**/*
+  - app/components/**/*
+
+Lint/MissingSuper:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+  - app/views/**/*.rb
+  - app/components/**/*.rb
+  - db/migrate/**/*.rb
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+  - app/views/**/*.rb
+  - app/components/**/*.rb
+
+Metrics/MethodLength:
+  Exclude:
+  - app/views/**/*.rb
+  - app/components/**/*.rb
+
+Rails/Output:
+  Exclude:
+  - app/views/**/*.rb
+  - app/components/**/*.rb
+
+Rails/HelperInstanceVariable:
+  Include:
+  - app/helpers/**/*.rb
+  - app/views/**/*.erb
+
+Rails/NoHelperMethod:
+  Enabled: true
+  Include:
+    - app/controllers/**/*.rb
+
+Rails/NoHelperMethodsInViewModules:
+  Enabled: true
+  Include:
+    - app/helpers/**/*.rb
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+  Exclude:
+  - app/views/**/*
+  - app/components/**/*
+  BracesRequiredMethods:
+  - let
+  - let!
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
+Style/KeywordParametersOrder:
+  Enabled: false
+
+Style/RedundantInitialize:
+  Exclude:
+  - app/views/**/*.rb
+  - app/components/**/*.rb
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrivialAccessors:
+  Enabled: false
+
+Rails/HelperMethodAfterDefinition:
+  Enabled: true
+  Include:
+    - app/controllers/**/*.rb
+
+Domain/NoPublicAttributeReaders:
+  Enabled: true
+  Include:
+  - app/domain/**/*.rb

@@ -1,0 +1,11 @@
+---
+path:
+  - app
+  - lib
+
+formats:
+  - console
+
+minimum_score: 0.0
+
+no_browser: true

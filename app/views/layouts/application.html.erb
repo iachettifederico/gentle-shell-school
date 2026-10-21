@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "GentleShellSchool" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="GentleShellSchool">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": Rails.env.production? ? "reload" : "" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-stone-50 text-slate-900 antialiased">
+    <main class="relative min-h-screen overflow-hidden px-6 py-16 sm:px-8 lg:px-12">
+      <div class="pointer-events-none absolute inset-0 -z-10">
+        <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-sky-200/40 blur-3xl"></div>
+        <div class="absolute right-0 top-24 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl"></div>
+      </div>
+
+      <div class="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-4xl items-center">
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

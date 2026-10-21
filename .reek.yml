@@ -1,0 +1,24 @@
+---
+exclude_paths:
+  - bin
+  - db
+  - log
+  - public/assets
+  - tmp
+  - vendor
+
+detectors:
+  DuplicateMethodCall:
+    max_calls: 2
+
+  IrresponsibleModule:
+    enabled: false
+
+  UncommunicativeMethodName:
+    enabled: false
+
+  UncommunicativeModuleName:
+    enabled: false
+
+  TooManyStatements:
+    max_statements: 12
