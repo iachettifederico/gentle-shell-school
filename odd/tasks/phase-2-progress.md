@@ -20,10 +20,17 @@ Branch: `feat/phase-2-progress` (from `feat/phase-1-lessons` @ `4156c19`). Deliv
 
 - [x] T1 — Domain: `Course::StudentId` (generate with an injected random source, `valid?`), `Course::StudentProgress` aggregate (complete idempotently, uncomplete, reset, clock injected), completion source policy. S1, S4, S5, S6. Route: gentle-ai-worker (context backstop). Commit: `0f089e0`.
 - [x] T2 — Persistence + system: migration (`students`, `lesson_completions`, unique index on student+slug), Active Record models, progress repository adapter, `Course::ProgressSystem` (enroll with collision retry, find, complete/uncomplete/reset validating slugs against the lesson catalog, transactions). S1–S6. Risk: item 1 (new tables, deletes on reset) → own commit. Route: gentle-ai-worker. Commit: `e69078c`.
-- [x] T3 — API: enroll, progress GET/PUT/DELETE, instructions, CORS/preflight, OpenAPI, llms.txt, README. S2–S8, S10. Route: gentle-ai-worker. Commit: T3 commit (see git log, `feat(api): track ...`).
-- [ ] T4 — Website: enroll button, localStorage ID, forget action, checkmarks via Stimulus. S9. Route: gentle-ai-worker. Commit: —
+- [x] T3 — API: enroll, progress GET/PUT/DELETE, instructions, CORS/preflight, OpenAPI, llms.txt, README. S2–S8, S10. Route: gentle-ai-worker. Commit: `871e2db`.
+- [x] T4 — Website: enroll button, localStorage ID, forget action, checkmarks via Stimulus. S9. Route: gentle-ai-worker. Commit: `28dddd4`.
 
 Forecast: ~900 authored changed lines → 3–4 slices on the chain.
+
+### Slices (feature-branch chain, continuing phase 1's three)
+
+4. `4156c19` build: Rails main configuration (from distribute). Risk: item 5.
+5. `0f089e0` + `e69078c` domain + persistence (T1, T2). Risk: item 1 (new tables, deletes) — independently verified (L6).
+6. `871e2db` progress API + docs (T3).
+7. `28dddd4` website enrollment + checkmarks (T4).
 
 ## Conventions for workers
 
@@ -42,3 +49,4 @@ Forecast: ~900 authored changed lines → 3–4 slices on the chain.
 - L5 (evidence T1+T2): worker RED (missing constants, missing persisted completions) → GREEN; parent review moved ActiveRecord errors out of ProgressSystem (adapter raises Course::StudentIdTaken, system raises Course::EnrollmentFailed "Could not generate a unique student ID after 10 attempts"; RED observed for the exhaustion spec). 59 examples, 0 failures; rubocop clean.
 - L6 (verify T1+T2): S1, S4, S5 pass at domain/system layer. SQLite transactions are IMMEDIATE by default in this Rails (adapter default), two-thread test kept both updates. S6 clarification: `updatedAt` is set to the operation's time (real clock, µs precision); equal-timestamp collisions are accepted, no forced bump. Unchanged-rows-on-rejection for invalid/unknown students is asserted at the HTTP layer in T3.
 - L7 (evidence T3): worker RED 9+2 failures → GREEN; 68 examples, rubocop clean, bin/ci passed. Parent smoke test on a dev server (separate pid file; user's :3000 server untouched): enroll, PUT agent+trimmed model, idempotent PUT kept completedAt, all S3–S5 error strings/statuses exact, DELETE lesson/reset, instructions text, per-endpoint preflight methods (S8), stale llms line removed. Test student deleted afterwards.
+- L8 (evidence T4): worker RED (missing data-controller) → GREEN, 69 examples, rubocop clean, bin/ci passed; no system-spec browser on PATH. Parent drove Chrome for Testing 148 (Playwright cache) over CDP with a throwaway /tmp script against a dev server: fresh → Enroll visible; enroll → ID + instructions link shown and stored; PUT welcome → reload shows ✓ welcome; Forget → not enrolled, storage cleared; stale ID lucky-wizard-0000 → forgotten. No JS errors. Test student deleted.
