@@ -1,0 +1,79 @@
+# OpenAPI description of the agent-facing API, served at /api/openapi.json.
+# `servers` is filled in at request time with the serving origin.
+openapi: 3.1.0
+info:
+  title: Gentle Shell School API
+  version: 1.0.0
+  description: >-
+    Public, read-only API that lets a student's agent fetch course lessons.
+    Each lesson carries agentInstructions describing what "done" looks like
+    and how to verify it. No authentication required.
+paths:
+  /api/lessons:
+    get:
+      operationId: listLessons
+      summary: List all lessons, sorted by order.
+      responses:
+        "200":
+          description: Every lesson in the course.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lesson"
+  /api/lessons/{slug}:
+    get:
+      operationId: getLesson
+      summary: Get one lesson by slug.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+          example: welcome
+      responses:
+        "200":
+          description: The lesson.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lesson"
+        "404":
+          description: No lesson has this slug.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Lesson:
+      type: object
+      required: [order, slug, title, description, agentInstructions, content]
+      properties:
+        order:
+          type: integer
+          description: Position of the lesson in the course, starting at 1.
+        slug:
+          type: string
+          example: welcome
+        title:
+          type: string
+        description:
+          type: string
+        agentInstructions:
+          type: string
+          description: >-
+            What the agent must teach and verify before the lesson counts as
+            complete. Quiz lessons include the shared quiz instructions.
+        content:
+          type: string
+          description: Lesson body as Markdown.
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          example: Lesson not found

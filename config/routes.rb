@@ -12,4 +12,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
   resources :lessons, only: :show, param: :slug
+
+  get "llms.txt" => "llms#show", format: false
+
+  namespace :api do
+    get "openapi.json" => "openapi#show", format: false
+    resources :lessons, only: [ :index, :show ], param: :slug
+    match "*path", to: "base#preflight", via: :options
+  end
 end

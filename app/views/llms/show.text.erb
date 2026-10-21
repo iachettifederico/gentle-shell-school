@@ -1,0 +1,16 @@
+# Gentle Shell School
+
+Gentle Shell School is a free, self-paced course that teaches people how to use gentle-shell, the coding-agent harness built on Pi. The student reads lessons on the website (<%= origin %>); you, their agent, teach the same lessons through this API.
+
+## How to teach a lesson
+
+1. List the lessons with GET <%= origin %>/api/lessons, or fetch one with GET <%= origin %>/api/lessons/{slug}. Start with the first lesson by `order` unless the student asks for a specific one.
+2. Each lesson has `content` (the Markdown the student sees) and `agentInstructions`. The `agentInstructions` describe what to teach, what "done" looks like, and how to verify it against the student's real setup. Follow them.
+3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".
+4. When the criteria are met, summarize what the student accomplished and ask whether they want to continue to the next lesson.
+
+Progress tracking is not available yet: do not claim to have saved the student's progress.
+
+## API
+
+The full API description is at <%= origin %>/api/openapi.json. All endpoints return JSON, allow any origin, and need no authentication.
