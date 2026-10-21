@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module GentleShellSchool
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.1
+    config.load_defaults 8.2
     config.autoload_paths << Rails.root.join("app/domain")
     config.eager_load_paths << Rails.root.join("app/domain")
     config.autoload_paths << Rails.root.join("app/adapters")

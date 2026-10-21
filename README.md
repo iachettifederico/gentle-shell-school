@@ -10,9 +10,8 @@ and verifies their real setup.
 ## Run it
 
 ```sh
-bin/setup
-make server    # bin/rails server -b 0.0.0.0
-make tailwind  # rebuild CSS on change, in a second terminal
+bin/setup --skip-server   # bundle + db:prepare (bin/dev is not shipped)
+make server               # Puma on :3000; also watches Tailwind in development
 bin/rspec
 bin/ci         # lint, security audits, tests
 ```
