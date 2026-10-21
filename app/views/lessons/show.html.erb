@@ -1,0 +1,9 @@
+<% content_for :title, "#{lesson.title} · Gentle Shell School" %>
+
+<p class="text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lesson <%= lesson.order %></p>
+<h1 class="mt-2 text-4xl font-semibold tracking-tight text-slate-950"><%= lesson.title %></h1>
+<p class="mt-3 text-lg text-slate-600"><%= lesson.description %></p>
+
+<article class="prose prose-slate mt-10 max-w-none">
+  <%= sanitize body_html %>
+</article>

@@ -9,10 +9,10 @@ RSpec.describe "Base template setup", type: :request do
     )
   end
 
-  it "serves a basic landing page" do
+  it "serves the course landing page" do
     get "/"
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Your generated app is ready.")
+    expect(response.body).to include("Gentle Shell School")
   end
 end

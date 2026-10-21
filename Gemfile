@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "awesome_print"
 gem "bootsnap", require: false
+gem "commonmarker"
 gem "image_processing"
 gem "importmap-rails"
 gem "kamal", require: false

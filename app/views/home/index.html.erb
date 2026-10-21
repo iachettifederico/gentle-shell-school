@@ -1,25 +1,22 @@
-<section class="w-full rounded-3xl border border-slate-200 bg-white/90 p-8 shadow-sm backdrop-blur sm:p-10 lg:p-12">
-  <div class="flex flex-wrap items-center gap-3 text-sm">
-    <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 ring-1 ring-inset ring-emerald-200">
-      Ready to build
-    </span>
-    <span class="text-slate-500">Rails starter template</span>
-  </div>
+<section class="space-y-6">
+  <p class="text-sm font-mono uppercase tracking-[0.15em] text-emerald-700">Free · self-paced · agent-taught</p>
+  <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Learn gentle-shell</h1>
+  <p class="max-w-2xl text-lg leading-8 text-slate-600">
+    Every lesson is written for two readers: you, here on the website, and your agent, through the course API.
+    Your agent teaches each lesson, quizzes you, and checks your real setup.
+  </p>
+</section>
 
-  <div class="mt-6 space-y-4">
-    <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl"><%= content_for?(:title) ? content_for(:title) : "GentleShellSchool" %></h1>
-    <p class="max-w-2xl text-lg leading-8 text-slate-600">Your generated app is ready.</p>
-  </div>
-
-  <div class="mt-10 grid gap-4 sm:grid-cols-2">
-    <div class="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200">
-      <p class="text-sm font-medium text-slate-500">Start here</p>
-      <p class="mt-2 text-sm leading-6 text-slate-700">Open <span class="font-medium text-slate-900">app/views/home/index.html.erb</span> to replace this page with your product.</p>
-    </div>
-
-    <div class="rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200">
-      <p class="text-sm font-medium text-slate-500">Next step</p>
-      <p class="mt-2 text-sm leading-6 text-slate-700">Wire up your first feature in <span class="font-medium text-slate-900">app/controllers/home_controller.rb</span> or add a new page.</p>
-    </div>
-  </div>
+<section class="mt-12">
+  <h2 class="text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lessons</h2>
+  <ol class="mt-4 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+    <% lessons.each do |lesson| %>
+      <li class="px-6 py-4">
+        <a href="<%= lesson_path(lesson.slug) %>" data-lesson class="text-lg font-medium text-slate-900 hover:text-emerald-700">
+          <%= lesson.title %>
+        </a>
+        <p class="mt-1 text-sm text-slate-600"><%= lesson.description %></p>
+      </li>
+    <% end %>
+  </ol>
 </section>
