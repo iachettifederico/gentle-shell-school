@@ -29,6 +29,26 @@ RSpec.describe "Lesson pages", type: :request do
                           ])
       expect(response.body).to include("About organic driven development.")
     end
+
+    it "renders the enrollment controls and progress hooks" do
+      with_lessons(lessons) do
+        get "/"
+      end
+
+      expect(response).to have_http_status(:ok)
+      page = response.parsed_body
+      expect(page.at_css('[data-controller="progress"]')).to be_present
+      enroll_button = page.at_css('[data-progress-target="enrollButton"]')
+      expect(enroll_button.text.strip).to eq("Enroll")
+      expect(enroll_button["data-action"]).to eq("progress#enroll")
+      expect(page.at_css('[data-progress-target="student"]')).to be_present
+      expect(page.at_css('[data-progress-target="studentId"]')).to be_present
+      expect(page.at_css('[data-progress-target="instructionsUrl"]')).to be_present
+      expect(page.at_css('[data-progress-target="forgetButton"]').text.strip).to eq("Forget this ID")
+      lesson_slugs = page.css('[data-progress-target="lesson"]').pluck("data-lesson-slug")
+      expect(lesson_slugs).to eq(%w[welcome odd unsafe])
+      expect(page.css('[data-progress-target="completion"]').count).to eq(3)
+    end
   end
 
   describe "GET /lessons/:slug" do
