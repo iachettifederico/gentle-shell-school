@@ -5,10 +5,104 @@ info:
   title: Gentle Shell School API
   version: 1.0.0
   description: >-
-    Public, read-only API that lets a student's agent fetch course lessons.
-    Each lesson carries agentInstructions describing what "done" looks like
-    and how to verify it. No authentication required.
+    Public API for teaching course lessons and recording anonymous student
+    progress. No authentication required.
 paths:
+  /api/enroll:
+    post:
+      operationId: enroll
+      summary: Create an anonymous student and empty progress record.
+      responses:
+        "201":
+          description: The new student ID and progress.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+        "400":
+          $ref: "#/components/responses/InvalidJson"
+  /api/progress/{student_id}:
+    parameters:
+      - $ref: "#/components/parameters/StudentId"
+    get:
+      operationId: getProgress
+      summary: Get a student's progress.
+      responses:
+        "200":
+          description: The student's progress.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Progress"
+        "400":
+          $ref: "#/components/responses/InvalidStudentId"
+        "404":
+          $ref: "#/components/responses/StudentNotFound"
+    put:
+      operationId: completeLesson
+      summary: Mark a lesson complete.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompleteLesson"
+      responses:
+        "200":
+          description: Updated progress.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Progress"
+        "400":
+          description: Invalid student ID, JSON, lesson slug, or lesson.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/StudentNotFound"
+    delete:
+      operationId: undoLessonCompletion
+      summary: Mark one lesson incomplete or reset all completions.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UndoProgress"
+      responses:
+        "200":
+          description: Updated progress.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Progress"
+        "400":
+          description: Invalid student ID, JSON, lesson slug, or lesson.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/responses/StudentNotFound"
+  /api/instructions/{student_id}:
+    parameters:
+      - $ref: "#/components/parameters/StudentId"
+    get:
+      operationId: getInstructions
+      summary: Get student-specific plain-text agent instructions.
+      responses:
+        "200":
+          description: Student ID and a pointer to llms.txt.
+          content:
+            text/plain:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/InvalidStudentId"
+        "404":
+          $ref: "#/components/responses/StudentNotFound"
   /api/lessons:
     get:
       operationId: listLessons
@@ -47,7 +141,92 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 components:
+  parameters:
+    StudentId:
+      name: student_id
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-z]+-[a-z]+-\d{4}$'
+      example: curious-hacker-2019
+  responses:
+    InvalidJson:
+      description: The request body is not valid JSON.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InvalidStudentId:
+      description: The student ID is malformed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    StudentNotFound:
+      description: No student has this ID.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
+    Enrollment:
+      type: object
+      required: [studentId, progress]
+      properties:
+        studentId:
+          type: string
+          pattern: '^[a-z]+-[a-z]+-\d{4}$'
+        progress:
+          $ref: "#/components/schemas/Progress"
+    Progress:
+      type: object
+      required: [completedLessons, createdAt, updatedAt]
+      properties:
+        completedLessons:
+          type: array
+          items:
+            $ref: "#/components/schemas/Completion"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Completion:
+      type: object
+      required: [slug, completedAt, source]
+      properties:
+        slug:
+          type: string
+        completedAt:
+          type: string
+          format: date-time
+        source:
+          type: string
+          enum: [agent, browser]
+        model:
+          type: string
+    CompleteLesson:
+      type: object
+      required: [lessonSlug]
+      properties:
+        lessonSlug:
+          type: string
+        source:
+          type: string
+          enum: [agent, browser]
+          default: browser
+        model:
+          type: string
+    UndoProgress:
+      type: object
+      properties:
+        lessonSlug:
+          type: string
+        reset:
+          type: boolean
+          description: Must be true when used instead of lessonSlug.
     Lesson:
       type: object
       required: [order, slug, title, description, agentInstructions, content]
@@ -76,4 +255,4 @@ components:
       properties:
         error:
           type: string
-          example: Lesson not found
+          example: Student not found

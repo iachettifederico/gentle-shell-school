@@ -52,8 +52,13 @@ Lesson body in GitHub-flavored Markdown. Raw HTML is escaped.
 | `GET /api/openapi.json` | OpenAPI 3.1 description of the API (`config/openapi.yml`) |
 | `GET /api/lessons` | All lessons, sorted by `order` |
 | `GET /api/lessons/:slug` | One lesson, or 404 `{"error":"Lesson not found"}` |
+| `POST /api/enroll` | Anonymous student ID and empty progress |
+| `GET /api/progress/:student_id` | A student's progress |
+| `PUT /api/progress/:student_id` | Mark a lesson complete |
+| `DELETE /api/progress/:student_id` | Undo one completion or reset all completions |
+| `GET /api/instructions/:student_id` | Plain-text student-specific agent instructions |
 
-Lessons are serialized as `{order, slug, title, description, agentInstructions, content}`.
+Lessons are serialized as `{order, slug, title, description, agentInstructions, content}`. Progress is serialized as `{completedLessons, createdAt, updatedAt}`; enroll first and retain the returned anonymous `studentId` to read or update it.
 API responses allow any origin (CORS) and need no authentication.
 
 When you add or change an endpoint, update `config/openapi.yml` and
