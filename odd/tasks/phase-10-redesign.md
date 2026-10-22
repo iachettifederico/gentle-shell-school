@@ -24,15 +24,15 @@ Branch `feat/phase-10-redesign`. Parent works inline; browser checks via headles
 - [x] T1 — Design system: tokens (palette with shades, spacing, type scale, shadows), base styles, focus ring, buttons/badges/cards as shared partials or component classes. Route: inline. Commit: `3d346b7`
 - [x] T2 — Layout chrome: skip link, header with nav and language switcher, footer. Route: inline. Commit: `3d346b7`
 - [x] T3 — Home: hero, start prompt, enrollment/progress card, syllabus modules and lesson rows. Route: inline. Commit: `3d346b7`
-- [x] T4 — Lesson page: header, progress card, prose and code, lab, teach-me box, feedback link, prev/next. Route: gentle-ai-worker (context backstop). Commit: —
-- [x] T5 — Enrollment pages (show, confirmation, expired, not found, already used) and 404. Route: gentle-ai-worker (context backstop). Commit: —
-- [ ] T6 — Verify: browser screenshots of every page × en/es/es-AR × 375/1280, contrast and a11y audit, existing scenarios, `bin/ci`. Route: inline. Commit: —
+- [x] T4 — Lesson page: header, progress card, prose and code, lab, teach-me box, feedback link, prev/next. Route: gentle-ai-worker (context backstop) + parent fixes. Commit: `5a3c077`
+- [x] T5 — Enrollment pages (show, confirmation, expired, not found, already used) and 404. Route: gentle-ai-worker (context backstop) + parent fixes. Commit: `5a3c077`
+- [x] T6 — Verify: browser screenshots of every page × en/es/es-AR × 375/1280, contrast and a11y audit, existing scenarios, `bin/ci`. Route: inline. Commit: `e6cc556` (lesson-body a11y fixes, test-first); evidence in L6–L8; `bin/ci` passed after the last change.
 
 ## Design system reference (read before T4/T5)
 
 - Tokens and components: `app/assets/tailwind/application.css` (`canvas/surface/raised/overlay`, `line`, `fg/fg-muted/fg-subtle`, `brand-50…950`, `success-*`; `.btn .btn-primary .btn-secondary .btn-ghost .btn-sm .card .eyebrow .link .chip .badge-success .prose-shell`).
 - Partials: `app/views/shared/_prompt_card.html.erb`, `app/views/shared/_status_panel.html.erb` (render with `render layout:`). Reference page: `app/views/home/index.html.erb`.
-- Slice boundary: commit 1 = `3d346b7` (T1–T3); T4/T5 are slice 2.
+- Slice boundary: slice 1 = `3d346b7` (T1–T3); slice 2 = `e6cc556` (sanitizer/Markdown fix, own commit: sanitizer allowlist is security-relevant) + `5a3c077` (T4/T5).
 
 ## Log
 
