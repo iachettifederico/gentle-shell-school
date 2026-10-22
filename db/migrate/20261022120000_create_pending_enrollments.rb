@@ -1,13 +1,17 @@
 class CreatePendingEnrollments < ActiveRecord::Migration[8.2]
-  def change
+  def up
     create_table :pending_enrollments do |t|
-      t.string :code, null: false
+      t.string :code_digest, null: false
       t.string :status, null: false, default: "pending"
       t.datetime :expires_at, null: false
       t.references :student, null: true, foreign_key: true
       t.timestamps
     end
 
-    add_index :pending_enrollments, :code, unique: true
+    add_index :pending_enrollments, :code_digest, unique: true
+  end
+
+  def down
+    drop_table :pending_enrollments
   end
 end

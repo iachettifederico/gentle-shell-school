@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery using: :header_or_legacy_token, with: :exception
 
   include LessonsAccess
 

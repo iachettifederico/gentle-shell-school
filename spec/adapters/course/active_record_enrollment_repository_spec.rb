@@ -11,6 +11,10 @@ RSpec.describe Course::ActiveRecordEnrollmentRepository do
 
     repository.create(enrollment)
 
+    record = PendingEnrollment.find_by!(code_digest: Digest::SHA256.hexdigest("unguessable-code"))
+    expect(record.attributes).not_to have_key("code")
+    expect(record.code_digest).to eq(Digest::SHA256.hexdigest("unguessable-code"))
+
     loaded = repository.find("unguessable-code")
     expect([ loaded.code, loaded.status, loaded.created_at, loaded.expires_at, loaded.claimed_student_id ])
       .to eq([ "unguessable-code", "pending", created_at, created_at + 30.minutes, nil ])

@@ -22,13 +22,13 @@ ActiveRecord::Schema[8.2].define(version: 2026_10_22_120000) do
   end
 
   create_table "pending_enrollments", force: :cascade do |t|
-    t.string "code", null: false
+    t.string "code_digest", null: false
     t.string "status", default: "pending", null: false
     t.datetime "expires_at", null: false
     t.integer "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_pending_enrollments_on_code", unique: true
+    t.index ["code_digest"], name: "index_pending_enrollments_on_code_digest", unique: true
     t.index ["student_id"], name: "index_pending_enrollments_on_student_id"
   end
 
