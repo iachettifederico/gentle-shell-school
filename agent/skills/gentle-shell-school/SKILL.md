@@ -25,7 +25,7 @@ Use for `/school`, a course lesson, or Gentle Shell School tutoring. Do not use 
 | Memory tools absent | Continue without memory or notice. |
 | Fresh read-only subagent unavailable | Grade the lab yourself and use `verifiedBy: "self"`. |
 | Native review available and enabled | Use it for the capstone. |
-| Native review unavailable or disabled | Run the Judgment Day skill as the capstone's final exam. |
+| Native review unavailable or disabled | Offer a Judgment Day as an optional final exam; run it only if the student explicitly asks for it. |
 
 ## Execution Steps
 
@@ -34,7 +34,7 @@ Use for `/school`, a course lesson, or Gentle Shell School tutoring. Do not use 
 3. Record a passing setup check with `PUT /api/progress/:studentId` using exactly `{"lessonSlug":"<slug>","source":"agent","model":"<model>","evidence":{"checks":[{"command":"<command>","result":"pass","summary":"<observed result>"}],"verifiedBy":"self"}}`.
 4. For a lesson lab, fetch `GET /api/labs/:slug`; ask the student to choose a new scratch directory, write only its `files` starter content there, and run `check` from that directory. Use `monitor` while the check runs and coach from its output. Launch a fresh-context, read-only verifier when available; give it only the lab brief, rubric, check output, and file paths. Record its grade with the same evidence shape and `verifiedBy: "independent-verifier"`; otherwise grade yourself with `"self"`.
 5. For study-partner work, have the student name their work-session subject with `orchestrator_session_id`; use `orchestrator_list` and metadata `orchestrator_consult` to follow published progress. Ask for documented model-cost permission before a reasoning consult.
-6. For the capstone, check `gentle-ai review mode status`; use native review only when available and enabled, otherwise load the Judgment Day skill for the final exam.
+6. For the capstone, check `gentle-ai review mode status`; use native review only when available and enabled; otherwise offer a Judgment Day final exam and load that skill only when the student explicitly asks for it.
 
 ## Output Contract
 

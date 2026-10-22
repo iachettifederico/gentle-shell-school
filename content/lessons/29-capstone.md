@@ -37,8 +37,9 @@ agent_instructions: |
   prose. Also verify a memory handoff was saved or, if memory is unavailable,
   that the feature document carries the recovery information.
   Follow the course capstone-review flow: check `gentle-ai review mode status` and
-  use native review when it is available and enabled; otherwise run the Judgment
-  Day skill as the final exam. Done means these artifacts are present, the student
+  use native review when it is available and enabled; otherwise offer a Judgment
+  Day as an optional final exam and run it only if the student explicitly asks
+  for it. Done means these artifacts are present, the student
   can explain each ODD decision, and review/verification evidence is recorded; do
   not mark the capstone done merely because code was written.
 ---
