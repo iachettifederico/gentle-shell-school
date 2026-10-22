@@ -24,6 +24,7 @@ module GentleShellSchool
 
     # Course lessons are Markdown files, not database rows.
     config.x.lessons_directory = Rails.root.join("content/lessons")
+    config.x.course.feedback_repository = "iachettifederico/gentle-shell-school"
 
     # Configuration for the application, engines, and railties goes here.
     #

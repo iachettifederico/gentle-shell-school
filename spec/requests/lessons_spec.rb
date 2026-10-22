@@ -42,6 +42,8 @@ RSpec.describe "Lesson pages", type: :request do
         .to eq([ "Getting started", "Foundations" ])
       expect(page.css("[data-module-total]").map { |count| [ count["data-module-total"], count.text.strip ] })
         .to eq([[ "1", "0/1 done" ], [ "2", "0/2 done" ]])
+      expect(page.at_css('a[href="https://github.com/iachettifederico/gentle-shell-school/issues/new?template=course-feedback.yml&lesson=site"]')&.text&.strip)
+        .to eq("Report a problem")
     end
 
     it "renders the enrollment controls and progress hooks" do
@@ -83,6 +85,8 @@ RSpec.describe "Lesson pages", type: :request do
         .to eq("Organic driven development · Gentle Shell School")
       expect(page.at_css('meta[property="og:description"]')["content"])
         .to eq("About organic driven development.")
+      expect(page.at_css('a[href="https://github.com/iachettifederico/gentle-shell-school/issues/new?template=course-feedback.yml&lesson=odd&title=%5BCourse+feedback%5D+odd%3A+"]')&.text&.strip)
+        .to eq("Report a problem with this lesson")
     end
 
     it "renders navigation, module, and teach-me prompt for the lesson" do
@@ -107,8 +111,11 @@ RSpec.describe "Lesson pages", type: :request do
       end
 
       expect(response).to have_http_status(:ok)
-      navigation = response.parsed_body.css("[data-lesson-navigation] a").map(&:text).map(&:squish)
+      page = response.parsed_body
+      navigation = page.css("[data-lesson-navigation] a").map(&:text).map(&:squish)
       expect(navigation).to eq([ "Next lesson Organic driven development" ])
+      expect(page.at_css('a[href="https://github.com/iachettifederico/gentle-shell-school/issues/new?template=course-feedback.yml&lesson=welcome&title=%5BCourse+feedback%5D+welcome%3A+"]')&.text&.strip)
+        .to eq("Report a problem with this lesson")
     end
 
     it "resolves {origin} in the body to the request origin" do

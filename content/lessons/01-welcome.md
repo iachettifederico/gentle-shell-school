@@ -12,7 +12,8 @@ agent_instructions: |
   Confirm you are running inside gentle-shell, briefly explain that you
   will teach each lesson, quiz them, and check their real setup, then ask
   whether they want to continue to the next lesson. Course lessons are
-  listed at {origin}/api/lessons.
+  listed at {origin}/api/lessons. When something in a lesson is wrong, follow
+  the Reporting problems section of {origin}/llms.txt.
 ---
 
 Welcome to **Gentle Shell School**, a free, self-paced course for learning
@@ -30,6 +31,8 @@ Every lesson has two audiences:
 So the agent running in your terminal becomes your tutor. It explains each
 topic, asks you a few quiz questions, and verifies your real setup before
 marking the lesson complete.
+
+Found a problem? Your agent can report it as a GitHub issue with your consent, or use the "Report a problem" link.
 
 ## Start the course
 

@@ -6,7 +6,8 @@ info:
   version: 1.0.0
   description: >-
     Public API for teaching course lessons and recording anonymous student
-    progress. No authentication required.
+    progress. No authentication required. Feedback goes to
+    https://github.com/%{feedback_repository}/issues.
 paths:
   /api/enroll:
     post:

@@ -15,6 +15,11 @@ RSpec.describe "Agent discovery", type: :request do
       expect(response.body).to include("source: \"agent\"")
       expect(response.body).to include("DELETE http://www.example.com/api/progress/{studentId}")
       expect(response.body).to include("http://www.example.com/api/instructions/{studentId}")
+      expect(response.body).to include('"Report it and continue", "Continue without reporting", "Stop here"')
+      expect(response.body).to include("[Course feedback] <lesson-slug>: <short summary>")
+      expect(response.body).to include("gh issue create --repo iachettifederico/gentle-shell-school")
+      expect(response.body).to include("issues/new?template=course-feedback.yml")
+      expect(response.body).to include('"Log in with gh now", "Open a prefilled link in my browser", "Skip reporting"')
       expect(response.body).not_to include("Progress tracking is not available yet")
       expect(response.body).not_to include("{origin}")
     end
@@ -41,6 +46,19 @@ RSpec.describe "Agent discovery", type: :request do
         .to eq(%w[completedLessons createdAt updatedAt])
       expect(document.dig("paths", "/api/progress/{student_id}", "put", "responses").keys)
         .to contain_exactly("200", "400", "404")
+      expect(document.dig("info", "description"))
+        .to include("https://github.com/iachettifederico/gentle-shell-school/issues")
+    end
+  end
+
+  describe "GET /api/instructions/:student_id" do
+    it "points agents to the reporting instructions" do
+      post "/api/enroll", as: :json
+      get "/api/instructions/#{response.parsed_body.fetch('studentId')}"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Reporting problems")
+      expect(response.body).to include("http://www.example.com/llms.txt")
     end
   end
 end

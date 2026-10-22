@@ -14,6 +14,7 @@ module Api
         My Gentle Shell School student ID is #{params[:student_id]}
 
         Give this ID to your agent when it teaches this course so it can record completed lessons. Read #{request.base_url}/llms.txt for the API and teaching instructions.
+        See the "Reporting problems" section there before reporting a course problem.
       TEXT
     end
   end

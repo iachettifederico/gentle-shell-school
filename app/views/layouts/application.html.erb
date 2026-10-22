@@ -39,7 +39,10 @@
     <footer class="border-t border-shell-border">
       <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 text-sm text-shell-dim sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p>Gentle Shell School — learn gentle-shell with your agent.</p>
-        <a href="/llms.txt" class="font-mono text-xs transition-colors hover:text-shell-muted">Built for people and agents</a>
+        <div class="flex items-center gap-4 font-mono text-xs">
+          <a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=site" class="transition-colors hover:text-shell-muted">Report a problem</a>
+          <a href="/llms.txt" class="transition-colors hover:text-shell-muted">Built for people and agents</a>
+        </div>
       </div>
     </footer>
   </body>

@@ -15,6 +15,18 @@ When the student completes a lesson, send PUT <%= origin %>/api/progress/{studen
 3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".
 4. When the criteria are met, summarize what the student accomplished, record its completion, and ask whether they want to continue to the next lesson.
 
+## Reporting problems
+
+When the agent or student finds a wrong or outdated fact, a broken setup check, a confusing explanation, a typo, or a site/API bug, consent first with ask_user_question, single choice, in this order: "Report it and continue", "Continue without reporting", "Stop here". Never file without consent; only the first choice permits a report.
+
+Search duplicates first: `gh issue list --repo <%= Rails.configuration.x.course.feedback_repository %> --state all --search "<query>"`. If an equivalent exists, offer to add one evidence-only comment instead.
+
+Use the title `[Course feedback] <lesson-slug>: <short summary>` (`site` instead of a slug for site/API problems). Start the body with "Filed by a tutoring agent with the student's explicit consent. Observed evidence only." Then use these sections in order: Lesson, Kind, What happened, Expected, Environment (gentle-shell version, model). Apply `course-feedback` and `agent-report` labels.
+
+Never include the student ID, absolute paths, usernames, hostnames, credentials, environment values, private project names, or source contents. If `gh auth status` shows a login for github.com, create the issue with `gh issue create --repo <%= Rails.configuration.x.course.feedback_repository %> --title ... --body-file ... --label course-feedback --label agent-report`, then read it back with `gh issue view`.
+
+If not authenticated, ask_user_question how the student wants to connect with one choice: "Log in with gh now", "Open a prefilled link in my browser", "Skip reporting". "Log in with gh now" means `gh auth login`, then file. "Open a prefilled link in my browser" means build `https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&title=...&lesson=...&kind=...&what-happened=...&expected=...&environment=...` with URL-encoded values; the student submits it. "Skip reporting" means do not file.
+
 ## API
 
 The full API description is at <%= origin %>/api/openapi.json. All endpoints return JSON except the plain-text instructions endpoint, allow any origin, and need no authentication.

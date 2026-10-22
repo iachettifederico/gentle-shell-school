@@ -1,0 +1,48 @@
+name: Course feedback
+description: Report a problem with a lesson, the website, or the API.
+title: "[Course feedback] "
+labels: [course-feedback]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Agent reports must follow /llms.txt and exclude private data.
+  - type: input
+    id: lesson
+    attributes:
+      label: Lesson
+      description: Lesson slug, or `site` for the website/API
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Wrong or outdated fact
+        - Broken setup check
+        - Confusing explanation
+        - Typo
+        - Site or API bug
+        - Suggestion
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: gentle-shell version, model
+    validations:
+      required: false

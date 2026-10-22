@@ -64,6 +64,13 @@ API responses allow any origin (CORS) and need no authentication.
 When you add or change an endpoint, update `config/openapi.yml` and
 `app/views/llms/show.text.erb` in the same commit.
 
+## Feedback
+
+Report a wrong or outdated fact, broken setup check, confusing explanation,
+typo, site/API bug, or suggestion with the website's **Report a problem** link.
+Agents must follow the `Reporting problems` section in `/llms.txt`: obtain the
+student's explicit consent, search for duplicates, and exclude private data.
+
 ## Architecture
 
 The app follows the layers in `AGENTS.md` and `docs/engineering/`:
