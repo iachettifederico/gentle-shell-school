@@ -11,7 +11,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <%= csrf_meta_tags %><%= csp_meta_tag %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": Rails.env.production? ? "reload" : "" %>
+    <% app_stylesheets_paths.each do |stylesheet| %>
+      <%= stylesheet_link_tag stylesheet, "data-turbo-track": Rails.env.production? ? "reload" : "" %>
+    <% end %>
     <%= javascript_importmap_tags %>
   </head>
   <body class="bg-shell-bg font-sans text-shell-text antialiased">
