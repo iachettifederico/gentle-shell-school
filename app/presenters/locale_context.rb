@@ -40,11 +40,13 @@ class LocaleContext
   end
 
   def localized_path(locale)
-    locale == "en" ? base_path : "/#{locale}#{base_path}"
+    return base_path if locale == "en"
+
+    base_path == "/" ? "/#{locale}" : "/#{locale}#{base_path}"
   end
 
   def base_path
-    @path.sub(%r{\A/(?:es|es-AR)(?=/|\z)}, "")
+    @path.sub(%r{\A/(?:es|es-AR)(?=/|\z)}, "").presence || "/"
   end
 
   def route_locale

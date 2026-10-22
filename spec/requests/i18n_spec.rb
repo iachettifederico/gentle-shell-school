@@ -18,7 +18,19 @@ RSpec.describe "Localized course delivery", type: :request do
     expect(response.parsed_body.at_css("html")["lang"]).to eq("es")
     expect(response.parsed_body.at_css('a[href="/es"]')).to be_present
     expect(response.parsed_body.css('link[rel="alternate"]').pluck("hreflang")).to contain_exactly("en", "es", "es-AR")
-    expect(response.cookies["course_locale"]).to eq("es")
+    expect(response.cookies).not_to have_key("course_locale")
+  end
+
+  it "links the Spanish home pages back to the English root" do
+    with_lessons(lessons) do
+      %w[/es /es-AR].each do |path|
+        get path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.at_css('link[rel="alternate"][hreflang="en"]')["href"]).to eq("/")
+        expect(response.parsed_body.at_css('nav a[lang="en"]')["href"]).to eq("/")
+      end
+    end
   end
 
   it "keeps English at the root and rejects unknown locale prefixes" do

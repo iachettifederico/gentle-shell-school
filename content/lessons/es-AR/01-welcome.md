@@ -31,7 +31,7 @@ pi install git:github.com/iachettifederico/gentle-shell-school
 ```
 
 ¿Encontraste un problema? Tu agente puede reportarlo como un issue de GitHub con
-tu consentimiento, o podés usar el enlace "Report a problem".
+tu consentimiento, o podés usar el enlace "Reportar un problema".
 
 ## Empezá el curso
 

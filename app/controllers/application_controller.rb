@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   def with_request_locale(&)
     @current_locale = params[:locale].presence || "en"
     @locale_context = LocaleContext.new(locale: @current_locale, path: request.path, routes: main_app)
-    cookies[:course_locale] = { value: @current_locale, expires: 1.year.from_now } if params[:locale].present?
     I18n.with_locale(@current_locale, &)
   end
 
