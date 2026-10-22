@@ -52,6 +52,14 @@ RSpec.describe "Labs API", type: :request do
     end
   end
 
+  it "answers malformed or nested lab paths with the JSON not-found error" do
+    [ "/api/labs/..%2F..%2Fconfig", "/api/labs/nested/path", "/api/labs/red-green/lab.yml" ].each do |path|
+      get path
+      expect(response).to have_http_status(:not_found)
+      expect(response.parsed_body).to eq("error" => "Lab not found")
+    end
+  end
+
   it "answers CORS preflight for the collection and member" do
     %w[/api/labs /api/labs/red-green].each do |path|
       process :options, path

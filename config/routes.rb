@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :labs, only: [ :index, :show ], param: :slug
     match "labs", to: "labs#preflight", via: :options
     match "labs/:slug", to: "labs#preflight", via: :options
+    # Nested or encoded lab paths are unknown labs, answered as JSON like any other.
+    get "labs/*slug", to: "labs#show", format: false
 
     post "enroll" => "enroll#create"
     match "enroll", to: "enroll#preflight", via: :options
