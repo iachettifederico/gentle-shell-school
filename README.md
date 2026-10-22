@@ -16,6 +16,24 @@ bin/rspec
 bin/ci         # lint, security audits, tests
 ```
 
+## Demo course (local only)
+
+Run the tiny demo course in development with:
+
+```sh
+COURSE=demo bin/dev
+```
+
+It contains three short lessons: how the course works, a quiz with a
+`gentle-shell --version` setup check, and a no-submit practice of the feedback
+consent flow. `COURSE=demo` is ignored outside development, so test and
+production always serve the real course.
+
+To compare the original course on `main` with the improved course on
+`feat/phase-6-gentle-native`, check out each branch in turn and start it with
+`COURSE=demo bin/dev`. The same local demo lessons make the course behavior
+comparable without affecting either production course.
+
 ## Writing a lesson
 
 Lessons are Markdown files in `content/lessons/`, not database rows. The file

@@ -22,8 +22,7 @@ module GentleShellSchool
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks rubocop])
 
-    # Course lessons are Markdown files, not database rows.
-    config.x.lessons_directory = Rails.root.join("content/lessons")
+    # GitHub repository that receives course feedback issues.
     config.x.course.feedback_repository = "iachettifederico/gentle-shell-school"
 
     # Configuration for the application, engines, and railties goes here.
