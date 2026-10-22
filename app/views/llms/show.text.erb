@@ -4,7 +4,9 @@ Gentle Shell School is a free, self-paced course that teaches people how to use 
 
 ## Progress
 
-Enroll the student first with POST <%= origin %>/api/enroll. Save the returned `studentId`: it is anonymous, has no login, and anyone with it can read or update that student's progress.
+Start with the enrollment handshake: POST <%= origin %>/api/enrollments, give the student the returned `enrollUrl`, and explain that enrolling is voluntary. When they say they enrolled (or every few seconds until `expiresAt`), check GET <%= origin %>/api/enrollments/{code}. Once it says `enrolled`, use its `studentId`. If they decline, teach without progress tracking.
+
+POST <%= origin %>/api/enroll remains available for the website's own Enroll button and older agents, but prefer the handshake. A student ID is anonymous, has no login, and anyone with it can read or update that student's progress.
 
 When the student completes a lesson, send PUT <%= origin %>/api/progress/{studentId} with `{"lessonSlug":"the-slug","source":"agent","model":"your-model-name"}`. Use `source: "agent"` and identify your model in `model`. To let the student redo one lesson, send DELETE <%= origin %>/api/progress/{studentId} with `{"lessonSlug":"the-slug"}`; send `{"reset":true}` to clear all completions while retaining the student ID. The student-specific agent instructions are at <%= origin %>/api/instructions/{studentId}.
 

@@ -7,6 +7,9 @@ module: "Getting started"
 quiz: false
 agent_instructions: |
   Welcome the student and explain that any coding agent can begin the course.
+  Start with the voluntary enrollment handshake in {origin}/llms.txt: create an
+  enrollment link, let the student choose whether to use it, then check its
+  status before tracking progress. If they decline, teach without tracking.
   If you are not gentle-shell, teach lessons `install-gentle-shell` and
   `open-gentle-shell` next; they install Gentle Shell and hand the student's
   anonymous student ID to it. If you are gentle-shell, follow the conditional

@@ -1,0 +1,10 @@
+<% content_for :title, "You're enrolled" %>
+<section data-controller="enrollment" data-enrollment-student-id-value="<%= enrollment.claimed_student_id %>" class="mx-auto max-w-2xl rounded-2xl border border-shell-accent/40 bg-shell-card p-6 sm:p-8">
+  <p class="font-mono text-xs text-shell-accent">ENROLLED</p>
+  <h1 class="mt-3 text-3xl font-bold tracking-[-0.04em]">You’re enrolled</h1>
+  <p class="mt-5 leading-7 text-shell-muted">Your browser now has your anonymous student ID. Return to your agent so it can continue the course with your shared progress.</p>
+  <div class="mt-7 flex flex-wrap gap-3">
+    <%= link_to "Home", root_path, class: "rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white hover:bg-shell-accent-hover" %>
+    <%= link_to "Start the first lesson", lesson_path("welcome"), class: "rounded-full border border-shell-border px-5 py-3 text-sm font-semibold text-shell-text hover:border-shell-border-hover" %>
+  </div>
+</section>

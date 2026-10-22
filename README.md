@@ -70,7 +70,9 @@ Lesson body in GitHub-flavored Markdown. Raw HTML is escaped.
 | `GET /api/openapi.json` | OpenAPI 3.1 description of the API (`config/openapi.yml`) |
 | `GET /api/lessons` | All lessons, sorted by `order` |
 | `GET /api/lessons/:slug` | One lesson, or 404 `{"error":"Lesson not found"}` |
-| `POST /api/enroll` | Anonymous student ID and empty progress |
+| `POST /api/enrollments` | Create a voluntary pending enrollment link |
+| `GET /api/enrollments/:code` | Check pending or enrolled handshake status |
+| `POST /api/enroll` | Anonymous student ID and empty progress (legacy alternative) |
 | `GET /api/progress/:student_id` | A student's progress |
 | `PUT /api/progress/:student_id` | Mark a lesson complete |
 | `DELETE /api/progress/:student_id` | Undo one completion or reset all completions |

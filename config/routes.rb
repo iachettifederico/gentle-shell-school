@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
   resources :lessons, only: :show, param: :slug
+  get "enroll/:code", to: "enrollments#show", as: :enroll
+  post "enroll/:code", to: "enrollments#create"
 
   get "llms.txt" => "llms#show", format: false
 
@@ -24,6 +26,10 @@ Rails.application.routes.draw do
 
     post "enroll" => "enroll#create"
     match "enroll", to: "enroll#preflight", via: :options
+
+    resources :enrollments, only: [ :create, :show ], param: :code
+    match "enrollments", to: "enrollments#preflight", via: :options
+    match "enrollments/:code", to: "enrollments#preflight", via: :options
 
     get "progress/:student_id" => "progress#show"
     put "progress/:student_id" => "progress#update"

@@ -45,7 +45,8 @@ RSpec.describe "Agent discovery", type: :request do
       expect(document["openapi"]).to eq("3.1.0")
       expect(document["servers"]).to eq([ { "url" => "http://www.example.com" } ])
       expect(document["paths"].keys).to contain_exactly(
-        "/api/enroll", "/api/progress/{student_id}", "/api/instructions/{student_id}",
+        "/api/enroll", "/api/enrollments", "/api/enrollments/{code}",
+        "/api/progress/{student_id}", "/api/instructions/{student_id}",
         "/api/lessons", "/api/lessons/{slug}"
       )
       expect(document.dig("components", "schemas", "Lesson", "required"))
