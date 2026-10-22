@@ -17,6 +17,7 @@ ActiveRecord::Schema[8.2].define(version: 2026_10_22_120000) do
     t.datetime "completed_at", null: false
     t.string "source", null: false
     t.string "model"
+    t.json "evidence"
     t.index ["student_id", "lesson_slug"], name: "index_lesson_completions_on_student_id_and_lesson_slug", unique: true
     t.index ["student_id"], name: "index_lesson_completions_on_student_id"
   end

@@ -24,9 +24,9 @@ module Course
       find_progress(student_id)
     end
 
-    def complete_lesson(student_id, lesson_slug:, source:, model:)
+    def complete_lesson(student_id, lesson_slug:, source:, model:, evidence: nil)
       update_known_lesson(student_id, lesson_slug) do |progress|
-        progress.complete(lesson_slug, source: source, model: model, at: now)
+        progress.complete(lesson_slug, source: source, model: model, evidence: evidence, at: now)
       end
     end
 

@@ -67,6 +67,30 @@ RSpec.describe Course::ProgressSystem do
     end
   end
 
+  it "adds evidence to an existing completion only when it has none" do
+    lessons do
+      progress = system.enroll
+      first_evidence = Course::Evidence.new(
+        "checks"     => [ { "command" => "bin/rspec", "result" => "pass", "summary" => "42 examples" } ],
+        "verifiedBy" => "self"
+      )
+      later_evidence = Course::Evidence.new(
+        "checks"     => [ { "command" => "bin/rubocop", "result" => "pass", "summary" => "No offenses" } ],
+        "verifiedBy" => "independent-verifier"
+      )
+
+      system.complete_lesson(progress.student_id, lesson_slug: "welcome", source: "browser", model: nil)
+      system.complete_lesson(
+        progress.student_id, lesson_slug: "welcome", source: "agent", model: nil, evidence: first_evidence
+      )
+      system.complete_lesson(
+        progress.student_id, lesson_slug: "welcome", source: "agent", model: nil, evidence: later_evidence
+      )
+
+      expect(system.progress_for(progress.student_id).completions.first.evidence.to_h).to eq(first_evidence.to_h)
+    end
+  end
+
   it "rejects an unknown lesson without changing stored progress" do
     progress = system.enroll
 

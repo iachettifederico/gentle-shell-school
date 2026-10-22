@@ -52,7 +52,8 @@ module Course
         slug:         completion.lesson_slug,
         completed_at: completion.completed_at,
         source:       completion.source,
-        model:        completion.model
+        model:        completion.model,
+        evidence:     completion.evidence && Evidence.new(completion.evidence)
       )
     end
 
@@ -61,7 +62,8 @@ module Course
         lesson_slug:  completion.slug,
         completed_at: completion.completed_at,
         source:       completion.source,
-        model:        completion.model
+        model:        completion.model,
+        evidence:     completion.evidence&.to_h
       )
     end
   end

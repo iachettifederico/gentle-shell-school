@@ -92,6 +92,46 @@ RSpec.describe "Progress API", type: :request do
     end
   end
 
+  it "stores validated evidence and retains the first completion evidence" do
+    with_lessons(lessons) do
+      student_id = enroll
+      evidence = {
+        checks:     [ { command: "bin/rspec", result: "pass", summary: "42 examples" } ],
+        verifiedBy: "independent-verifier",
+      }
+
+      put "/api/progress/#{student_id}", params: { lessonSlug: "welcome", evidence: evidence }, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body.dig("completedLessons", 0, "evidence")).to eq(evidence.deep_stringify_keys)
+
+      put "/api/progress/#{student_id}",
+          params: { lessonSlug: "welcome", evidence: evidence.merge(verifiedBy: "self") }, as: :json
+      expect(response.parsed_body.dig("completedLessons", 0, "evidence")).to eq(evidence.deep_stringify_keys)
+
+      put "/api/progress/#{student_id}", params: { lessonSlug: "next" }, as: :json
+      put "/api/progress/#{student_id}", params: { lessonSlug: "next", evidence: evidence }, as: :json
+      next_completion = response.parsed_body.fetch("completedLessons")
+                                .find { |completion| completion.fetch("slug") == "next" }
+      expect(next_completion.fetch("evidence")).to eq(evidence.deep_stringify_keys)
+    end
+  end
+
+  it "rejects invalid evidence without changing stored progress" do
+    with_lessons(lessons) do
+      student_id = enroll
+      put "/api/progress/#{student_id}", params: { lessonSlug: "welcome" }, as: :json
+      before = progress_json(student_id)
+
+      [ { checks: [], verifiedBy: "self" }, "not an object" ].each do |evidence|
+        put "/api/progress/#{student_id}", params: { lessonSlug: "next", evidence: evidence }, as: :json
+
+        expect(response).to have_http_status(:bad_request)
+        expect(response.parsed_body).to eq("error" => "Invalid \"evidence\" field")
+        expect(progress_json(student_id)).to eq(before)
+      end
+    end
+  end
+
   it "rejects invalid PUT input without changing stored progress" do
     with_lessons(lessons) do
       student_id = enroll

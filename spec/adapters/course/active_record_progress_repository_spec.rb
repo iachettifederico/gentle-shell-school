@@ -30,4 +30,17 @@ RSpec.describe Course::ActiveRecordProgressRepository do
 
     expect(LessonCompletion.pluck(:lesson_slug, :source, :model)).to eq([ [ "welcome", "browser", nil ] ])
   end
+
+  it "round-trips completion evidence" do
+    progress = Course::StudentProgress.new(student_id: "curious-hacker-2019", created_at: Time.utc(2025, 1, 1))
+    evidence = Course::Evidence.new(
+      "checks"     => [ { "command" => "bin/rspec", "result" => "pass", "summary" => "42 examples" } ],
+      "verifiedBy" => "self"
+    )
+    progress.complete("welcome", source: "agent", model: nil, evidence: evidence, at: Time.utc(2025, 1, 2))
+
+    repository.create(progress)
+
+    expect(repository.find("curious-hacker-2019").completions.first.evidence.to_h).to eq(evidence.to_h)
+  end
 end

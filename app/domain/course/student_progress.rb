@@ -1,11 +1,12 @@
 module Course
   # Completion metadata retained for one lesson.
   class Completion
-    def initialize(slug:, completed_at:, source:, model:)
+    def initialize(slug:, completed_at:, source:, model:, evidence: nil)
       @slug = slug
       @completed_at = completed_at
       @source = source
       @model = model
+      @evidence = evidence
     end
 
     def slug
@@ -22,6 +23,14 @@ module Course
 
     def model
       @model
+    end
+
+    def evidence
+      @evidence
+    end
+
+    def add_evidence(evidence)
+      @evidence = evidence if @evidence.nil?
     end
   end
 
@@ -50,12 +59,10 @@ module Course
       @completions.sort_by(&:completed_at).dup
     end
 
-    def complete(slug, source:, model:, at:)
-      unless completed?(slug)
-        @completions << Completion.new(
-          slug: slug, completed_at: at, source: completion_source(source), model: completion_model(model)
-        )
-      end
+    def complete(slug, source:, model:, evidence: nil, at:)
+      completion = completion_for(slug)
+      completion.add_evidence(evidence) if completion && evidence
+      @completions << new_completion(slug, source, model, evidence, at) unless completion
       @updated_at = at
     end
 
@@ -73,8 +80,18 @@ module Course
 
     private
 
-    def completed?(slug)
-      @completions.any? { |completion| completion.slug == slug }
+    def completion_for(slug)
+      @completions.find { |completion| completion.slug == slug }
+    end
+
+    def new_completion(slug, source, model, evidence, at)
+      Completion.new(
+        slug:         slug,
+        completed_at: at,
+        source:       completion_source(source),
+        model:        completion_model(model),
+        evidence:     evidence
+      )
     end
 
     def completion_source(source)

@@ -9,10 +9,9 @@ module Api
     def update
       return render_lesson_slug_error unless valid_lesson_slug?
 
-      progress = progress_system.complete_lesson(
-        params[:student_id], lesson_slug: params[:lessonSlug], source: params[:source], model: params[:model]
-      )
-      render json: progress_json(progress)
+      render json: progress_json(progress_system.complete_lesson(params[:student_id], **completion_attributes))
+    rescue Course::InvalidEvidence => e
+      render json: { error: e.message }, status: :bad_request
     end
 
     def destroy
@@ -27,6 +26,23 @@ module Api
 
     def valid_lesson_slug?
       params[:lessonSlug].is_a?(String) && params[:lessonSlug].present?
+    end
+
+    def completion_attributes
+      {
+        lesson_slug: params[:lessonSlug], source: params[:source], model: params[:model], evidence: evidence,
+      }
+    end
+
+    def evidence
+      return unless params.key?(:evidence)
+
+      value = params[:evidence]
+      Course::Evidence.new(value.respond_to?(:to_unsafe_h) ? value.to_unsafe_h : value)
+    end
+
+    def completion_json(completion)
+      super.merge(**(completion.evidence ? { evidence: completion.evidence.to_h } : {}))
     end
 
     def render_reset

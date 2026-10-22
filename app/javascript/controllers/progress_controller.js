@@ -42,7 +42,7 @@ export default class extends Controller {
     const studentId = localStorage.getItem("studentId")
     if (!studentId || !this.hasLessonSlugValue) return
 
-    const completed = this.statusTarget.textContent === "Completed ✓"
+    const completed = this.completionButtonTarget.textContent === "Mark not complete"
     const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`, this.progressRequest(completed))
     if (this.staleStudent(response)) return
     if (response.ok) this.showProgress(await response.json())
@@ -62,9 +62,10 @@ export default class extends Controller {
   }
 
   showProgress(progress) {
-    const completedSlugs = progress.completedLessons.map((completion) => completion.slug)
-    this.showCompletions(completedSlugs)
-    this.showLessonProgress(completedSlugs)
+    const completions = progress.completedLessons
+    const completedSlugs = completions.map((completion) => completion.slug)
+    this.showCompletions(completions)
+    this.showLessonProgress(completions)
     this.showHomeProgress(completedSlugs)
   }
 
@@ -87,20 +88,34 @@ export default class extends Controller {
     this.instructionsUrlTarget.textContent = new URL(url, window.location.origin).href
   }
 
-  showCompletions(completedSlugs) {
+  showCompletions(completions) {
     this.completionTargets.forEach((completion) => {
-      completion.hidden = !completedSlugs.includes(completion.dataset.lessonSlug)
+      const completed = completions.find((item) => item.slug === completion.dataset.lessonSlug)
+      completion.hidden = !completed
+      if (completed) this.setCompletionLabel(completion, completed)
     })
   }
 
-  showLessonProgress(completedSlugs) {
+  showLessonProgress(completions) {
     if (!this.hasLessonProgressTarget) return
 
-    const completed = completedSlugs.includes(this.lessonSlugValue)
+    const completion = completions.find((item) => item.slug === this.lessonSlugValue)
     this.enrollmentPromptTarget.hidden = true
     this.lessonProgressTarget.hidden = false
-    this.statusTarget.textContent = completed ? "Completed ✓" : "Not completed yet"
-    this.completionButtonTarget.textContent = completed ? "Mark not complete" : "Mark complete"
+    this.statusTarget.textContent = completion ? this.completionLabel(completion) : "Not completed yet"
+    this.completionButtonTarget.textContent = completion ? "Mark not complete" : "Mark complete"
+  }
+
+  setCompletionLabel(element, completion) {
+    const label = this.completionLabel(completion)
+    element.textContent = label
+    element.setAttribute("aria-label", label)
+  }
+
+  completionLabel(completion) {
+    if (!completion.evidence) return "✓"
+
+    return completion.evidence.verifiedBy === "independent-verifier" ? "Independently verified" : "Verified"
   }
 
   showHomeProgress(completedSlugs) {
