@@ -1,0 +1,48 @@
+# Phase 6 — Gentle-shell-native learning
+
+Go beyond the opencode.school model by using what gentle-shell gives the tutor: a skill package, Engram memory, independently graded labs, evidence-backed completion, live coaching, real review, and a cross-session study partner.
+Branch `feat/phase-6-gentle-native` (from local `main` after the history rewrite).
+
+## Specs
+
+- S1 — "implement all of these proposals in a separate branch."
+- The proposals (parent's previous answer, quoted as the requirement source):
+  - S2 — "The tutor as a skill or package, not just `llms.txt`. We ship a `gentle-shell-school` skill, plus a prompt template so `/school` starts or continues the course."
+  - S3 — "Memory-powered learning with Engram. The tutor saves what you struggled with (for example `school/<lesson>/gaps`). The next session opens with spaced-repetition questions on your weak spots" — "this has to degrade gracefully when it's missing."
+  - S4 — "Labs graded by an independent verifier. These are hands-on exercises in a scratch repo with tests that start out failing. A fresh-context subagent on a cheap model grades the work"
+  - S5 — "Completion backed by evidence. … It could also record what was verified: the setup check, the command and its result. Then a checkmark means \"verified\", not just \"the agent said so\"."
+  - S6 — "A live coach for background work. In a lab, the tutor watches your test runner with `monitor` and steps in when something fails"
+  - S7 — "A real review of the capstone: native review / RDD over your actual commit, plus a judgment day as the final exam."
+  - S8 — "A study partner across sessions. You work in one session while the tutor, in another, watches your progress with `orchestrator_consult` and coaches you without filling your work context."
+
+- S9 — "id also like a demo course to run locally. it should be a tiny dev environment only course for me to test out how all of this works and too test the original course vs the improved one (which means it should bon main and the improved course branch rebased onto main)"
+
+## Contracts (parent decisions; workers implement exactly these)
+
+- C1 Evidence (S5) — `PUT /api/progress/:id` accepts optional `evidence`: `{"checks": [{"command": "<string>", "result": "pass"|"fail", "summary": "<string>"}], "verifiedBy": "self"|"independent-verifier"}`. Validation: `checks` 1–10 items, `command` and `summary` non-blank strings ≤ 500 chars, `result` in the enum, `verifiedBy` in the enum; invalid → `400` `{"error": "Invalid \"evidence\" field"}` and stored progress unchanged. Stored per completion; first completion's evidence is kept on idempotent repeats (S4 of phase 2), except a repeat PUT that adds evidence to a completion without evidence stores it. `<Progress>.completedLessons[]` gains `"evidence"` (object or omitted when absent). Website: a completed lesson with evidence shows "Verified" (and "Independently verified" when `verifiedBy` is `independent-verifier`) instead of a bare checkmark tooltip.
+- C2 Labs (S4, S6) — Lab files live in `content/labs/<slug>/` with `lab.yml` (`slug`, `lesson` (lesson slug), `title`, `brief` (Markdown), `check` (shell command run from the lab root), `rubric` (list of strings for the grader)) and `starter/` (files copied into the student's scratch repo). API: `GET /api/labs` → `200` `{"labs": [{"slug","lesson","title"}]}`; `GET /api/labs/:slug` → `200` `{"slug","lesson","title","brief","check","rubric":[...],"files":[{"path","content"}]}`; unknown → `404` `{"error":"Lab not found"}`; CORS like the other endpoints. `GET /api/lessons/:slug` gains `"lab": "<lab-slug>"` or null. Labs need only Node (Pi runs on Node): checks use `node --test`. Each lab's check must FAIL on the starter files and PASS on a reference solution kept under `spec/fixtures/labs/<slug>/solution/` (never served).
+- C3 Skill package (S2, S3, S6, S7, S8) — repository root `package.json` (private, no runtime deps) with `"pi": {"skills": ["./agent/skills"], "prompts": ["./agent/prompts/*.md"]}`; skill `agent/skills/gentle-shell-school/SKILL.md`; prompt `agent/prompts/school.md` (`/school [lesson-slug]`). Install: `pi install git:github.com/iachettifederico/gentle-shell-school` (worker confirms the exact command and whether `gentle-shell` forwards it). The skill is the tutor protocol: read `<origin>/llms.txt`, enrollment and stored student ID, the lesson loop, quizzes with ask_user_question, real-setup checks recorded as C1 evidence, labs per C2 graded by a fresh-context read-only subagent (verifiedBy `independent-verifier`; fall back to `self` when subagents are unavailable), live coaching with `monitor` during labs, Engram memory per S3 with topic key `gentle-shell-school/<lesson-slug>/gaps` and graceful degradation, capstone review per S7, study partner per S8, feedback per phase 5. Origin default: the production site URL is unknown — the skill takes it from the `/school` argument or asks once and stores it in memory/`~/.gentle-shell-school` is NOT allowed; keep it in the conversation and Engram only.
+
+- C4 Demo course (S9) — on `main`: `COURSE=demo` selects `content/demo/lessons` instead of `content/lessons`, only when `Rails.env.development?` (any other env ignores it and serves the real course). Three tiny lessons, module "Demo": `demo-welcome` (how the course works, quiz false), `demo-quiz-and-check` (one quiz question + a real-setup check `gentle-shell --version`), `demo-feedback` (practice the Reporting problems consent flow without filing: choose "Continue without reporting"). Run with `COURSE=demo bin/dev`. Phase 6 is rebased onto `main` afterwards; T3 adds a demo lab for `demo-quiz-and-check` on the branch.
+
+## Tasks
+
+- [x] T1 — C1 evidence: migration, domain, adapter, system, API, OpenAPI, website badge. Risk: item 1 (migration on stored data) → own commit + independent verify. Route: gentle-ai-worker. Commit: `977b45c`.
+- [x] T2 — C3 skill package + `/school` prompt + llms.txt "Use the course skill" section + welcome lesson install note + lesson 23 (study partner) and 27 (capstone review) agent_instructions + README. Route: gentle-ai-worker (parallel with T1; disjoint surfaces). Commit: `931b7a8`.
+- [x] T5 — C4 demo course on `main`, then rebase this branch onto `main`. Route: gentle-ai-worker on `main`, parent commits and rebases. Commit: `8ca2e1d` on `main`.
+- [ ] T3 — C2 labs (+ demo lab): domain, file repository, API, OpenAPI, lesson API field, lesson-page lab section, 5 labs with starters + reference solutions + specs proving fail-on-starter/pass-on-solution, llms.txt labs paragraph. Route: gentle-ai-worker after T1. Commit: —
+- [ ] T4 — Verify: independent verify of T1 migration/data rules; install the package into an isolated Pi agent dir and confirm the skill and `/school` load; run each lab check; `bin/ci`. Route: gentle-ai-verify + parent. Commit: —
+
+## Conventions for workers
+
+- Same as `odd/tasks/phase-4-finish-site.md` "Conventions for workers" (run via `/tmp/gss-run`, layers, cops, test-first for server behavior, no new gems, do not commit). Workers cannot delete files; ask the parent.
+- Gentle-shell facts in the skill and lessons must come from the authorized sources listed in `odd/tasks/phase-3-curriculum.md` "Conventions for workers" (gentle-pi package docs, Pi docs, CLI help). Never invent tool names, flags, or commands; omit what you cannot confirm.
+- English. Public repository: no personal values.
+
+## Log
+
+- L1 (user, verbatim): "implement all of these proposals in a separate branch."
+- L2 (decision): contracts C1–C3 fixed by the parent so T1 and T2 can run in parallel; labs use Node's built-in test runner because Pi requires Node; production origin unknown, so the skill takes the origin from the user.
+- L3 (evidence T1, T2): T1 977b45c (03e0655 before rebase) — Course::Evidence value object, additive reversible migration (add_column :lesson_completions, :evidence, :json), adapter/system/API/OpenAPI, Verified badges; RED→GREEN. T2 931b7a8 (be106fd before rebase) — root package.json pi manifest, agent/skills/gentle-shell-school/SKILL.md, agent/prompts/school.md, llms.txt "Use the course skill", welcome/23/27 updates, README; install confirmed `pi install git:github.com/iachettifederico/gentle-shell-school` (gentle-shell install <source> forwards). Combined: 87 examples, rubocop clean. T2's interim rubocop failure came from T1's in-progress files.
+- L4 (user, verbatim): "id also like a demo course to run locally. it should be a tiny dev environment only course for me to test out how all of this works and too test the original course vs the improved one (which means it should bon main and the improved course branch rebased onto main)"
+- L5 (evidence T5): worker on main — config/initializers/course.rb selects content/demo/lessons only when Rails.env.development? && COURSE=demo; 3 demo lessons (module Demo); specs for dev/test/production selection; curl on a COURSE=demo server returned only the 3 demo slugs. Parent fixed a stale comment, committed 8ca2e1d on main, rebased this branch onto main (README and spec/content conflicts resolved by keeping both sections); 92 examples, rubocop clean.
