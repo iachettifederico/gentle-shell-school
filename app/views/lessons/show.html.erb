@@ -25,6 +25,17 @@
     <%= sanitize body_html %>
   </article>
 
+  <% if lab %>
+    <section data-lesson-lab class="mt-12 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
+      <h2 class="text-lg font-semibold text-shell-text">Lab</h2>
+      <h3 class="mt-3 text-xl font-semibold text-shell-text"><%= lab.title %></h3>
+      <div class="prose prose-invert mt-4 max-w-none prose-p:text-shell-muted prose-p:leading-7 prose-a:text-shell-accent">
+        <%= sanitize lab_brief_html %>
+      </div>
+      <p class="mt-5 font-mono text-sm text-shell-muted">Ask your agent: /school <%= lesson.slug %> lab</p>
+    </section>
+  <% end %>
+
   <div class="mt-12 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-6">
     <h2 class="text-lg font-semibold text-shell-text">Teach me this lesson</h2>
     <p data-teach-me-prompt class="mt-3 break-words font-mono text-sm leading-6 text-shell-muted"><%= teach_me_prompt %></p>

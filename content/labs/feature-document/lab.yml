@@ -1,0 +1,15 @@
+slug: feature-document
+lesson: feature-tracking
+title: Write a feature document
+brief: |
+  ## Preserve the request before implementation
+
+  The request is: "Add a search box that filters the course lessons by title."
+  Create `odd/tasks/lesson-search.md` with `## Specs`, `## Tasks`, and `## Log`.
+  Quote the request **verbatim** in Specs, plan the work in Tasks, and record the
+  request in Log. This gives a later session a durable source of truth.
+check: node --test
+rubric:
+  - The feature document preserves the request verbatim in Specs.
+  - Tasks describe a small, testable delivery sequence.
+  - Log records the request and useful progress context.

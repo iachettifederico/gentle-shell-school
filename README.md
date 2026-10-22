@@ -46,6 +46,18 @@ Then use `/school` to start or continue the course, or `/school <lesson-slug>`
 to choose a lesson. `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`
 forwards the same Pi install command to the selected Gentle Shell home.
 
+## Labs
+
+Hands-on labs live in `content/labs/<slug>/`. Each `lab.yml` links one lesson,
+contains a Markdown brief, a `node --test` check, and independent-grader rubric
+items; `starter/` is the complete scratch-project payload served by the API.
+Every starter intentionally fails its check until the student completes it.
+Reference solutions stay in `spec/fixtures/labs/` and are never served.
+
+`COURSE=demo` also selects `content/demo/labs/` in development. Agents fetch a
+lab from `GET /api/labs/:slug`, write its files into a student-chosen scratch
+directory, run its check, coach with `monitor`, and grade against its rubric.
+
 ## Writing a lesson
 
 Lessons are Markdown files in `content/lessons/`, not database rows. The file
@@ -80,7 +92,9 @@ Lesson body in GitHub-flavored Markdown. Raw HTML is escaped.
 | --- | --- |
 | `GET /llms.txt` | Plain-text overview and operating instructions for agents |
 | `GET /api/openapi.json` | OpenAPI 3.1 description of the API (`config/openapi.yml`) |
-| `GET /api/lessons` | All lessons, sorted by `order` |
+| `GET /api/lessons` | All lessons, sorted by `order`, including a nullable `lab` slug |
+| `GET /api/labs` | Lab summaries (`slug`, lesson, title) |
+| `GET /api/labs/:slug` | A lab's brief, check, rubric, and starter files |
 | `GET /api/lessons/:slug` | One lesson, or 404 `{"error":"Lesson not found"}` |
 | `POST /api/enrollments` | Create a voluntary pending enrollment link |
 | `GET /api/enrollments/:code` | Check pending or enrolled handshake status |

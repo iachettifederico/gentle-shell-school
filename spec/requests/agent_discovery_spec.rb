@@ -31,13 +31,15 @@ RSpec.describe "Agent discovery", type: :request do
       expect(response.body).to include('"Log in with gh now", "Open a prefilled link in my browser", "Skip reporting"')
       expect(response.body).to include("pi install git:github.com/iachettifederico/gentle-shell-school")
       expect(response.body).to include("/school")
+      expect(response.body).to include("GET http://www.example.com/api/labs/:slug")
+      expect(response.body).to include("Coach with `monitor` while the check runs")
       expect(response.body).not_to include("Progress tracking is not available yet")
       expect(response.body).not_to include("{origin}")
     end
   end
 
   describe "GET /api/openapi.json" do
-    it "describes the lessons endpoints for the serving origin" do
+    it "describes the lessons and labs endpoints for the serving origin" do
       get "/api/openapi.json"
 
       expect(response).to have_http_status(:ok)
@@ -49,10 +51,12 @@ RSpec.describe "Agent discovery", type: :request do
       expect(document["paths"].keys).to contain_exactly(
         "/api/enroll", "/api/enrollments", "/api/enrollments/{code}",
         "/api/progress/{student_id}", "/api/instructions/{student_id}",
-        "/api/lessons", "/api/lessons/{slug}"
+        "/api/labs", "/api/labs/{slug}", "/api/lessons", "/api/lessons/{slug}"
       )
       expect(document.dig("components", "schemas", "Lesson", "required"))
-        .to eq(%w[order slug title description agentInstructions content])
+        .to eq(%w[order slug title description agentInstructions content lab])
+      expect(document.dig("components", "schemas", "Lab", "allOf", 1, "required"))
+        .to eq(%w[brief check rubric files])
       expect(document.dig("components", "schemas", "Enrollment", "required")).to eq(%w[studentId progress])
       expect(document.dig("components", "schemas", "Progress", "required"))
         .to eq(%w[completedLessons createdAt updatedAt])

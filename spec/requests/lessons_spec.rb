@@ -128,6 +128,32 @@ RSpec.describe "Lesson pages", type: :request do
         .to eq('Read http://www.example.com/llms.txt and teach me the "Organic driven development" lesson (odd).')
     end
 
+    it "renders the linked lab brief and agent prompt" do
+      lab = {
+        "feature-document" => {
+          metadata: <<~YAML,
+            slug: feature-document
+            lesson: odd
+            title: Feature document
+            brief: "## Write it\n\nExplain why."
+            check: node --test
+            rubric:
+              - Complete it.
+          YAML
+          files:    { "index.js" => "" },
+        },
+      }
+
+      with_lessons(lessons) do
+        with_labs(lab) { get "/lessons/odd" }
+      end
+
+      expect(response.parsed_body.at_css("[data-lesson-lab] h2").text).to eq("Lab")
+      expect(response.parsed_body.at_css("[data-lesson-lab] h3").text).to eq("Feature document")
+      expect(response.parsed_body.at_css("[data-lesson-lab]").text).to include("Explain why.")
+      expect(response.parsed_body.at_css("[data-lesson-lab]").text).to include("Ask your agent: /school odd lab")
+    end
+
     it "omits unavailable previous or next navigation links" do
       with_lessons(lessons) do
         get "/lessons/welcome"

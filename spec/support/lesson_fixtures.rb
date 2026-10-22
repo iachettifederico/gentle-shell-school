@@ -15,6 +15,38 @@ module LessonFixtures
     end
   end
 
+  def with_labs(labs, &)
+    Dir.mktmpdir do |dir|
+      write_labs(dir, labs)
+      with_labs_directory(dir, &)
+    end
+  end
+
+  def write_labs(directory, labs)
+    labs.each { |slug, lab| write_lab(directory, slug, lab) }
+  end
+
+  def write_lab(directory, slug, lab)
+    lab[:files].each do |path, content|
+      write_lab_file(directory, slug, path, content)
+    end
+    File.write(File.join(directory, slug, "lab.yml"), lab[:metadata])
+  end
+
+  def write_lab_file(directory, slug, path, content)
+    file = File.join(directory, slug, "starter", path)
+    FileUtils.mkdir_p(File.dirname(file))
+    File.write(file, content)
+  end
+
+  def with_labs_directory(directory, &)
+    original = Rails.configuration.x.labs_directory
+    Rails.configuration.x.labs_directory = directory
+    yield
+  ensure
+    Rails.configuration.x.labs_directory = original
+  end
+
   def lesson_markdown(slug:, order:, title:, body:, **options)
     <<~MD
       ---

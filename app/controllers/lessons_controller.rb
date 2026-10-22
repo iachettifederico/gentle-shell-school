@@ -14,10 +14,16 @@ class LessonsController < ApplicationController
 
   def lesson_locals(lesson)
     previous_lesson, next_lesson = lessons_system.lesson_neighbors(lesson.slug)
+    lab = labs_system.lab_for_lesson(lesson.slug)
     {
       lesson: lesson, previous_lesson: previous_lesson, next_lesson: next_lesson,
       body_html: rendered_body(lesson), teach_me_prompt: teach_me_prompt(lesson),
+      lab: lab, lab_brief_html: lab_brief_html(lab),
     }
+  end
+
+  def lab_brief_html(lab)
+    MarkdownRenderer.new.render(lab.brief) if lab
   end
 
   def rendered_body(lesson)

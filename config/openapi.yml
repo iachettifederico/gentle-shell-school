@@ -148,6 +148,46 @@ paths:
           $ref: "#/components/responses/InvalidStudentId"
         "404":
           $ref: "#/components/responses/StudentNotFound"
+  /api/labs:
+    get:
+      operationId: listLabs
+      summary: List lab summaries.
+      responses:
+        "200":
+          description: Every lab.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [labs]
+                properties:
+                  labs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LabSummary"
+  /api/labs/{slug}:
+    get:
+      operationId: getLab
+      summary: Get one lab with its starter files.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The lab.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lab"
+        "404":
+          description: No lab has this slug.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /api/lessons:
     get:
       operationId: listLessons
@@ -345,9 +385,46 @@ components:
         reset:
           type: boolean
           description: Must be true when used instead of lessonSlug.
+    LabSummary:
+      type: object
+      required: [slug, lesson, title]
+      properties:
+        slug:
+          type: string
+        lesson:
+          type: string
+          description: Slug of the lesson containing this lab.
+        title:
+          type: string
+    Lab:
+      allOf:
+        - $ref: "#/components/schemas/LabSummary"
+        - type: object
+          required: [brief, check, rubric, files]
+          properties:
+            brief:
+              type: string
+              description: Lab instructions as Markdown.
+            check:
+              type: string
+              description: Shell command to run from the student scratch directory.
+            rubric:
+              type: array
+              items:
+                type: string
+            files:
+              type: array
+              items:
+                type: object
+                required: [path, content]
+                properties:
+                  path:
+                    type: string
+                  content:
+                    type: string
     Lesson:
       type: object
-      required: [order, slug, title, description, agentInstructions, content]
+      required: [order, slug, title, description, agentInstructions, content, lab]
       properties:
         order:
           type: integer
@@ -362,6 +439,9 @@ components:
         module:
           type: [string, "null"]
           description: Optional syllabus module containing the lesson.
+        lab:
+          type: [string, "null"]
+          description: Slug of the linked lab, when this lesson has one.
         agentInstructions:
           type: string
           description: >-

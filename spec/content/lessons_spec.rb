@@ -31,6 +31,19 @@ RSpec.describe "Course content" do
     expect(system.lessons.map(&:slug)).to eq(%w[demo-welcome demo-quiz-and-check demo-feedback])
   end
 
+  it "loads every real and demo lab" do
+    real_labs = Course::LabsSystem.new(
+      repository: Course::FileLabRepository.new(directory: Rails.root.join("content/labs"))
+    )
+    demo_labs = Course::LabsSystem.new(
+      repository: Course::FileLabRepository.new(directory: Rails.root.join("content/demo/labs"))
+    )
+
+    expect(real_labs.labs.map(&:slug))
+      .to eq(%w[explore-handoff feature-document red-green work-unit-commits write-a-skill])
+    expect(demo_labs.labs.map(&:slug)).to eq([ "demo-hello" ])
+  end
+
   it "ships a discoverable Pi course skill and prompt" do
     package = JSON.parse(Rails.root.join("package.json").read)
     skill_path = Rails.root.join("agent/skills/gentle-shell-school/SKILL.md")

@@ -25,6 +25,10 @@ For the hand-off in `open-gentle-shell`, the previous agent records that lesson 
 3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".
 4. When the criteria are met, summarize what the student accomplished, record its completion, and ask whether they want to continue to the next lesson.
 
+## Labs
+
+When a lesson's `lab` field names a lab, fetch it with GET <%= origin %>/api/labs/:slug. Ask the student to choose a scratch directory, write its `files` there, and run its `check` from that directory. Coach with `monitor` while the check runs. Grade the finished work from a fresh-context subagent against `rubric`, then record the observed check and grade as C1 completion evidence.
+
 ## Reporting problems
 
 When the agent or student finds a wrong or outdated fact, a broken setup check, a confusing explanation, a typo, or a site/API bug, consent first with ask_user_question, single choice, in this order: "Report it and continue", "Continue without reporting", "Stop here". Never file without consent; only the first choice permits a report.

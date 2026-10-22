@@ -1,0 +1,15 @@
+slug: work-unit-commits
+lesson: commits-and-slices
+title: Slice work into commits
+brief: |
+  ## Keep each step reviewable
+
+  First run `git init` in this scratch project. Make the test pass, then create at
+  least two Conventional Commit commits. Each commit should leave the test suite
+  passing. The check refuses to run outside a Git repository so its failure tells
+  you what to do first.
+check: node --test
+rubric:
+  - The scratch project has at least two Conventional Commit messages.
+  - Each commit is a small, understandable work unit.
+  - The finished test suite passes.

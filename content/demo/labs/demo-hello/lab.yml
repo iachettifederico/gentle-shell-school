@@ -1,0 +1,13 @@
+slug: demo-hello
+lesson: demo-quiz-and-check
+title: Fix the greeting
+brief: |
+  ## Make one test pass
+
+  Run `node --test`, then fix the one-line greeting function. This tiny lab lets
+  you watch the tutor's lab loop in the local demo course.
+check: node --test
+rubric:
+  - The greeting returns the expected text.
+  - The student ran the check and explained the failure.
+  - The student can describe the small change they made.

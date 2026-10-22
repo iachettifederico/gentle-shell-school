@@ -29,6 +29,7 @@ RSpec.describe "Lessons API", type: :request do
         "title"             => "Welcome",
         "description"       => "About welcome.",
         "module"            => "Getting started",
+        "lab"               => nil,
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n",
       }
@@ -40,6 +41,7 @@ RSpec.describe "Lessons API", type: :request do
         "title"             => "Odd",
         "description"       => "About odd.",
         "module"            => nil,
+        "lab"               => nil,
         "agentInstructions" => "Verify odd at http://www.example.com/lessons/odd.\n\n#{Course::QuizInstructions::TEXT}",
         "content"           => "Explore first.\n",
       }
@@ -71,9 +73,33 @@ RSpec.describe "Lessons API", type: :request do
         "title"             => "Welcome",
         "description"       => "About welcome.",
         "module"            => "Getting started",
+        "lab"               => nil,
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n"
       )
+    end
+
+    it "includes the linked lab slug" do
+      lab = {
+        "feature-document" => {
+          metadata: <<~YAML,
+            slug: feature-document
+            lesson: welcome
+            title: Feature document
+            brief: Write it.
+            check: node --test
+            rubric:
+              - Complete it.
+          YAML
+          files:    { "index.js" => "" },
+        },
+      }
+
+      with_lessons(lessons) do
+        with_labs(lab) { get "/api/lessons/welcome" }
+      end
+
+      expect(response.parsed_body["lab"]).to eq("feature-document")
     end
 
     it "returns 404 with an error for an unknown lesson" do

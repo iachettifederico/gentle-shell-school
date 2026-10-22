@@ -1,0 +1,15 @@
+slug: explore-handoff
+lesson: subagents
+title: Hand off an exploration
+brief: |
+  ## Explore before you plan
+
+  Delegate a read-only exploration of `src/`. Save its handoff as `handoff.md`.
+  Include at least three references in the form `src/path.js:line` that point to
+  real lines. This makes the exploration useful without copying source into the
+  handoff.
+check: node --test
+rubric:
+  - The handoff summarizes the exploration in the delegate's own words.
+  - It cites at least three valid source path and line references.
+  - It identifies a useful next step or risk.

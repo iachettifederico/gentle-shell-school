@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     match "lessons", to: "lessons#preflight", via: :options
     match "lessons/:slug", to: "lessons#preflight", via: :options
 
+    resources :labs, only: [ :index, :show ], param: :slug
+    match "labs", to: "labs#preflight", via: :options
+    match "labs/:slug", to: "labs#preflight", via: :options
+
     post "enroll" => "enroll#create"
     match "enroll", to: "enroll#preflight", via: :options
 

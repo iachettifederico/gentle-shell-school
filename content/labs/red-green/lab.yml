@@ -1,0 +1,14 @@
+slug: red-green
+lesson: test-first-and-verification
+title: Make the tests green
+brief: |
+  ## Start with the failing test
+
+  Run `node --test`, implement `double` in `src/double.js`, and make the provided
+  test pass. Then add one behavior-level test of your own. The test count check
+  makes the extra example observable.
+check: node --test
+rubric:
+  - The implementation makes the provided behavior pass.
+  - A new test covers another meaningful input.
+  - The student can explain the RED to GREEN cycle.
