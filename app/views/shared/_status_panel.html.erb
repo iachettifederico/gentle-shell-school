@@ -1,0 +1,12 @@
+<%# Centered message page. Locals: eyebrow, heading; optional body, data, accent. Block: body extras and actions. %>
+<%= tag.section data: local_assigns.fetch(:data, {}), class: "relative mx-auto max-w-2xl py-6 sm:py-14" do %>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 mx-auto h-48 max-w-md rounded-full bg-brand-600/15 blur-3xl"></div>
+  <div class="card relative p-6 sm:p-10 <%= "ring-brand-500/35" if local_assigns[:accent] %>">
+    <p class="eyebrow"><%= eyebrow %></p>
+    <h1 class="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-balance text-fg sm:text-4xl"><%= heading %></h1>
+    <% if local_assigns[:body] %>
+      <p class="mt-4 max-w-xl text-base leading-7 text-pretty text-fg-muted"><%= body %></p>
+    <% end %>
+    <%= yield %>
+  </div>
+<% end %>

@@ -7,6 +7,8 @@ en:
     report_problem: "Report a problem"
     built_for: "Built for people and agents"
     language: "Language"
+    skip: "Skip to content"
+    main_navigation: "Main"
   home:
     badge: "Free · Self-paced · Agent-taught"
     intro: "Learn gentle-shell in depth: lessons written for you, and a course API your coding agent uses to teach you, quiz you, and check your real setup."

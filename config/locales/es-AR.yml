@@ -7,6 +7,8 @@ es-AR:
     report_problem: "Reportar un problema"
     built_for: "Hecho para personas y agentes"
     language: "Idioma"
+    skip: "Saltar al contenido"
+    main_navigation: "Principal"
   home:
     badge: "Gratis · A tu ritmo · Enseñado por agentes"
     intro: "Aprendé gentle-shell a fondo: lecciones para vos y una API que tu agente de programación usa para enseñarte, evaluarte y revisar tu configuración real."

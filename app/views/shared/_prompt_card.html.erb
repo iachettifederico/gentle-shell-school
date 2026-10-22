@@ -1,0 +1,21 @@
+<%# Copyable agent prompt. Locals: heading, prompt, copy_label; optional id, prompt_data. Block: extra links. %>
+<%= tag.div id: local_assigns[:id], class: "card scroll-mt-28 overflow-hidden" do %>
+  <div class="flex items-center gap-3 border-b border-line bg-raised/70 px-5 py-3">
+    <span aria-hidden="true" class="flex gap-1.5"><span class="size-2.5 rounded-full bg-brand-500"></span><span class="size-2.5 rounded-full bg-overlay"></span><span class="size-2.5 rounded-full bg-overlay"></span></span>
+    <h2 class="text-sm font-semibold text-fg"><%= heading %></h2>
+  </div>
+  <div class="p-5 sm:p-6">
+    <div class="flex gap-3 rounded-xl bg-canvas px-4 py-3.5 ring-1 ring-line">
+      <span aria-hidden="true" class="font-mono text-sm leading-6 font-semibold text-brand-400 select-none">›</span>
+      <%= tag.p prompt, data: local_assigns.fetch(:prompt_data, {}), class: "min-w-0 font-mono text-sm leading-6 break-words text-fg" %>
+    </div>
+    <div class="mt-4 flex items-center">
+      <button type="button" data-action="progress#copy" data-prompt="<%= prompt %>" class="btn btn-secondary btn-sm"><%= copy_label %></button>
+      <span data-copy-status role="status" class="sr-only"></span>
+    </div>
+    <% extras = yield %>
+    <% if extras.present? %>
+      <div class="mt-5 flex flex-col gap-2 border-t border-line pt-4 sm:flex-row sm:flex-wrap sm:gap-x-6"><%= extras %></div>
+    <% end %>
+  </div>
+<% end %>

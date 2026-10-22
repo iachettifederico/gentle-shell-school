@@ -49,9 +49,15 @@ export default class extends Controller {
   }
 
   copy(event) {
-    navigator.clipboard.writeText(event.currentTarget.dataset.prompt)
-    event.currentTarget.textContent = this.copiedLabelValue
-    setTimeout(() => { event.currentTarget.textContent = this.copyLabelValue }, 1200)
+    const button = event.currentTarget
+    const status = button.parentElement.querySelector("[data-copy-status]")
+    navigator.clipboard.writeText(button.dataset.prompt)
+    button.textContent = this.copiedLabelValue
+    if (status) status.textContent = this.copiedLabelValue
+    setTimeout(() => {
+      button.textContent = this.copyLabelValue
+      if (status) status.textContent = ""
+    }, 1200)
   }
 
   showStudent(studentId) {
@@ -109,7 +115,7 @@ export default class extends Controller {
   setCompletionLabel(element, completion) {
     const label = this.completionLabel(completion)
     element.textContent = label
-    element.setAttribute("aria-label", label)
+    element.setAttribute("aria-label", completion.evidence ? label : element.dataset.completedLabel || label)
   }
 
   completionLabel(completion) {
