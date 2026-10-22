@@ -1,52 +1,65 @@
-<section class="space-y-6">
-  <p class="text-sm font-mono uppercase tracking-[0.15em] text-emerald-700">Free · self-paced · agent-taught</p>
-  <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">Learn gentle-shell</h1>
-  <p class="max-w-2xl text-lg leading-8 text-slate-600">
-    Every lesson is written for two readers: you, here on the website, and your agent, through the course API.
-    Your agent teaches each lesson, quizzes you, and checks your real setup.
-  </p>
+<% content_for :description, "A free, self-paced shell course taught with your coding agent." %>
+
+<section class="mx-auto max-w-3xl py-10 text-center sm:py-18">
+  <p class="inline-flex rounded-full border border-shell-accent/25 bg-shell-accent-subtle px-3 py-1 font-mono text-xs text-shell-accent">Free · Self-paced · Agent-taught</p>
+  <h1 class="mt-7 text-5xl font-extrabold tracking-[-0.065em] text-shell-text sm:text-7xl">Gentle <span class="text-shell-accent">Shell</span><br>School</h1>
+  <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-shell-muted sm:text-lg sm:leading-8">Learn gentle-shell in depth: lessons written for you, and a course API your coding agent uses to teach you, quiz you, and check your real setup.</p>
+  <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+    <a href="#lessons" class="rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent">Start the course</a>
+    <a href="/llms.txt" class="rounded-full border border-shell-border bg-shell-card px-5 py-3 font-mono text-sm font-medium text-shell-text transition-colors hover:border-shell-border-hover">llms.txt</a>
+  </div>
 </section>
 
-<section class="mt-12" data-controller="progress">
-  <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
-    <button type="button" data-action="progress#enroll" data-progress-target="enrollButton" class="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
-      Enroll
-    </button>
-    <div data-progress-target="student" hidden>
-      <p class="text-sm text-slate-700">Your student ID: <span data-progress-target="studentId" class="font-mono font-semibold"></span></p>
-      <p data-progress-target="summary" class="mt-2 text-sm font-medium text-slate-800"></p>
-      <p data-progress-target="continue" class="mt-2 text-sm text-slate-700" hidden><a class="font-medium text-emerald-700 underline hover:text-emerald-900"></a></p>
-      <p class="mt-2 text-sm text-slate-600">Give this ID to your agent. Instructions: <a data-progress-target="instructionsUrl" class="font-mono text-emerald-700 underline hover:text-emerald-900"></a></p>
-      <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="mt-3 text-sm font-medium text-slate-600 underline hover:text-slate-900">
+<section id="lessons" class="mt-8 scroll-mt-6" data-controller="progress">
+  <div class="rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-7">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-mono text-xs text-shell-accent">YOUR COURSE</p>
+        <p class="mt-1 text-sm text-shell-muted">Keep your place across lessons with a private student ID.</p>
+      </div>
+      <button type="button" data-action="progress#enroll" data-progress-target="enrollButton" class="shrink-0 rounded-full bg-shell-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent">
+        Enroll
+      </button>
+    </div>
+    <div data-progress-target="student" hidden class="mt-5 border-t border-shell-border pt-5">
+      <p class="text-sm text-shell-muted">Your student ID: <span data-progress-target="studentId" class="font-mono font-semibold text-shell-text"></span></p>
+      <p data-progress-target="summary" class="mt-2 text-sm font-medium text-shell-text"></p>
+      <p data-progress-target="continue" class="mt-2 text-sm text-shell-muted" hidden><a class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover"></a></p>
+      <p class="mt-3 break-words text-sm leading-6 text-shell-muted">Give this ID to your agent. Instructions: <a data-progress-target="instructionsUrl" class="font-mono text-shell-accent transition-colors hover:text-shell-accent-hover"></a></p>
+      <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="mt-4 text-sm font-medium text-shell-muted underline decoration-shell-dim underline-offset-4 transition-colors hover:text-shell-text">
         Forget this ID
       </button>
     </div>
   </div>
 
-  <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-    <h2 class="text-lg font-semibold text-slate-950">Start the course</h2>
-    <p class="mt-2 font-mono text-sm leading-6 text-slate-700">Read <%= request.base_url %>/llms.txt and start the Welcome lesson.</p>
-    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the Welcome lesson." class="mt-4 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">Copy</button>
+  <div class="mt-5 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-7">
+    <h2 class="text-lg font-semibold text-shell-text">Start with your agent</h2>
+    <p class="mt-2 font-mono text-sm leading-6 text-shell-muted">Read <%= request.base_url %>/llms.txt and start the Welcome lesson.</p>
+    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the Welcome lesson." class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
   </div>
 
-  <h2 class="mt-12 text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lessons</h2>
+  <div class="mt-14 flex items-baseline justify-between gap-5">
+    <h2 class="text-2xl font-bold tracking-[-0.035em] text-shell-text">Syllabus</h2>
+    <p class="font-mono text-xs text-shell-dim">27 lessons</p>
+  </div>
   <% lesson_groups.each do |module_name, lessons| %>
-    <div class="mt-6">
-      <h3 data-module-name="<%= module_name %>" class="flex items-center justify-between text-xl font-semibold text-slate-900">
-        <%= module_name %>
-        <span hidden data-module-name="<%= module_name %>" data-module-total="<%= lessons.size %>" data-progress-module-count class="text-sm font-normal text-slate-600"><%= "0/#{lessons.size} done" %></span>
-      </h3>
-      <ol class="mt-3 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+    <section class="mt-6 overflow-hidden rounded-2xl border border-shell-border bg-shell-card">
+      <div class="flex items-center justify-between gap-4 border-b border-shell-border px-5 py-4 sm:px-6">
+        <h3 data-module-name="<%= module_name %>" class="text-base font-semibold text-shell-text"><%= module_name %></h3>
+        <span hidden data-module-name="<%= module_name %>" data-module-total="<%= lessons.size %>" data-progress-module-count class="shrink-0 font-mono text-xs text-shell-muted"><%= "0/#{lessons.size} done" %></span>
+      </div>
+      <ol class="divide-y divide-shell-border">
         <% lessons.each do |lesson| %>
-          <li data-progress-target="lesson" data-lesson-slug="<%= lesson.slug %>" data-module-name="<%= module_name %>" class="px-6 py-4">
-            <a href="<%= lesson_path(lesson.slug) %>" data-lesson class="text-lg font-medium text-slate-900 hover:text-emerald-700">
-              <%= lesson.title %>
-            </a>
-            <span data-progress-target="completion" data-lesson-slug="<%= lesson.slug %>" hidden aria-label="Completed" class="ml-2 text-emerald-700">✓</span>
-            <p class="mt-1 text-sm text-slate-600"><%= lesson.description %></p>
+          <li data-progress-target="lesson" data-lesson-slug="<%= lesson.slug %>" data-module-name="<%= module_name %>" class="group flex gap-4 px-5 py-4 sm:px-6">
+            <span class="w-6 pt-0.5 font-mono text-xs text-shell-dim"><%= format("%02d", lesson.order) %></span>
+            <div class="min-w-0 flex-1">
+              <a href="<%= lesson_path(lesson.slug) %>" data-lesson class="font-medium text-shell-text transition-colors group-hover:text-shell-accent"><%= lesson.title %></a>
+              <p class="mt-1 text-sm leading-6 text-shell-muted"><%= lesson.description %></p>
+            </div>
+            <span data-progress-target="completion" data-lesson-slug="<%= lesson.slug %>" hidden aria-label="Completed" class="pt-0.5 text-shell-accent">✓</span>
           </li>
         <% end %>
       </ol>
-    </div>
+    </section>
   <% end %>
 </section>

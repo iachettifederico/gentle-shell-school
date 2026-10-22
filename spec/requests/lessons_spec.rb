@@ -34,6 +34,10 @@ RSpec.describe "Lesson pages", type: :request do
                             [ "Unsafe", "/lessons/unsafe" ]
                           ])
       expect(response.body).to include("About organic driven development.")
+      expect(page.at_css('meta[name="description"]')["content"])
+        .to include("coding agent")
+      expect(page.at_css('meta[property="og:title"]')["content"])
+        .to eq("Gentle Shell School")
       expect(page.css("h3[data-module-name]").pluck("data-module-name"))
         .to eq([ "Getting started", "Foundations" ])
       expect(page.css("[data-module-total]").map { |count| [ count["data-module-total"], count.text.strip ] })
@@ -73,6 +77,12 @@ RSpec.describe "Lesson pages", type: :request do
       expect(page.at_css("article h2").text).to eq("Steps")
       expect(page.at_css("article p").text).to eq("Explore first.")
       expect(page.at_css("title").text).to eq("Organic driven development · Gentle Shell School")
+      expect(page.at_css('meta[name="description"]')["content"])
+        .to eq("About organic driven development.")
+      expect(page.at_css('meta[property="og:title"]')["content"])
+        .to eq("Organic driven development · Gentle Shell School")
+      expect(page.at_css('meta[property="og:description"]')["content"])
+        .to eq("About organic driven development.")
     end
 
     it "renders navigation, module, and teach-me prompt for the lesson" do
@@ -83,8 +93,10 @@ RSpec.describe "Lesson pages", type: :request do
       expect(response).to have_http_status(:ok)
       page = response.parsed_body
       expect(page.at_css("[data-lesson-module]").text.strip).to eq("Foundations")
-      expect(page.css("[data-lesson-navigation] a").map { |link| [ link.text.strip, link["href"] ] })
-        .to eq([[ "Previous: Welcome", "/lessons/welcome" ], [ "Next: Unsafe", "/lessons/unsafe" ]])
+      navigation = page.css("[data-lesson-navigation] a")
+      expect(navigation.pluck("href")).to eq([ "/lessons/welcome", "/lessons/unsafe" ])
+      expect(navigation.map(&:text).map(&:squish))
+        .to eq([ "Previous lesson Welcome", "Next lesson Unsafe" ])
       expect(page.at_css("[data-teach-me-prompt]").text.strip)
         .to eq('Read http://www.example.com/llms.txt and teach me the "Organic driven development" lesson (odd).')
     end
@@ -95,8 +107,8 @@ RSpec.describe "Lesson pages", type: :request do
       end
 
       expect(response).to have_http_status(:ok)
-      navigation = response.parsed_body.css("[data-lesson-navigation] a").map(&:text).map(&:strip)
-      expect(navigation).to eq([ "Next: Organic driven development" ])
+      navigation = response.parsed_body.css("[data-lesson-navigation] a").map(&:text).map(&:squish)
+      expect(navigation).to eq([ "Next lesson Organic driven development" ])
     end
 
     it "resolves {origin} in the body to the request origin" do
@@ -121,6 +133,7 @@ RSpec.describe "Lesson pages", type: :request do
       end
 
       expect(response).to have_http_status(:not_found)
+      expect(response.parsed_body.css('a[href="/"]').map(&:text).map(&:strip)).to include("Back to the course")
     end
   end
 end

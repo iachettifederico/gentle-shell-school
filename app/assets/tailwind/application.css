@@ -1,2 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --color-shell-bg: #09090b;
+  --color-shell-card: #111113;
+  --color-shell-code: #18181c;
+  --color-shell-accent: #ea1889;
+  --color-shell-accent-hover: #ff6db0;
+  --color-shell-accent-subtle: #ea188926;
+  --color-shell-border: #ffffff12;
+  --color-shell-border-hover: #ea188959;
+  --color-shell-text: #fafafa;
+  --color-shell-muted: #a1a1aa;
+  --color-shell-dim: #52525b;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html { background: var(--color-shell-bg); }
+  body { min-width: 320px; background: var(--color-shell-bg); color: var(--color-shell-text); }
+  ::selection { background: var(--color-shell-accent); color: var(--color-shell-text); }
+}
+
+/* Code blocks: the inline-code chip must not repeat inside <pre>. */
+.prose pre code {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}

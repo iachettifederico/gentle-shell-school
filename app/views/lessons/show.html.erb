@@ -1,37 +1,48 @@
 <% content_for :title, "#{lesson.title} · Gentle Shell School" %>
+<% content_for :description, lesson.description %>
+<% content_for :og_title, "#{lesson.title} · Gentle Shell School" %>
+<% content_for :og_description, lesson.description %>
 
-<section data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>">
-  <% if lesson.module_name.present? %>
-    <p data-lesson-module class="text-sm font-mono uppercase tracking-[0.15em] text-emerald-700"><%= lesson.module_name %></p>
-  <% end %>
-  <p class="mt-2 text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lesson <%= lesson.order %></p>
-  <h1 class="mt-2 text-4xl font-semibold tracking-tight text-slate-950"><%= lesson.title %></h1>
-  <p class="mt-3 text-lg text-slate-600"><%= lesson.description %></p>
+<section class="mx-auto max-w-3xl" data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>">
+  <div class="border-b border-shell-border pb-8">
+    <% if lesson.module_name.present? %>
+      <p data-lesson-module class="font-mono text-xs text-shell-accent"><%= lesson.module_name %></p>
+    <% end %>
+    <p class="mt-3 font-mono text-xs text-shell-dim">Lesson <%= format("%02d", lesson.order) %></p>
+    <h1 class="mt-3 text-4xl font-extrabold tracking-[-0.05em] text-shell-text sm:text-5xl"><%= lesson.title %></h1>
+    <p class="mt-4 max-w-2xl text-lg leading-8 text-shell-muted"><%= lesson.description %></p>
+  </div>
 
-  <div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-    <p data-progress-target="enrollmentPrompt" class="text-sm text-slate-700">Track your progress by <a href="<%= root_path %>" class="font-medium text-emerald-700 underline hover:text-emerald-900">enrolling on the home page</a>.</p>
+  <div class="mt-6 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
+    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-shell-muted">Track your progress by <a href="<%= root_path %>" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">enrolling on the home page</a>.</p>
     <div data-progress-target="lessonProgress" hidden>
-      <p data-progress-target="status" class="text-sm font-medium text-slate-800"></p>
-      <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="mt-3 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800"></button>
+      <p data-progress-target="status" class="text-sm font-medium text-shell-text"></p>
+      <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="mt-3 rounded-full bg-shell-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent"></button>
     </div>
   </div>
 
-  <article class="prose prose-slate mt-10 max-w-none">
+  <article class="prose prose-invert mt-12 max-w-none prose-headings:font-bold prose-headings:tracking-[-0.03em] prose-p:leading-8 prose-p:text-shell-muted prose-a:text-shell-accent prose-a:no-underline hover:prose-a:text-shell-accent-hover prose-strong:text-shell-text prose-code:rounded prose-code:border prose-code:border-shell-border prose-code:bg-shell-code prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-shell-text prose-code:before:content-none prose-code:after:content-none prose-pre:border prose-pre:border-shell-border prose-pre:bg-shell-code prose-pre:font-mono prose-pre:text-shell-text">
     <%= sanitize body_html %>
   </article>
 
-  <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-    <h2 class="text-lg font-semibold text-slate-950">Teach me this lesson</h2>
-    <p data-teach-me-prompt class="mt-2 font-mono text-sm leading-6 text-slate-700"><%= teach_me_prompt %></p>
-    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">Copy</button>
+  <div class="mt-12 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-6">
+    <h2 class="text-lg font-semibold text-shell-text">Teach me this lesson</h2>
+    <p data-teach-me-prompt class="mt-3 break-words font-mono text-sm leading-6 text-shell-muted"><%= teach_me_prompt %></p>
+    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
   </div>
 
-  <nav data-lesson-navigation class="mt-10 flex flex-wrap justify-between gap-4 border-t border-slate-200 pt-6">
+  <nav data-lesson-navigation class="mt-10 grid gap-4 border-t border-shell-border pt-8 sm:grid-cols-2">
     <% if previous_lesson %>
-      <%= link_to "Previous: #{previous_lesson.title}", lesson_path(previous_lesson.slug), class: "font-medium text-emerald-700 hover:text-emerald-900" %>
+      <%= link_to lesson_path(previous_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 transition-colors hover:border-shell-border-hover" do %>
+        <span class="font-mono text-xs text-shell-dim">Previous lesson</span>
+        <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= previous_lesson.title %></span>
+      <% end %>
     <% end %>
     <% if next_lesson %>
-      <%= link_to "Next: #{next_lesson.title}", lesson_path(next_lesson.slug), class: "font-medium text-emerald-700 hover:text-emerald-900" %>
+      <%= link_to lesson_path(next_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 text-right transition-colors hover:border-shell-border-hover #{'sm:col-start-2' unless previous_lesson}" do %>
+        <span class="font-mono text-xs text-shell-dim">Next lesson</span>
+        <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= next_lesson.title %></span>
+      <% end %>
     <% end %>
   </nav>
 </section>

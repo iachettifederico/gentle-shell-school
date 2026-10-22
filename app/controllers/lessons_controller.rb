@@ -1,12 +1,16 @@
 class LessonsController < ApplicationController
   def show
     lesson = lessons_system.find_lesson(params[:slug])
-    raise ActionController::RoutingError, "Lesson not found" unless lesson
+    return render_not_found unless lesson
 
     render locals: lesson_locals(lesson)
   end
 
   private
+
+  def render_not_found
+    render "errors/not_found", status: :not_found
+  end
 
   def lesson_locals(lesson)
     previous_lesson, next_lesson = lessons_system.lesson_neighbors(lesson.slug)

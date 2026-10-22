@@ -2,6 +2,9 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Gentle Shell School" %></title>
+    <meta name="description" content="<%= content_for(:description) || "A free, self-paced shell course taught with your coding agent." %>">
+    <meta property="og:title" content="<%= content_for(:og_title) || content_for(:title) || "Gentle Shell School" %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || content_for(:description) || "A free, self-paced shell course taught with your coding agent." %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Gentle Shell School">
@@ -15,16 +18,27 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-stone-50 text-slate-900 antialiased">
-    <header class="border-b border-slate-200 bg-white/80">
-      <nav class="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-4">
-        <a href="<%= root_path %>" class="font-semibold tracking-tight text-slate-950">Gentle Shell School</a>
-        <a href="/llms.txt" class="text-sm font-mono text-slate-500 hover:text-slate-900">llms.txt</a>
+  <body class="bg-shell-bg font-sans text-shell-text antialiased">
+    <header class="border-b border-shell-border bg-shell-bg/90 backdrop-blur">
+      <nav class="mx-auto flex w-full max-w-6xl items-center justify-between gap-5 px-5 py-4 sm:px-8">
+        <a href="<%= root_path %>" class="text-base font-bold tracking-[-0.04em] text-shell-text">Gentle <span class="text-shell-accent">Shell</span></a>
+        <div class="flex items-center gap-4 text-sm text-shell-muted sm:gap-6">
+          <a href="<%= root_path %>#lessons" class="transition-colors hover:text-shell-text">Lessons</a>
+          <a href="/llms.txt" class="font-mono text-xs transition-colors hover:text-shell-text">llms.txt</a>
+          <a href="/api/openapi.json" class="hidden font-mono text-xs transition-colors hover:text-shell-text sm:inline">API</a>
+        </div>
       </nav>
     </header>
 
-    <main class="mx-auto w-full max-w-3xl px-6 py-12">
+    <main class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
       <%= yield %>
     </main>
+
+    <footer class="border-t border-shell-border">
+      <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 text-sm text-shell-dim sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <p>Gentle Shell School — learn gentle-shell with your agent.</p>
+        <a href="/llms.txt" class="font-mono text-xs transition-colors hover:text-shell-muted">Built for people and agents</a>
+      </div>
+    </footer>
   </body>
 </html>
