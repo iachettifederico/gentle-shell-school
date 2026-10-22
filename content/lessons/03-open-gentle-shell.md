@@ -31,7 +31,9 @@ agent_instructions: |
   have recorded completion and given the student that prompt. You cannot see the
   new session: the gentle-shell agent that receives the prompt confirms the
   student ID with GET {origin}/api/progress/{studentId} and continues with
-  lesson 04.
+  lesson 04. Mention that the student may install the course tutor package in
+  Gentle Shell (`gentle-shell install git:github.com/iachettifederico/gentle-shell-school`)
+  and use `/school`; it is optional.
 ---
 
 # Open Gentle Shell
@@ -69,6 +71,15 @@ Read {origin}/llms.txt. My Gentle Shell School student ID is <id>. Continue the 
 The prompt gives the new agent both the course instructions and your progress
 key. It should read the course instructions, use that ID when it requests your
 student-specific instructions, and continue at the next incomplete lesson.
+
+Optionally, install the course tutor package in Gentle Shell first. It turns the
+course instructions into a skill and adds the `/school` command:
+
+```sh
+gentle-shell install git:github.com/iachettifederico/gentle-shell-school
+```
+
+Restart Gentle Shell, then use `/school` with the same hand-off prompt.
 
 ## Why the order matters
 
