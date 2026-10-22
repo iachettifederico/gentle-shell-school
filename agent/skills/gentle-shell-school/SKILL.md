@@ -15,7 +15,7 @@ Use for `/school`, a course lesson, or Gentle Shell School tutoring. Do not use 
 
 - Treat the supplied URL as the origin; otherwise ask once. Keep it only in this conversation and, when available, Engram—never `~/.gentle-shell-school`.
 - Read `<origin>/llms.txt` before acting. Follow its **Reporting problems** rules exactly.
-- Enroll with `POST <origin>/api/enroll`; retain the anonymous `studentId` in the conversation. Read student instructions and use `GET /api/progress/:studentId` to continue.
+- If the student already has a student ID, use it. Otherwise start the enrollment handshake: `POST <origin>/api/enrollments`, give the student the returned `enrollUrl`, explain that enrolling is voluntary, then check `GET <origin>/api/enrollments/:code` until it returns `enrolled` with the `studentId` (or `expiresAt` passes). If they decline, teach without progress tracking. Retain the anonymous `studentId` in the conversation; read student instructions and use `GET /api/progress/:studentId` to continue.
 - Never mark a lesson complete without observed evidence.
 
 ## Decision Gates
