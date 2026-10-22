@@ -29,7 +29,7 @@ en:
     module_zero: "0/%{count} done"
   lesson:
     label: "Lesson %{number}"
-    track: "Track your progress by %{link}."
+    track_html: "Track your progress by %{link}."
     enroll_home: "enrolling on the home page"
     lab: "Lab"
     lab_prompt: "Ask your agent: /school %{slug} lab"

@@ -29,7 +29,7 @@ es-AR:
     module_zero: "0/%{count} completadas"
   lesson:
     label: "Lección %{number}"
-    track: "Seguí tu progreso %{link}."
+    track_html: "Seguí tu progreso %{link}."
     enroll_home: "inscribiéndote en la página principal"
     lab: "Laboratorio"
     lab_prompt: "Pedile a tu agente: /school %{slug} lab"

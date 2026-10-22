@@ -137,26 +137,6 @@
   }
 
   /* Lesson and lab bodies rendered from Markdown. */
-  .prose-shell {
-    --tw-prose-body: var(--color-fg-muted);
-    --tw-prose-headings: var(--color-fg);
-    --tw-prose-lead: var(--color-fg-muted);
-    --tw-prose-links: var(--color-brand-400);
-    --tw-prose-bold: var(--color-fg);
-    --tw-prose-counters: var(--color-fg-subtle);
-    --tw-prose-bullets: var(--color-brand-500);
-    --tw-prose-hr: var(--color-line-strong);
-    --tw-prose-quotes: var(--color-fg);
-    --tw-prose-quote-borders: var(--color-brand-500);
-    --tw-prose-captions: var(--color-fg-subtle);
-    --tw-prose-kbd: var(--color-fg);
-    --tw-prose-code: var(--color-fg);
-    --tw-prose-pre-code: var(--color-fg);
-    --tw-prose-pre-bg: var(--color-raised);
-    --tw-prose-th-borders: var(--color-line-strong);
-    --tw-prose-td-borders: var(--color-line);
-  }
-
   .prose-shell :where(h2, h3, h4):not(:where(.not-prose *)) {
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -176,6 +156,7 @@
     background: var(--color-raised);
     padding: 0.125rem 0.375rem;
     font-weight: 500;
+    overflow-wrap: anywhere;
     box-shadow: inset 0 0 0 1px var(--color-line);
   }
 
@@ -184,13 +165,44 @@
     content: none;
   }
 
+  /* Wrap code instead of scrolling: a scrolling block is unreachable by keyboard. */
   .prose-shell :where(pre):not(:where(.not-prose *)) {
     border-radius: 0.875rem;
     box-shadow: inset 0 0 0 1px var(--color-line);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  /* The page header already shows the lesson title; skip the body's repeat.
+     The second selector matches the same h1 inside Herb's development debug wrapper. */
+  article.prose-shell > h1:first-child,
+  article.prose-shell > [data-herb-debug-outline-type]:first-child > h1:first-child {
+    display: none;
   }
 
   .prose-shell :where(table):not(:where(.not-prose *)) {
     display: block;
     overflow-x: auto;
   }
+}
+
+/* Keep lesson prose tokens ahead of the typography plugin's default palette. */
+.prose.prose-shell {
+  --tw-prose-body: var(--color-fg-muted);
+  --tw-prose-headings: var(--color-fg);
+  --tw-prose-lead: var(--color-fg-muted);
+  --tw-prose-links: var(--color-brand-400);
+  --tw-prose-bold: var(--color-fg);
+  --tw-prose-counters: var(--color-fg-subtle);
+  --tw-prose-bullets: var(--color-brand-500);
+  --tw-prose-hr: var(--color-line-strong);
+  --tw-prose-quotes: var(--color-fg);
+  --tw-prose-quote-borders: var(--color-brand-500);
+  --tw-prose-captions: var(--color-fg-subtle);
+  --tw-prose-kbd: var(--color-fg);
+  --tw-prose-code: var(--color-fg);
+  --tw-prose-pre-code: var(--color-fg);
+  --tw-prose-pre-bg: var(--color-raised);
+  --tw-prose-th-borders: var(--color-line-strong);
+  --tw-prose-td-borders: var(--color-line);
 }

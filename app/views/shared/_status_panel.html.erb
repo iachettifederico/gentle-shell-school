@@ -1,5 +1,6 @@
-<%# Centered message page. Locals: eyebrow, heading; optional body, data, accent. Block: body extras and actions. %>
-<%= tag.section data: local_assigns.fetch(:data, {}), class: "relative mx-auto max-w-2xl py-6 sm:py-14" do %>
+<%# Centered message page. Locals: eyebrow, heading; optional body, accent. Block: body extras and actions.
+    Stimulus wiring belongs on a wrapper in the page: Herb's development compiler renders a dynamic `data:` hash on tag helpers literally. %>
+<section class="relative mx-auto max-w-2xl py-6 sm:py-14">
   <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 mx-auto h-48 max-w-md rounded-full bg-brand-600/15 blur-3xl"></div>
   <div class="card relative p-6 sm:p-10 <%= "ring-brand-500/35" if local_assigns[:accent] %>">
     <p class="eyebrow"><%= eyebrow %></p>
@@ -9,4 +10,4 @@
     <% end %>
     <%= yield %>
   </div>
-<% end %>
+</section>

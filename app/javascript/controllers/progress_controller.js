@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["enrollButton", "student", "studentId", "instructionsUrl", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
-  static values = { lessonSlug: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
+  static values = { lessonSlug: String, completedLabel: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
 
   connect() {
     const studentId = localStorage.getItem("studentId")
@@ -108,7 +108,7 @@ export default class extends Controller {
     const completion = completions.find((item) => item.slug === this.lessonSlugValue)
     this.enrollmentPromptTarget.hidden = true
     this.lessonProgressTarget.hidden = false
-    this.statusTarget.textContent = completion ? this.completionLabel(completion) : this.notCompletedLabelValue
+    this.statusTarget.textContent = completion ? this.statusLabel(completion) : this.notCompletedLabelValue
     this.completionButtonTarget.textContent = completion ? this.markIncompleteLabelValue : this.markCompleteLabelValue
   }
 
@@ -116,6 +116,12 @@ export default class extends Controller {
     const label = this.completionLabel(completion)
     element.textContent = label
     element.setAttribute("aria-label", completion.evidence ? label : element.dataset.completedLabel || label)
+  }
+
+  statusLabel(completion) {
+    if (completion.evidence || !this.hasCompletedLabelValue) return this.completionLabel(completion)
+
+    return `${this.completedLabelValue} ✓`
   }
 
   completionLabel(completion) {

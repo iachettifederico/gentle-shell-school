@@ -3,58 +3,58 @@
 <% content_for :og_title, "#{lesson.title} · #{t('site.title')}" %>
 <% content_for :og_description, lesson.description %>
 
-<section class="mx-auto max-w-3xl" data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>" data-progress-copy-label-value="<%= t("home.copy") %>" data-progress-copied-label-value="<%= t("progress.copied") %>" data-progress-not-completed-label-value="<%= t("progress.not_completed") %>" data-progress-mark-incomplete-label-value="<%= t("progress.mark_incomplete") %>" data-progress-mark-complete-label-value="<%= t("progress.mark_complete") %>" data-progress-verified-label-value="<%= t("progress.verified") %>" data-progress-independently-verified-label-value="<%= t("progress.independently_verified") %>">
-  <div class="border-b border-shell-border pb-8">
+<section class="mx-auto max-w-[44rem]" data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>" data-progress-completed-label-value="<%= t("home.completed") %>" data-progress-copy-label-value="<%= t("home.copy") %>" data-progress-copied-label-value="<%= t("progress.copied") %>" data-progress-not-completed-label-value="<%= t("progress.not_completed") %>" data-progress-mark-incomplete-label-value="<%= t("progress.mark_incomplete") %>" data-progress-mark-complete-label-value="<%= t("progress.mark_complete") %>" data-progress-verified-label-value="<%= t("progress.verified") %>" data-progress-independently-verified-label-value="<%= t("progress.independently_verified") %>">
+  <header>
     <% if lesson.module_name.present? %>
-      <p data-lesson-module class="font-mono text-xs text-shell-accent"><%= lesson.module_name %></p>
+      <p data-lesson-module class="eyebrow"><%= lesson.module_name %></p>
     <% end %>
-    <p class="mt-3 font-mono text-xs text-shell-dim"><%= t("lesson.label", number: format("%02d", lesson.order)) %></p>
-    <h1 class="mt-3 text-4xl font-extrabold tracking-[-0.05em] text-shell-text sm:text-5xl"><%= lesson.title %></h1>
-    <p class="mt-4 max-w-2xl text-lg leading-8 text-shell-muted"><%= lesson.description %></p>
-  </div>
+    <p class="mt-4 chip w-fit"><%= t("lesson.label", number: format("%02d", lesson.order)) %></p>
+    <h1 class="mt-5 text-4xl leading-[1.02] font-extrabold tracking-[-0.05em] text-fg sm:text-6xl"><%= lesson.title %></h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-pretty text-fg-muted"><%= lesson.description %></p>
+  </header>
 
-  <div class="mt-6 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
-    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-shell-muted"><%= t("lesson.track", link: link_to(t("lesson.enroll_home"), locale_context.root_path, class: "font-medium text-shell-accent transition-colors hover:text-shell-accent-hover")).html_safe %></p>
-    <div data-progress-target="lessonProgress" hidden>
-      <p data-progress-target="status" class="text-sm font-medium text-shell-text"></p>
-      <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="mt-3 rounded-full bg-shell-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent"></button>
+  <section aria-label="<%= t("lesson.label", number: format("%02d", lesson.order)) %>" class="card mt-10 p-5 sm:p-6">
+    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-fg-muted"><%= t("lesson.track_html", link: link_to(t("lesson.enroll_home"), locale_context.root_path, class: "link")) %></p>
+    <div data-progress-target="lessonProgress" hidden class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <p data-progress-target="status" aria-live="polite" class="text-sm font-semibold text-fg"></p>
+      <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="btn btn-primary btn-sm shrink-0 self-start sm:self-auto"></button>
     </div>
-  </div>
+  </section>
 
-  <article class="prose prose-invert mt-12 max-w-none prose-headings:font-bold prose-headings:tracking-[-0.03em] prose-p:leading-8 prose-p:text-shell-muted prose-a:text-shell-accent prose-a:no-underline hover:prose-a:text-shell-accent-hover prose-strong:text-shell-text prose-code:rounded prose-code:border prose-code:border-shell-border prose-code:bg-shell-code prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-shell-text prose-code:before:content-none prose-code:after:content-none prose-pre:border prose-pre:border-shell-border prose-pre:bg-shell-code prose-pre:font-mono prose-pre:text-shell-text">
+  <article class="prose prose-lg prose-shell mt-14 max-w-none">
     <%= sanitize body_html %>
   </article>
 
   <% if lab %>
-    <section data-lesson-lab class="mt-12 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
-      <h2 class="text-lg font-semibold text-shell-text"><%= t("lesson.lab") %></h2>
-      <h3 class="mt-3 text-xl font-semibold text-shell-text"><%= lab.title %></h3>
-      <div class="prose prose-invert mt-4 max-w-none prose-p:text-shell-muted prose-p:leading-7 prose-a:text-shell-accent">
+    <section data-lesson-lab aria-labelledby="lab-heading" class="card mt-14 p-5 sm:p-7">
+      <p class="eyebrow"><%= t("lesson.lab") %></p>
+      <h2 id="lab-heading" class="mt-3 text-2xl font-bold tracking-[-0.03em] text-fg"><%= t("lesson.lab") %></h2>
+      <h3 class="mt-5 text-xl font-bold tracking-[-0.02em] text-fg"><%= lab.title %></h3>
+      <div class="prose prose-shell mt-4 max-w-none">
         <%= sanitize lab_brief_html %>
       </div>
-      <p class="mt-5 font-mono text-sm text-shell-muted"><%= t("lesson.lab_prompt", slug: lesson.slug) %></p>
+      <p class="mt-6 font-mono text-sm leading-6 text-fg-muted"><%= t("lesson.lab_prompt", slug: lesson.slug) %></p>
     </section>
   <% end %>
 
-  <div class="mt-12 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-6">
-    <h2 class="text-lg font-semibold text-shell-text"><%= t("lesson.teach") %></h2>
-    <p data-teach-me-prompt class="mt-3 break-words font-mono text-sm leading-6 text-shell-muted"><%= teach_me_prompt %></p>
-    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover"><%= t("home.copy") %></button>
+  <div class="mt-14">
+    <%= render layout: "shared/prompt_card", locals: { heading: t("lesson.teach"), prompt: teach_me_prompt, copy_label: t("home.copy") } do %>
+      <a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=<%= lesson.slug %>&title=%5BCourse+feedback%5D+<%= lesson.slug %>%3A+" class="link text-sm"><%= t("lesson.report") %></a>
+    <% end %>
   </div>
 
-  <p class="mt-6 text-sm text-shell-muted"><a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=<%= lesson.slug %>&title=%5BCourse+feedback%5D+<%= lesson.slug %>%3A+" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover"><%= t("lesson.report") %></a></p>
 
-  <nav data-lesson-navigation class="mt-10 grid gap-4 border-t border-shell-border pt-8 sm:grid-cols-2">
+  <nav data-lesson-navigation class="mt-12 grid gap-4 border-t border-line pt-8 sm:grid-cols-2">
     <% if previous_lesson %>
-      <%= link_to locale_context.lesson_path(previous_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 transition-colors hover:border-shell-border-hover" do %>
-        <span class="font-mono text-xs text-shell-dim"><%= t("lesson.previous") %></span>
-        <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= previous_lesson.title %></span>
+      <%= link_to locale_context.lesson_path(previous_lesson.slug), class: "card group min-h-28 p-5 transition hover:bg-raised" do %>
+        <span class="flex items-center gap-2 font-mono text-xs font-medium tracking-[0.12em] text-fg-subtle uppercase"><svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M12.78 4.22a.75.75 0 0 1 0 1.06L8.06 10l4.72 4.72a.75.75 0 0 1-1.06 1.06l-5.25-5.25a.75.75 0 0 1 0-1.06l5.25-5.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" /></svg><%= t("lesson.previous") %></span>
+        <span class="mt-3 block text-lg font-bold tracking-[-0.02em] text-fg transition-colors group-hover:text-brand-300"><%= previous_lesson.title %></span>
       <% end %>
     <% end %>
     <% if next_lesson %>
-      <%= link_to locale_context.lesson_path(next_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 text-right transition-colors hover:border-shell-border-hover #{'sm:col-start-2' unless previous_lesson}" do %>
-        <span class="font-mono text-xs text-shell-dim"><%= t("lesson.next") %></span>
-        <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= next_lesson.title %></span>
+      <%= link_to locale_context.lesson_path(next_lesson.slug), class: "card group min-h-28 p-5 transition hover:bg-raised sm:text-right #{'sm:col-start-2' unless previous_lesson}" do %>
+        <span class="flex items-center gap-2 font-mono text-xs font-medium tracking-[0.12em] text-fg-subtle uppercase sm:justify-end"><%= t("lesson.next") %><svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M7.22 4.22a.75.75 0 0 1 1.06 0l5.25 5.25a.75.75 0 0 1 0 1.06l-5.25 5.25a.75.75 0 1 1-1.06-1.06L11.94 10 7.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg></span>
+        <span class="mt-3 block text-lg font-bold tracking-[-0.02em] text-fg transition-colors group-hover:text-brand-300"><%= next_lesson.title %></span>
       <% end %>
     <% end %>
   </nav>

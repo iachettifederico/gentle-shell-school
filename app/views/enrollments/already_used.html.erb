@@ -1,1 +1,5 @@
-<section class="mx-auto max-w-2xl rounded-2xl border border-shell-border bg-shell-card p-6 text-center sm:p-8"><p class="font-mono text-xs text-shell-accent"><%= t("enrollment.label") %></p><h1 class="mt-3 text-3xl font-bold"><%= t("enrollment.used") %></h1><p class="mt-4 text-shell-muted"><%= t("enrollment.return_home") %></p><%= link_to t("enrollment.home"), locale_context.root_path, class: "mt-7 inline-block text-shell-accent" %></section>
+<%= render layout: "shared/status_panel", locals: { eyebrow: t("enrollment.label"), heading: t("enrollment.used"), body: t("enrollment.return_home") } do %>
+  <div class="mt-8">
+    <%= link_to t("enrollment.home"), locale_context.root_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

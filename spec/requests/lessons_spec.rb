@@ -124,7 +124,7 @@ RSpec.describe "Lesson pages", type: :request do
       expect(navigation.pluck("href")).to eq([ "/lessons/welcome", "/lessons/unsafe" ])
       expect(navigation.map(&:text).map(&:squish))
         .to eq([ "Previous lesson Welcome", "Next lesson Unsafe" ])
-      expect(page.at_css("[data-teach-me-prompt]").text.strip)
+      expect(page.at_css("[data-prompt-text]").text.strip)
         .to eq('Read http://www.example.com/llms.txt and teach me the "Organic driven development" lesson (odd).')
     end
 
