@@ -33,14 +33,18 @@
   </div>
 
   <div class="mt-5 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-7">
-    <h2 class="text-lg font-semibold text-shell-text">Start with your agent</h2>
-    <p class="mt-2 font-mono text-sm leading-6 text-shell-muted">Read <%= request.base_url %>/llms.txt and start the Welcome lesson.</p>
-    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the Welcome lesson." class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
+    <h2 class="text-lg font-semibold text-shell-text">Start with any coding agent</h2>
+    <p class="mt-2 font-mono text-sm leading-6 text-shell-muted">Read <%= request.base_url %>/llms.txt and start the course.</p>
+    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the course." class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
+    <div class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:gap-4">
+      <a href="/lessons/welcome" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">Already using gentle-shell? Start here</a>
+      <a href="https://github.com/Gentleman-Programming/gentle-shell#readme" class="font-medium text-shell-muted transition-colors hover:text-shell-text">Install gentle-shell yourself</a>
+    </div>
   </div>
 
   <div class="mt-14 flex items-baseline justify-between gap-5">
     <h2 class="text-2xl font-bold tracking-[-0.035em] text-shell-text">Syllabus</h2>
-    <p class="font-mono text-xs text-shell-dim">27 lessons</p>
+    <p class="font-mono text-xs text-shell-dim">29 lessons</p>
   </div>
   <% lesson_groups.each do |module_name, lessons| %>
     <section class="mt-6 overflow-hidden rounded-2xl border border-shell-border bg-shell-card">

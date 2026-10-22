@@ -1,206 +1,113 @@
 ---
-title: "Install, Check, Update, and Remove"
+title: "Check, Update, and Remove Gentle Shell"
 slug: install-and-update
-description: "Choose an installation path and maintain it without confusing Pi and Gentle Shell updates."
+description: "Check your setup, choose an update channel, and remove Gentle Shell deliberately."
 order: 5
 module: "Foundations"
 quiz: true
 agent_instructions: |
-  Teach installation as an ownership choice. Contrast an isolated standalone
-  Gentle Shell home, linking an existing Pi home, and installing gentle-pi into
-  an existing Pi. Explain setup checks, update channels, and the difference
-  between self-uninstalling Gentle Shell and Pi's package uninstall alias.
+  Installation is taught in the earlier Install Gentle Shell lesson. Teach this
+  lesson as maintenance: checking a running workspace, updating along a
+  channel, and previewing removal. Explain the difference between `update` and
+  `upgrade` without treating them as synonyms.
 
   Ask these questions with ask_user_question, including the correct answer:
-  1. What home does plain `gentle-shell` use by default?
-     Correct answer: Its isolated `~/.gentle-shell/agent` home.
-  2. What does `gentle-shell --link` reuse?
-     Correct answer: The existing Pi agent home, including its sign-ins, models,
-     and chats.
-  3. Which command updates Gentle Shell along its release or main channel?
+  1. Which workspace commands are the documented starting point for checking
+     a running Gentle Shell setup?
+     Correct answer: `/gentle:status` and `/gentle:doctor`.
+  2. Which command updates Gentle Shell along its release or main channel?
      Correct answer: `gentle-shell upgrade`.
-  4. Which command previews removal without deleting anything?
+  3. Which command previews removal without deleting anything?
      Correct answer: `gentle-shell self-uninstall --dry-run`.
 
-  Have the student run `/gentle:status` and `/gentle:doctor` in a Gentle Shell
-  session, or explain why they cannot yet do so. The lesson is done when they
-  can identify their installation path and distinguish `update`, `upgrade`, and
-  `self-uninstall`.
+  Have the student run `gentle-shell --version`, then `/gentle:status` and
+  `/gentle:doctor` in a Gentle Shell session. The lesson is done when they can
+  identify the setup checks, say when to use `upgrade` rather than `update`,
+  and name the command that previews removal.
 ---
 
-# Install, Check, Update, and Remove
+# Check, Update, and Remove Gentle Shell
 
-An installation is not just a way to make a command appear on `PATH`. It decides
-which agent home holds state, whether your existing Pi configuration is reused,
-and which tool owns future updates. Gentle Shell documents several paths because
-they make different tradeoffs. Pick one deliberately before you start treating
-it as your daily workspace.
+Installation belongs in **Install Gentle Shell**. Once Gentle Shell is running,
+the useful questions change: what version and home are active, how do you check
+the running workspace, which update do you mean, and how can you remove it
+without deleting the wrong thing?
 
-## Choose the installation boundary
+## Check the launcher and workspace
 
-The standalone path installs the current package and starts the launcher:
-
-```bash
-npm i -g gentle-pi
-gentle-shell
-```
-
-Plain `gentle-shell` uses an isolated agent home at
-`~/.gentle-shell/agent`. Its Gentle Shell settings live separately at
-`~/.gentle-shell/gentle-ai`. On first use, the launcher sets the isolated home
-up; this keeps the normal Pi installation untouched and avoids conflicting
-plugins in the separate home.
-
-If you intentionally want the same Pi home instead, start with:
+Start with the launcher's version report:
 
 ```bash
-gentle-shell --link
+gentle-shell --version
 ```
 
-Linked mode reuses `~/.pi/agent` as-is. It is never automatically provisioned
-and its theme is not changed by the launcher. This is convenient when you want
-the same sign-ins, models, and chats, but it also means the two entry points
-share that home. You can make either choice the default with `gentle-shell home
-link` or `gentle-shell home isolated`.
-
-A third path is for people already using Pi and wanting the package inside that
-existing Pi agent. Install the package through Pi, restart Pi, and synchronize:
-
-```bash
-pi install npm:gentle-pi
-gentle-ai sync
-pi
-```
-
-This is not required for the standalone launcher. Installing `npm:gentle-pi`
-inside an isolated Gentle Shell home is unnecessary because the launcher already
-loads its own package.
-
-## Setup is provisioning, not a mystery repair command
-
-`gentle-shell setup` provisions the resolved home with the companion packages
-that Gentle AI installs for a Pi agent. The first launch of an isolated home
-runs this provisioning automatically; the explicit command exists when you want
-to run it again and see its output.
-
-```bash
-gentle-shell setup
-```
-
-Use a home selector *before* `setup` if you mean another home. For example,
-`gentle-shell --link setup` targets the linked Pi home. The launcher also
-supports a careful import route for a separate home:
-
-```bash
-gentle-shell home import-pi --dry-run
-gentle-shell home import-pi
-```
-
-The dry run lets you inspect the plan. Import copies only the Pi sign-in file and
-MCP configuration into the separate home when absent, plus default provider,
-model, and thinking settings when absent. It never overwrites those files or
-settings, changes the source Pi home, or copies packages, extensions, caches, or
-chats. Copying credentials creates a second credential store, so providers that
-rotate refresh tokens can sign one store out; linked mode instead shares one
-store.
-
-## Check the setup from the running workspace
-
-After starting Gentle Shell, use these workspace commands:
+It reports Gentle Shell, Pi, and home version information. Then, from an open
+Gentle Shell session, use the documented workspace checks:
 
 ```text
 /gentle:status
 /gentle:doctor
 ```
 
-They are the documented starting point for checking the setup. The important
-habit is to inspect the running environment rather than infer it from an old
-terminal command. In particular, a successful global package installation does
-not prove that a specific Pi home has the package or companions you expect.
+These checks inspect the running environment. That matters because a command
+that exists in one terminal does not by itself prove that a particular agent
+home has the expected workspace and companion setup.
 
-The launcher’s own `--version` is useful for a complementary check:
+## Update the thing you mean
 
-```bash
-gentle-shell --version
-```
-
-It reports Gentle Shell, Pi, and the selected home mode and directory.
-
-## Update the thing you actually mean
-
-Three similar words name different operations:
-
-- `gentle-shell update [target]` forwards Pi's package update command for the
-  selected home. Without a target in a bundled installation, it runs
-  `gentle-shell upgrade` instead.
-- `gentle-shell upgrade` updates **Gentle Shell** along its channel.
-- Pi’s `update` command is Pi’s package-update mechanism; in a bundled install,
-  Pi itself ships pinned with Gentle Shell, so the documented route for that
-  update is `gentle-shell upgrade`.
-
-On a launcher that supports it, update Gentle Shell’s current channel with:
+`gentle-shell upgrade` updates Gentle Shell along its current channel:
 
 ```bash
 gentle-shell upgrade
 ```
 
-You can switch between the documented release and main channels:
+On launchers that support channels, you can choose the documented release or
+main channel:
 
 ```bash
 gentle-shell upgrade --channel main
 gentle-shell upgrade --channel release
 ```
 
-A bundled installation follows the release channel and can keep a previous
-version for rollback:
+The main channel builds Gentle Shell and Gentle AI from current main commits and
+needs pnpm and Go. Switching back to release restores the pinned Gentle AI
+binary. A bundled installation follows the release channel and keeps a previous
+version that can be selected with:
 
 ```bash
 gentle-shell upgrade --rollback
 ```
 
-The main channel builds Gentle AI and Gentle Shell from current main commits and
-needs pnpm and Go. The release channel restores the pinned Gentle AI binary when
-switching back. Do not substitute `update` for `upgrade` merely because both
-sound like maintenance; they have different owners.
+Do not confuse `upgrade` with `gentle-shell update [target]`. The latter forwards
+Pi's package-update command for the selected home. In a bundled installation,
+Pi is pinned with Gentle Shell, so an update of Pi itself runs `gentle-shell
+upgrade` instead. Older launchers that do not support `upgrade` should use the
+latest installer described in **Install Gentle Shell** rather than treating
+`upgrade` as a chat prompt.
 
-## Remove only what you intend to remove
+## Remove only what you intend
 
-First inspect the removal plan:
+Always inspect the removal plan first:
 
 ```bash
 gentle-shell self-uninstall --dry-run
 ```
 
-Then run the interactive removal only if the plan is right:
+If the plan is correct, the interactive command is:
 
 ```bash
 gentle-shell self-uninstall
 ```
 
-Self-uninstall prints the full plan and waits for confirmation. By default it
-removes Gentle Shell’s own data, isolated home, and package while keeping shared
-Gentle AI configuration. `--include-shared` asks to remove those listed shared
-configuration files too; `--yes` skips the first confirmation but still keeps
-shared configuration unless paired with `--include-shared`.
-
-Do not confuse this with `gentle-shell uninstall <source>`. That is forwarded to
-Pi as Pi’s alias for removing a package source. It is not the command to remove
-Gentle Shell itself. Self-uninstall also promises not to touch the Pi home or
-custom `--home` homes.
-
-## Common mistakes
-
-- **Using `--link` expecting a copy.** It reuses the Pi home.
-- **Running setup without considering the selected home.** The selector before
-  `setup` determines the target.
-- **Calling `update` when the goal is a new Gentle Shell release.** Use
-  `upgrade` for the shell’s channel.
-- **Deleting files manually after a failed uninstall plan.** Read the plan and
-  use the explicit self-uninstall path instead.
+Self-uninstall removes Gentle Shell's own data, isolated home, and `gentle-pi`
+package after confirmation. It keeps the shared Gentle AI configuration in
+`~/.pi/gentle-ai` unless you accept or pass `--include-shared`, and it does not
+touch your Pi home or custom `--home` homes. `gentle-shell uninstall <source>`
+is different: it is Pi's alias for removing a package source, not the command
+for removing Gentle Shell itself.
 
 ## Try it
 
-Run `gentle-shell --version`, then open a session and run `/gentle:status` and
-`/gentle:doctor`. State whether you are isolated, linked, or using an existing
-Pi installation. Finally, say which command you would use to update Gentle Shell
-and which command you would use only to preview its removal.
+Run `gentle-shell --version`, then `/gentle:status` and `/gentle:doctor` in a
+Gentle Shell session. State which command updates Gentle Shell, which one updates
+Pi packages, and which command previews a removal plan.

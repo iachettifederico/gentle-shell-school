@@ -12,6 +12,16 @@ RSpec.describe "Course content" do
     expect(system.lessons.map(&:module_name)).to all(match(/\S/))
   end
 
+  it "starts with the any-agent getting started lessons and has contiguous orders" do
+    system = Course::LessonsSystem.new(
+      repository: Course::FileLessonRepository.new(directory: Rails.root.join("content/lessons"))
+    )
+
+    expect(system.lessons.first(3).map(&:slug)).to eq(%w[welcome install-gentle-shell open-gentle-shell])
+    expect(system.lessons.first(3).map(&:module_name)).to all(eq("Getting started"))
+    expect(system.lessons.map(&:order)).to eq((1..29).to_a)
+  end
+
   it "loads the demo lessons in order" do
     system = Course::LessonsSystem.new(
       repository: Course::FileLessonRepository.new(directory: Rails.root.join("content/demo/lessons"))

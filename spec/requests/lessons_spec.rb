@@ -46,6 +46,25 @@ RSpec.describe "Lesson pages", type: :request do
         .to eq("Report a problem")
     end
 
+    it "offers an any-agent start prompt and gentle-shell links" do
+      with_lessons(lessons) do
+        get "/"
+      end
+
+      expect(response).to have_http_status(:ok)
+      page = response.parsed_body
+      expect(page.at_css("h2", text: "Start with any coding agent")).to be_present
+      expect(response.body).to include("Read http://www.example.com/llms.txt and start the course.")
+      copy_button = page.at_css(
+        'button[data-prompt="Read http://www.example.com/llms.txt and start the course."]'
+      )
+      expect(copy_button&.text&.strip).to eq("Copy")
+      expect(page.at_css('a[href="/lessons/welcome"]')&.text&.strip)
+        .to eq("Already using gentle-shell? Start here")
+      expect(page.at_css('a[href="https://github.com/Gentleman-Programming/gentle-shell#readme"]')&.text&.strip)
+        .to eq("Install gentle-shell yourself")
+    end
+
     it "renders the enrollment controls and progress hooks" do
       with_lessons(lessons) do
         get "/"

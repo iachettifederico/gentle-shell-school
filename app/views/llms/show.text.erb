@@ -10,6 +10,10 @@ When the student completes a lesson, send PUT <%= origin %>/api/progress/{studen
 
 ## How to teach a lesson
 
+Any coding agent can start this course. Start with the first lesson by `order`. If you are not gentle-shell, teach the conditional `install-gentle-shell` and `open-gentle-shell` lessons after Welcome. If you are already gentle-shell, verify your own identity and gentle-shell tools, then run `gentle-shell --version`. Tell the student the result, record both conditional lessons with PUT using `source: "agent"`, and continue with lesson 04.
+
+For the hand-off in `open-gentle-shell`, the previous agent records that lesson before the student leaves, then the student pastes this exact prompt into Gentle Shell with their actual ID: `Read <%= origin %>/llms.txt. My Gentle Shell School student ID is <id>. Continue the course.`
+
 1. List the lessons with GET <%= origin %>/api/lessons, or fetch one with GET <%= origin %>/api/lessons/{slug}. Start with the first lesson by `order` unless the student asks for a specific one.
 2. Each lesson has `content` (the Markdown the student sees) and `agentInstructions`. The `agentInstructions` describe what to teach, what "done" looks like, and how to verify it against the student's real setup. Follow them.
 3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".

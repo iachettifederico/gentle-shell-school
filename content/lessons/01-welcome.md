@@ -1,19 +1,19 @@
 ---
 title: "Welcome"
 slug: welcome
-description: "Meet Gentle Shell School and how your agent will teach you."
+description: "Meet Gentle Shell School and how any coding agent can start your course."
 order: 1
 module: "Getting started"
 quiz: false
 agent_instructions: |
-  This lesson is complete once the student is talking to you through
-  gentle-shell and has read how the course works.
-
-  Confirm you are running inside gentle-shell, briefly explain that you
-  will teach each lesson, quiz them, and check their real setup, then ask
-  whether they want to continue to the next lesson. Course lessons are
-  listed at {origin}/api/lessons. When something in a lesson is wrong, follow
-  the Reporting problems section of {origin}/llms.txt.
+  Welcome the student and explain that any coding agent can begin the course.
+  If you are not gentle-shell, teach lessons `install-gentle-shell` and
+  `open-gentle-shell` next; they install Gentle Shell and hand the student's
+  anonymous student ID to it. If you are gentle-shell, follow the conditional
+  instructions in `install-gentle-shell`, which verify that fact and skip both
+  setup lessons. Course lessons are listed at {origin}/api/lessons. When
+  something in a lesson is wrong, follow the Reporting problems section of
+  {origin}/llms.txt.
 ---
 
 Welcome to **Gentle Shell School**, a free, self-paced course for learning
@@ -28,16 +28,19 @@ Every lesson has two audiences:
   includes instructions telling the agent what "done" looks like and how to
   check it.
 
-So the agent running in your terminal becomes your tutor. It explains each
-topic, asks you a few quiz questions, and verifies your real setup before
-marking the lesson complete.
+Any coding agent can start the course. It explains each topic, asks quiz
+questions where appropriate, and verifies your real setup before marking a
+lesson complete. If that first agent is not gentle-shell, the next two lessons
+help you install and open Gentle Shell, then transfer your course progress to
+its agent.
 
-Found a problem? Your agent can report it as a GitHub issue with your consent, or use the "Report a problem" link.
+Found a problem? Your agent can report it as a GitHub issue with your consent,
+or use the "Report a problem" link.
 
 ## Start the course
 
-Open gentle-shell and ask it:
+Ask any coding agent:
 
 ```text
-Read {origin}/llms.txt and start the Welcome lesson.
+Read {origin}/llms.txt and start the course.
 ```

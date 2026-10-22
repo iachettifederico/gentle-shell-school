@@ -11,6 +11,15 @@ RSpec.describe "Agent discovery", type: :request do
       expect(response.body).to include("http://www.example.com/api/lessons")
       expect(response.body).to include("http://www.example.com/api/openapi.json")
       expect(response.body).to include("agentInstructions")
+      expect(response.body).to include("Any coding agent can start this course.")
+      expect(response.body).to include(
+        "If you are already gentle-shell, verify your own identity and gentle-shell tools, " \
+        "then run `gentle-shell --version`."
+      )
+      expect(response.body).to include(
+        "Read http://www.example.com/llms.txt. My Gentle Shell School student ID is <id>. " \
+        "Continue the course."
+      )
       expect(response.body).to include("POST http://www.example.com/api/enroll")
       expect(response.body).to include("source: \"agent\"")
       expect(response.body).to include("DELETE http://www.example.com/api/progress/{studentId}")
