@@ -47,12 +47,22 @@ module Course
       }
     end
 
+    # Serves only regular files that really live under starter/: symlinks are
+    # skipped so lab content can never expose files elsewhere on disk.
     def starter_paths(slug)
-      Dir.glob(File.join(@directory, slug, "starter", "**", "*")).select { |path| File.file?(path) }.sort
+      starter = File.join(@directory, slug, "starter")
+      return [] unless File.directory?(starter)
+
+      root = File.realpath(starter)
+      Dir.glob(File.join(root, "**", "*")).select { |path| servable?(root, path) }.sort
+    end
+
+    def servable?(root, path)
+      !File.symlink?(path) && File.file?(path) && File.realpath(path).start_with?("#{root}/")
     end
 
     def file_json(slug, path)
-      starter = File.join(@directory, slug, "starter")
+      starter = File.realpath(File.join(@directory, slug, "starter"))
       { path: path.delete_prefix("#{starter}/"), content: File.read(path) }
     end
   end

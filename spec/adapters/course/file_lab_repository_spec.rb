@@ -38,4 +38,17 @@ RSpec.describe Course::FileLabRepository do
       ]
     )
   end
+  it "never serves symlinked files or files outside the starter directory" do
+    secret = File.join(@dir, "secret.txt")
+    File.write(secret, "do not serve\n")
+    starter = File.join(@dir, "leaky", "starter")
+    FileUtils.mkdir_p(File.join(starter, "nested"))
+    File.write(File.join(starter, "index.js"), "ok\n")
+    File.symlink(secret, File.join(starter, "link.txt"))
+    File.symlink(@dir, File.join(starter, "nested", "up"))
+
+    files = described_class.new(directory: @dir).files_for("leaky")
+
+    expect(files).to eq([ { path: "index.js", content: "ok\n" } ])
+  end
 end
