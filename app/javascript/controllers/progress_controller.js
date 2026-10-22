@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["enrollButton", "student", "studentId", "instructionsUrl", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
-  static values = { lessonSlug: String }
+  static values = { lessonSlug: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
 
   connect() {
     const studentId = localStorage.getItem("studentId")
@@ -42,7 +42,7 @@ export default class extends Controller {
     const studentId = localStorage.getItem("studentId")
     if (!studentId || !this.hasLessonSlugValue) return
 
-    const completed = this.completionButtonTarget.textContent === "Mark not complete"
+    const completed = this.completionButtonTarget.textContent === this.markIncompleteLabelValue
     const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`, this.progressRequest(completed))
     if (this.staleStudent(response)) return
     if (response.ok) this.showProgress(await response.json())
@@ -50,8 +50,8 @@ export default class extends Controller {
 
   copy(event) {
     navigator.clipboard.writeText(event.currentTarget.dataset.prompt)
-    event.currentTarget.textContent = "Copied"
-    setTimeout(() => { event.currentTarget.textContent = "Copy" }, 1200)
+    event.currentTarget.textContent = this.copiedLabelValue
+    setTimeout(() => { event.currentTarget.textContent = this.copyLabelValue }, 1200)
   }
 
   showStudent(studentId) {
@@ -102,8 +102,8 @@ export default class extends Controller {
     const completion = completions.find((item) => item.slug === this.lessonSlugValue)
     this.enrollmentPromptTarget.hidden = true
     this.lessonProgressTarget.hidden = false
-    this.statusTarget.textContent = completion ? this.completionLabel(completion) : "Not completed yet"
-    this.completionButtonTarget.textContent = completion ? "Mark not complete" : "Mark complete"
+    this.statusTarget.textContent = completion ? this.completionLabel(completion) : this.notCompletedLabelValue
+    this.completionButtonTarget.textContent = completion ? this.markIncompleteLabelValue : this.markCompleteLabelValue
   }
 
   setCompletionLabel(element, completion) {
@@ -115,14 +115,14 @@ export default class extends Controller {
   completionLabel(completion) {
     if (!completion.evidence) return "✓"
 
-    return completion.evidence.verifiedBy === "independent-verifier" ? "Independently verified" : "Verified"
+    return completion.evidence.verifiedBy === "independent-verifier" ? this.independentlyVerifiedLabelValue : this.verifiedLabelValue
   }
 
   showHomeProgress(completedSlugs) {
     if (!this.hasSummaryTarget) return
 
     const total = this.lessonTargets.length
-    this.summaryTarget.textContent = completedSlugs.length === total ? "All lessons complete." : `${completedSlugs.length} of ${total} lessons complete`
+    this.summaryTarget.textContent = completedSlugs.length === total ? this.allCompleteLabelValue : this.completeCountLabelValue.replace("%{completed}", completedSlugs.length).replace("%{total}", total)
     this.showContinueLink(completedSlugs)
     this.showModuleCounts(completedSlugs)
   }
@@ -135,14 +135,14 @@ export default class extends Controller {
     const link = this.continueTarget.querySelector("a")
     const lessonLink = nextLesson.querySelector("a[data-lesson]")
     link.href = lessonLink.href
-    link.textContent = `Continue with: ${lessonLink.textContent.trim()}`
+    link.textContent = this.continueLabelValue.replace("%{title}", lessonLink.textContent.trim())
   }
 
   showModuleCounts(completedSlugs) {
     this.element.querySelectorAll("[data-progress-module-count]").forEach((count) => {
       const moduleLessons = this.lessonTargets.filter((lesson) => lesson.dataset.moduleName === count.dataset.moduleName)
       const completed = moduleLessons.filter((lesson) => completedSlugs.includes(lesson.dataset.lessonSlug)).length
-      count.textContent = `${completed}/${count.dataset.moduleTotal} done`
+      count.textContent = this.moduleCountLabelValue.replace("%{completed}", completed).replace("%{total}", count.dataset.moduleTotal)
       count.hidden = false
     })
   }

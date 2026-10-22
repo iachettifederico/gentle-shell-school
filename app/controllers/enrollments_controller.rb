@@ -10,25 +10,25 @@ class EnrollmentsController < ApplicationController
     enrollment = enrollment_system.status(params[:code])
     return already_used if enrollment.status == "enrolled"
 
-    render :show, locals: { enrollment: enrollment }
+    render :show, locals: locale_context_locals.merge(enrollment: enrollment)
   end
 
   def create
     enrollment = enrollment_system.claim(params[:code])
-    render :confirmation, locals: { enrollment: enrollment }
+    render :confirmation, locals: locale_context_locals.merge(enrollment: enrollment)
   end
 
   private
 
   def not_found
-    render :not_found, status: :not_found
+    render :not_found, status: :not_found, locals: locale_context_locals
   end
 
   def expired
-    render :expired, status: :gone
+    render :expired, status: :gone, locals: locale_context_locals
   end
 
   def already_used
-    render :already_used
+    render :already_used, locals: locale_context_locals
   end
 end

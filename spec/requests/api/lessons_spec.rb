@@ -30,6 +30,7 @@ RSpec.describe "Lessons API", type: :request do
         "description"       => "About welcome.",
         "module"            => "Getting started",
         "lab"               => nil,
+        "locale"            => "en",
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n",
       }
@@ -42,6 +43,7 @@ RSpec.describe "Lessons API", type: :request do
         "description"       => "About odd.",
         "module"            => nil,
         "lab"               => nil,
+        "locale"            => "en",
         "agentInstructions" => "Verify odd at http://www.example.com/lessons/odd.\n\n#{Course::QuizInstructions::TEXT}",
         "content"           => "Explore first.\n",
       }
@@ -74,6 +76,7 @@ RSpec.describe "Lessons API", type: :request do
         "description"       => "About welcome.",
         "module"            => "Getting started",
         "lab"               => nil,
+        "locale"            => "en",
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n"
       )

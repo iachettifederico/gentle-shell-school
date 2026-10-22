@@ -8,7 +8,8 @@ require_relative "../../app/domain/course/catalog"
 module CourseLessons
   def build_lesson(slug: "welcome", order: 1, quiz: false, module_name: nil, **content)
     Course::Lesson.new(
-      slug: slug, order: order, quiz: quiz, module_name: module_name, content: build_lesson_content(**content)
+      metadata: { slug: slug, order: order, quiz: quiz, module_name: module_name },
+      content:  build_lesson_content(**content)
     )
   end
 

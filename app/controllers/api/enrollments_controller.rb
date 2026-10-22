@@ -15,7 +15,7 @@ module Api
     private
 
     def pending_json(enrollment)
-      pending_status_json(enrollment).merge(code: enrollment.code, enrollUrl: enroll_url(enrollment.code))
+      pending_status_json(enrollment).merge(code: enrollment.code, enrollUrl: enroll_url(code: enrollment.code))
     end
 
     def pending_status_json(enrollment)

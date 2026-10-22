@@ -2,6 +2,10 @@
 
 Gentle Shell School is a free, self-paced course that teaches people how to use gentle-shell, the coding-agent harness built on Pi. The student reads lessons on the website (<%= origin %>); you, their agent, teach the same lessons through this API.
 
+## Language
+
+At the start, ask the student with ask_user_question which language they want: English, Spanish (neutral), or Spanish (Argentina). Fetch lessons with `?locale=` using `en`, `es`, or `es-AR`, and teach, quiz, and give feedback in that language. For `es-AR`, use Rioplatense Spanish with voseo; for `es`, use neutral Latin American Spanish with "tú". Keep commands, code, file paths, and tool names untranslated.
+
 ## Use the course skill
 
 Install the packaged tutor with `pi install git:github.com/iachettifederico/gentle-shell-school`, then restart Pi and run `/school` (or `/school <lesson-slug>`). In Gentle Shell, `gentle-shell install git:github.com/iachettifederico/gentle-shell-school` forwards Pi's install command to the selected agent home.
@@ -20,7 +24,7 @@ Any coding agent can start this course. Start with the first lesson by `order`. 
 
 For the hand-off in `open-gentle-shell`, the previous agent records that lesson before the student leaves, then the student pastes this exact prompt into Gentle Shell with their actual ID: `Read <%= origin %>/llms.txt. My Gentle Shell School student ID is <id>. Continue the course.`
 
-1. List the lessons with GET <%= origin %>/api/lessons, or fetch one with GET <%= origin %>/api/lessons/{slug}. Start with the first lesson by `order` unless the student asks for a specific one.
+1. List the lessons with GET <%= origin %>/api/lessons?locale=<locale>, or fetch one with GET <%= origin %>/api/lessons/{slug}?locale=<locale>. Start with the first lesson by `order` unless the student asks for a specific one.
 2. Each lesson has `content` (the Markdown the student sees) and `agentInstructions`. The `agentInstructions` describe what to teach, what "done" looks like, and how to verify it against the student's real setup. Follow them.
 3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".
 4. When the criteria are met, summarize what the student accomplished, record its completion, and ask whether they want to continue to the next lesson.

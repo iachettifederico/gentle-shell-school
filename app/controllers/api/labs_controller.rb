@@ -1,11 +1,11 @@
 module Api
   class LabsController < BaseController
     def index
-      render json: { labs: labs_system.labs.map { |lab| summary_json(lab) } }
+      render json: { labs: labs_system.labs(locale: requested_locale).map { |lab| summary_json(lab) } }
     end
 
     def show
-      lab = labs_system.find_lab(params[:slug])
+      lab = labs_system.find_lab(params[:slug], locale: requested_locale)
       return render json: { error: "Lab not found" }, status: :not_found unless lab
 
       render json: detail_json(lab)
@@ -20,7 +20,7 @@ module Api
     end
 
     def summary_json(lab)
-      { slug: lab.slug, lesson: lab.lesson_slug, title: lab.title }
+      { slug: lab.slug, lesson: lab.lesson_slug, title: lab.title, locale: lab.locale }
     end
 
     def detail_json(lab)

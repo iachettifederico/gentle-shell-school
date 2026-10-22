@@ -1,20 +1,20 @@
-<% content_for :title, "#{lesson.title} · Gentle Shell School" %>
+<% content_for :title, "#{lesson.title} · #{t('site.title')}" %>
 <% content_for :description, lesson.description %>
-<% content_for :og_title, "#{lesson.title} · Gentle Shell School" %>
+<% content_for :og_title, "#{lesson.title} · #{t('site.title')}" %>
 <% content_for :og_description, lesson.description %>
 
-<section class="mx-auto max-w-3xl" data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>">
+<section class="mx-auto max-w-3xl" data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>" data-progress-copy-label-value="<%= t("home.copy") %>" data-progress-copied-label-value="<%= t("progress.copied") %>" data-progress-not-completed-label-value="<%= t("progress.not_completed") %>" data-progress-mark-incomplete-label-value="<%= t("progress.mark_incomplete") %>" data-progress-mark-complete-label-value="<%= t("progress.mark_complete") %>" data-progress-verified-label-value="<%= t("progress.verified") %>" data-progress-independently-verified-label-value="<%= t("progress.independently_verified") %>">
   <div class="border-b border-shell-border pb-8">
     <% if lesson.module_name.present? %>
       <p data-lesson-module class="font-mono text-xs text-shell-accent"><%= lesson.module_name %></p>
     <% end %>
-    <p class="mt-3 font-mono text-xs text-shell-dim">Lesson <%= format("%02d", lesson.order) %></p>
+    <p class="mt-3 font-mono text-xs text-shell-dim"><%= t("lesson.label", number: format("%02d", lesson.order)) %></p>
     <h1 class="mt-3 text-4xl font-extrabold tracking-[-0.05em] text-shell-text sm:text-5xl"><%= lesson.title %></h1>
     <p class="mt-4 max-w-2xl text-lg leading-8 text-shell-muted"><%= lesson.description %></p>
   </div>
 
   <div class="mt-6 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
-    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-shell-muted">Track your progress by <a href="<%= root_path %>" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">enrolling on the home page</a>.</p>
+    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-shell-muted"><%= t("lesson.track", link: link_to(t("lesson.enroll_home"), locale_context.root_path, class: "font-medium text-shell-accent transition-colors hover:text-shell-accent-hover")).html_safe %></p>
     <div data-progress-target="lessonProgress" hidden>
       <p data-progress-target="status" class="text-sm font-medium text-shell-text"></p>
       <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="mt-3 rounded-full bg-shell-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent"></button>
@@ -27,33 +27,33 @@
 
   <% if lab %>
     <section data-lesson-lab class="mt-12 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-6">
-      <h2 class="text-lg font-semibold text-shell-text">Lab</h2>
+      <h2 class="text-lg font-semibold text-shell-text"><%= t("lesson.lab") %></h2>
       <h3 class="mt-3 text-xl font-semibold text-shell-text"><%= lab.title %></h3>
       <div class="prose prose-invert mt-4 max-w-none prose-p:text-shell-muted prose-p:leading-7 prose-a:text-shell-accent">
         <%= sanitize lab_brief_html %>
       </div>
-      <p class="mt-5 font-mono text-sm text-shell-muted">Ask your agent: /school <%= lesson.slug %> lab</p>
+      <p class="mt-5 font-mono text-sm text-shell-muted"><%= t("lesson.lab_prompt", slug: lesson.slug) %></p>
     </section>
   <% end %>
 
   <div class="mt-12 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-6">
-    <h2 class="text-lg font-semibold text-shell-text">Teach me this lesson</h2>
+    <h2 class="text-lg font-semibold text-shell-text"><%= t("lesson.teach") %></h2>
     <p data-teach-me-prompt class="mt-3 break-words font-mono text-sm leading-6 text-shell-muted"><%= teach_me_prompt %></p>
-    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
+    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover"><%= t("home.copy") %></button>
   </div>
 
-  <p class="mt-6 text-sm text-shell-muted"><a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=<%= lesson.slug %>&title=%5BCourse+feedback%5D+<%= lesson.slug %>%3A+" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">Report a problem with this lesson</a></p>
+  <p class="mt-6 text-sm text-shell-muted"><a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=<%= lesson.slug %>&title=%5BCourse+feedback%5D+<%= lesson.slug %>%3A+" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover"><%= t("lesson.report") %></a></p>
 
   <nav data-lesson-navigation class="mt-10 grid gap-4 border-t border-shell-border pt-8 sm:grid-cols-2">
     <% if previous_lesson %>
-      <%= link_to lesson_path(previous_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 transition-colors hover:border-shell-border-hover" do %>
-        <span class="font-mono text-xs text-shell-dim">Previous lesson</span>
+      <%= link_to locale_context.lesson_path(previous_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 transition-colors hover:border-shell-border-hover" do %>
+        <span class="font-mono text-xs text-shell-dim"><%= t("lesson.previous") %></span>
         <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= previous_lesson.title %></span>
       <% end %>
     <% end %>
     <% if next_lesson %>
-      <%= link_to lesson_path(next_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 text-right transition-colors hover:border-shell-border-hover #{'sm:col-start-2' unless previous_lesson}" do %>
-        <span class="font-mono text-xs text-shell-dim">Next lesson</span>
+      <%= link_to locale_context.lesson_path(next_lesson.slug), class: "group rounded-2xl border border-shell-border bg-shell-card p-5 text-right transition-colors hover:border-shell-border-hover #{'sm:col-start-2' unless previous_lesson}" do %>
+        <span class="font-mono text-xs text-shell-dim"><%= t("lesson.next") %></span>
         <span class="mt-2 block font-semibold text-shell-text transition-colors group-hover:text-shell-accent"><%= next_lesson.title %></span>
       <% end %>
     <% end %>

@@ -10,12 +10,13 @@ module Course
 
     SLUG_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
 
-    def initialize(slug:, order:, quiz:, module_name: nil, content:)
-      @slug = require_slug(slug)
-      @order = require_positive_integer(order)
-      @quiz = require_boolean(quiz)
-      @module_name = module_name
+    def initialize(metadata:, content:, locale: "en")
+      @slug = require_slug(metadata[:slug])
+      @order = require_positive_integer(metadata[:order])
+      @quiz = require_boolean(metadata[:quiz])
+      @module_name = metadata[:module_name]
       @content = content
+      @locale = locale
     end
 
     def slug
@@ -32,6 +33,10 @@ module Course
 
     def module_name
       @module_name
+    end
+
+    def locale
+      @locale
     end
 
     # Instructions for the student's agent, resolved for the origin serving them.

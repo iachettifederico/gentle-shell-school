@@ -10,6 +10,10 @@ module GentleShellSchool
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.2
+    config.i18n.available_locales = %i[en es es-AR]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = { "es-AR": %i[es en], es: :en }
+
     config.autoload_paths << Rails.root.join("app/domain")
     config.eager_load_paths << Rails.root.join("app/domain")
     config.autoload_paths << Rails.root.join("app/adapters")

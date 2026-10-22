@@ -1,5 +1,3 @@
-require "active_support/core_ext/module/delegation"
-
 module Course
   # Entry point for reading labs and their starter files from any delivery channel.
   class LabsSystem
@@ -7,23 +5,25 @@ module Course
       @repository = repository
     end
 
-    delegate :labs, to: :catalog
-    delegate :files_for, to: :repository
-
-    def find_lab(slug)
-      catalog.find(slug)
+    def labs(locale: "en")
+      catalog(locale).labs
     end
 
-    def lab_for_lesson(slug)
-      catalog.for_lesson(slug)
+    delegate :files_for, to: :@repository
+
+    def find_lab(slug, locale: "en")
+      catalog(locale).find(slug)
+    end
+
+    def lab_for_lesson(slug, locale: "en")
+      catalog(locale).for_lesson(slug)
     end
 
     private
 
-    attr_reader :repository
-
-    def catalog
-      @catalog ||= repository.catalog
+    def catalog(locale)
+      @catalogs ||= {}
+      @catalogs[locale] ||= @repository.catalog(locale: locale)
     end
   end
 end

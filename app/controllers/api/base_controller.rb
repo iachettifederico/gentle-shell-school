@@ -11,6 +11,11 @@ module Api
     before_action do
       response.headers.merge!(cors_headers)
     end
+    before_action :validate_locale
+
+    rescue_from ArgumentError do |error|
+      render json: { error: error.message }, status: :bad_request
+    end
 
     rescue_from ActionDispatch::Http::Parameters::ParseError do
       render json: { error: "Invalid JSON body" }, status: :bad_request
@@ -33,6 +38,16 @@ module Api
     end
 
     private
+
+    def requested_locale
+      params.fetch(:locale, "en")
+    end
+
+    def validate_locale
+      return if Course::Locale.valid?(requested_locale)
+
+      render json: { error: "Unsupported locale: #{requested_locale.inspect}" }, status: :bad_request
+    end
 
     def cors_headers
       {

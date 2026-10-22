@@ -69,7 +69,7 @@ RSpec.describe "Labs API", type: :request do
   end
 
   def lab_summary
-    { "slug" => "red-green", "lesson" => "test-first", "title" => "Red, green" }
+    { "slug" => "red-green", "lesson" => "test-first", "title" => "Red, green", "locale" => "en" }
   end
 
   def lab_detail

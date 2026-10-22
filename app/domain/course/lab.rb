@@ -1,7 +1,7 @@
 module Course
   # A hands-on exercise linked to one course lesson.
   class Lab
-    ATTRIBUTES = %i[slug lesson_slug title brief check rubric].freeze
+    ATTRIBUTES = %i[slug lesson_slug title brief check rubric locale].freeze
 
     def initialize(**attributes)
       ATTRIBUTES.each do |attribute|
@@ -23,7 +23,7 @@ module Course
     end
 
     def validate_strings
-      ATTRIBUTES.reject { |attribute| attribute == :rubric }.each do |attribute|
+      ATTRIBUTES.reject { |attribute| %i[rubric locale].include?(attribute) }.each do |attribute|
         valid = public_send(attribute).is_a?(String) && public_send(attribute).match?(/\S/)
         raise InvalidLesson, "lab #{attribute.to_s.tr('_', ' ')} must be present" unless valid
       end

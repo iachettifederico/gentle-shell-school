@@ -1,31 +1,71 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  site:
+    title: "Gentle Shell School"
+    description: "A free, self-paced course for learning gentle-shell, taught by your coding agent."
+    nav_lessons: "Lessons"
+    footer: "Gentle Shell School — learn gentle-shell with your agent."
+    report_problem: "Report a problem"
+    built_for: "Built for people and agents"
+    language: "Language"
+  home:
+    badge: "Free · Self-paced · Agent-taught"
+    intro: "Learn gentle-shell in depth: lessons written for you, and a course API your coding agent uses to teach you, quiz you, and check your real setup."
+    start: "Start with any coding agent"
+    start_prompt: "Read %{origin}/llms.txt and start the course."
+    copy: "Copy"
+    already_using: "Already using gentle-shell? Start here"
+    install: "Install gentle-shell yourself"
+    course: "YOUR COURSE"
+    keep_place: "Keep your place across lessons with a private student ID."
+    enroll: "Enroll"
+    student_id: "Your student ID:"
+    give_id: "Give this ID to your agent. Instructions:"
+    forget: "Forget this ID"
+    syllabus: "Syllabus"
+    completed: "Completed"
+    lesson_count: "%{count} lessons"
+    module_zero: "0/%{count} done"
+  lesson:
+    label: "Lesson %{number}"
+    track: "Track your progress by %{link}."
+    enroll_home: "enrolling on the home page"
+    lab: "Lab"
+    lab_prompt: "Ask your agent: /school %{slug} lab"
+    teach: "Teach me this lesson"
+    teach_prompt: 'Read %{origin}/llms.txt and teach me the "%{title}" lesson (%{slug}).'
+    report: "Report a problem with this lesson"
+    previous: "Previous lesson"
+    next: "Next lesson"
+    not_found_title: "Lesson not found · Gentle Shell School"
+    not_found_description: "This lesson is not part of the Gentle Shell School syllabus."
+    not_found_heading: "That lesson is not in the syllabus."
+    not_found_body: "Choose a lesson from the course outline and continue where you left off."
+    back: "Back to the course"
+  enrollment:
+    title: "Enroll in Gentle Shell School"
+    label: "COURSE ENROLLMENT"
+    body: "Enrolling creates an anonymous student ID and stores your course progress on this server. There is no account. Anyone with this ID can read or update that progress, and you can use “Forget this ID” on the home page."
+    warning: "This browser already has a student ID. Enrolling will switch it to this new ID."
+    enroll: "Enroll"
+    not_now: "Not now"
+    enrolled: "ENROLLED"
+    enrolled_title: "You’re enrolled"
+    enrolled_body: "Your browser now has your anonymous student ID. Return to your agent so it can continue the course with your shared progress."
+    home: "Home"
+    first_lesson: "Start the first lesson"
+    missing: "Enrollment link not found"
+    expired: "Enrollment link expired"
+    ask_agent: "Ask your agent for a new enrollment link."
+    used: "This enrollment link is already used"
+    return_home: "Return home to continue your course."
+  progress:
+    copied: "Copied"
+    not_completed: "Not completed yet"
+    mark_incomplete: "Mark not complete"
+    mark_complete: "Mark complete"
+    independently_verified: "Independently verified"
+    verified: "Verified"
+    all_complete: "All lessons complete."
+    complete_count: "%{completed} of %{total} lessons complete"
+    continue: "Continue with: %{title}"
+    module_count: "%{completed}/%{total} done"

@@ -2,17 +2,29 @@ require "tmpdir"
 
 # Points the app at a temporary lessons directory for the duration of an example.
 module LessonFixtures
-  def with_lessons(files)
+  def with_lessons(files, &)
     Dir.mktmpdir do |dir|
-      files.each do |name, content|
-        File.write(File.join(dir, name), content)
-      end
-      original = Rails.configuration.x.lessons_directory
-      Rails.configuration.x.lessons_directory = dir
-      yield
-    ensure
-      Rails.configuration.x.lessons_directory = original
+      write_lessons(dir, files)
+      with_lessons_directory(dir, &)
     end
+  end
+
+  def write_lessons(directory, files)
+    files.each { |name, content| write_lesson_file(directory, name, content) }
+  end
+
+  def write_lesson_file(directory, name, content)
+    path = File.join(directory, name)
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, content)
+  end
+
+  def with_lessons_directory(directory)
+    original = Rails.configuration.x.lessons_directory
+    Rails.configuration.x.lessons_directory = directory
+    yield
+  ensure
+    Rails.configuration.x.lessons_directory = original
   end
 
   def with_labs(labs, &)

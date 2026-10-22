@@ -150,6 +150,8 @@ paths:
           $ref: "#/components/responses/StudentNotFound"
   /api/labs:
     get:
+      parameters:
+        - $ref: "#/components/parameters/Locale"
       operationId: listLabs
       summary: List lab summaries.
       responses:
@@ -170,6 +172,7 @@ paths:
       operationId: getLab
       summary: Get one lab with its starter files.
       parameters:
+        - $ref: "#/components/parameters/Locale"
         - name: slug
           in: path
           required: true
@@ -190,6 +193,8 @@ paths:
                 $ref: "#/components/schemas/Error"
   /api/lessons:
     get:
+      parameters:
+        - $ref: "#/components/parameters/Locale"
       operationId: listLessons
       summary: List all lessons, sorted by order.
       responses:
@@ -206,6 +211,7 @@ paths:
       operationId: getLesson
       summary: Get one lesson by slug.
       parameters:
+        - $ref: "#/components/parameters/Locale"
         - name: slug
           in: path
           required: true
@@ -227,6 +233,14 @@ paths:
                 $ref: "#/components/schemas/Error"
 components:
   parameters:
+    Locale:
+      name: locale
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [en, es, es-AR]
+      description: Requested content locale; each item reports the locale actually served after fallback.
     StudentId:
       name: student_id
       in: path
@@ -387,7 +401,7 @@ components:
           description: Must be true when used instead of lessonSlug.
     LabSummary:
       type: object
-      required: [slug, lesson, title]
+      required: [slug, lesson, title, locale]
       properties:
         slug:
           type: string
@@ -396,6 +410,9 @@ components:
           description: Slug of the lesson containing this lab.
         title:
           type: string
+        locale:
+          type: string
+          enum: [en, es, es-AR]
     Lab:
       allOf:
         - $ref: "#/components/schemas/LabSummary"
@@ -424,7 +441,7 @@ components:
                     type: string
     Lesson:
       type: object
-      required: [order, slug, title, description, agentInstructions, content, lab]
+      required: [order, slug, title, description, agentInstructions, content, lab, locale]
       properties:
         order:
           type: integer
@@ -442,6 +459,10 @@ components:
         lab:
           type: [string, "null"]
           description: Slug of the linked lab, when this lesson has one.
+        locale:
+          type: string
+          enum: [en, es, es-AR]
+          description: Locale actually served after per-file fallback.
         agentInstructions:
           type: string
           description: >-

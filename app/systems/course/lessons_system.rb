@@ -1,5 +1,3 @@
-require "active_support/core_ext/module/delegation"
-
 module Course
   # Entry point for reading course lessons from any delivery channel.
   class LessonsSystem
@@ -7,24 +5,27 @@ module Course
       @repository = repository
     end
 
-    delegate :lessons, to: :catalog
-
-    def find_lesson(slug)
-      catalog.find(slug)
+    def lessons(locale: "en")
+      catalog(locale).lessons
     end
 
-    def lesson_neighbors(slug)
-      catalog.neighbors_for(slug)
+    def find_lesson(slug, locale: "en")
+      catalog(locale).find(slug)
     end
 
-    def lesson_groups
-      lessons.group_by(&:module_name)
+    def lesson_neighbors(slug, locale: "en")
+      catalog(locale).neighbors_for(slug)
+    end
+
+    def lesson_groups(locale: "en")
+      lessons(locale: locale).group_by(&:module_name)
     end
 
     private
 
-    def catalog
-      @catalog ||= @repository.catalog
+    def catalog(locale)
+      @catalogs ||= {}
+      @catalogs[locale] ||= @repository.catalog(locale: locale)
     end
   end
 end

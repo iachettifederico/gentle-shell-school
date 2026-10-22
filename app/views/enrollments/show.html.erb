@@ -1,11 +1,1 @@
-<% content_for :title, "Enroll in Gentle Shell School" %>
-<section data-controller="enrollment" class="mx-auto max-w-2xl rounded-2xl border border-shell-border bg-shell-card p-6 sm:p-8">
-  <p class="font-mono text-xs text-shell-accent">COURSE ENROLLMENT</p>
-  <h1 class="mt-3 text-3xl font-bold tracking-[-0.04em]">Enroll in Gentle Shell School</h1>
-  <p class="mt-5 leading-7 text-shell-muted">Enrolling creates an anonymous student ID and stores your course progress on this server. There is no account. Anyone with this ID can read or update that progress, and you can use “Forget this ID” on the home page.</p>
-  <p data-enrollment-target="switchWarning" hidden class="mt-4 rounded-lg border border-shell-accent/40 bg-shell-accent-subtle p-3 text-sm text-shell-text">This browser already has a student ID. Enrolling will switch it to this new ID.</p>
-  <div class="mt-7 flex flex-wrap gap-3">
-    <%= button_to "Enroll", enroll_path(enrollment.code), method: :post, form: { data: { turbo: false } }, authenticity_token: true, class: "rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white hover:bg-shell-accent-hover" %>
-    <%= link_to "Not now", root_path, class: "rounded-full border border-shell-border px-5 py-3 text-sm font-semibold text-shell-text hover:border-shell-border-hover" %>
-  </div>
-</section>
+<% content_for :title, t("enrollment.title") %><section data-controller="enrollment" class="mx-auto max-w-2xl rounded-2xl border border-shell-border bg-shell-card p-6 sm:p-8"><p class="font-mono text-xs text-shell-accent"><%= t("enrollment.label") %></p><h1 class="mt-3 text-3xl font-bold tracking-[-0.04em]"><%= t("enrollment.title") %></h1><p class="mt-5 leading-7 text-shell-muted"><%= t("enrollment.body") %></p><p data-enrollment-target="switchWarning" hidden class="mt-4 rounded-lg border border-shell-accent/40 bg-shell-accent-subtle p-3 text-sm text-shell-text"><%= t("enrollment.warning") %></p><div class="mt-7 flex flex-wrap gap-3"><%= button_to t("enrollment.enroll"), locale_context.enroll_path(enrollment.code), method: :post, form: { data: { turbo: false } }, authenticity_token: true, class: "rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white hover:bg-shell-accent-hover" %><%= link_to t("enrollment.not_now"), locale_context.root_path, class: "rounded-full border border-shell-border px-5 py-3 text-sm font-semibold text-shell-text hover:border-shell-border-hover" %></div></section>

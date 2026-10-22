@@ -1,11 +1,11 @@
 module Api
   class LessonsController < BaseController
     def index
-      render json: lessons_system.lessons.map { |lesson| lesson_json(lesson) }
+      render json: lessons_system.lessons(locale: requested_locale).map { |lesson| lesson_json(lesson) }
     end
 
     def show
-      lesson = lessons_system.find_lesson(params[:slug])
+      lesson = lessons_system.find_lesson(params[:slug], locale: requested_locale)
       return render json: { error: "Lesson not found" }, status: :not_found unless lesson
 
       render json: lesson_json(lesson)
@@ -20,7 +20,8 @@ module Api
     def lesson_fields(lesson)
       {
         order: lesson.order, slug: lesson.slug, title: lesson.title, description: lesson.description,
-        module: lesson.module_name, lab: labs_system.lab_for_lesson(lesson.slug)&.slug,
+        module: lesson.module_name, lab: labs_system.lab_for_lesson(lesson.slug, locale: requested_locale)&.slug,
+        locale: lesson.locale,
       }
     end
 

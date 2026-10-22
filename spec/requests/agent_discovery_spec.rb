@@ -54,7 +54,7 @@ RSpec.describe "Agent discovery", type: :request do
         "/api/labs", "/api/labs/{slug}", "/api/lessons", "/api/lessons/{slug}"
       )
       expect(document.dig("components", "schemas", "Lesson", "required"))
-        .to eq(%w[order slug title description agentInstructions content lab])
+        .to eq(%w[order slug title description agentInstructions content lab locale])
       expect(document.dig("components", "schemas", "Lab", "allOf", 1, "required"))
         .to eq(%w[brief check rubric files])
       expect(document.dig("components", "schemas", "Enrollment", "required")).to eq(%w[studentId progress])
