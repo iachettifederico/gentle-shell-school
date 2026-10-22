@@ -25,10 +25,13 @@ agent_instructions: |
   3. Which agent records this lesson before the hand-off?
      Correct answer: The agent teaching this lesson now.
 
-  The real-setup check is that the student opens gentle-shell and pastes the
-  exact prepared prompt with their own student ID. The lesson is done when this
-  agent has recorded completion, the student has pasted the prompt into Gentle
-  Shell, and the new agent can continue the course.
+  The real-setup check, which you can observe here, is that `gentle-shell
+  --version` prints a version and the student has the exact prepared hand-off
+  prompt with their own student ID ready to paste. The lesson is done when you
+  have recorded completion and given the student that prompt. You cannot see the
+  new session: the gentle-shell agent that receives the prompt confirms the
+  student ID with GET {origin}/api/progress/{studentId} and continues with
+  lesson 04.
 ---
 
 # Open Gentle Shell

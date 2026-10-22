@@ -54,6 +54,10 @@ RSpec.describe "Lesson pages", type: :request do
       expect(response).to have_http_status(:ok)
       page = response.parsed_body
       expect(page.at_css("h2", text: "Start with any coding agent")).to be_present
+      hero_cta = page.at_css("section a.bg-shell-accent")
+      expect(hero_cta.text.strip).to eq("Start with any coding agent")
+      expect(hero_cta["href"]).to eq("#start")
+      expect(page.at_css("#start h2").text).to eq("Start with any coding agent")
       expect(response.body).to include("Read http://www.example.com/llms.txt and start the course.")
       copy_button = page.at_css(
         'button[data-prompt="Read http://www.example.com/llms.txt and start the course."]'

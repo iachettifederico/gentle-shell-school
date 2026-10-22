@@ -5,13 +5,23 @@
   <h1 class="mt-7 text-5xl font-extrabold tracking-[-0.065em] text-shell-text sm:text-7xl">Gentle <span class="text-shell-accent">Shell</span><br>School</h1>
   <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-shell-muted sm:text-lg sm:leading-8">Learn gentle-shell in depth: lessons written for you, and a course API your coding agent uses to teach you, quiz you, and check your real setup.</p>
   <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-    <a href="#lessons" class="rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent">Start the course</a>
+    <a href="#start" class="rounded-full bg-shell-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-shell-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shell-accent">Start with any coding agent</a>
     <a href="/llms.txt" class="rounded-full border border-shell-border bg-shell-card px-5 py-3 font-mono text-sm font-medium text-shell-text transition-colors hover:border-shell-border-hover">llms.txt</a>
   </div>
 </section>
 
 <section id="lessons" class="mt-8 scroll-mt-6" data-controller="progress">
-  <div class="rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-7">
+  <div id="start" class="scroll-mt-6 rounded-2xl border border-shell-accent/40 bg-shell-code p-5 sm:p-7">
+    <h2 class="text-lg font-semibold text-shell-text">Start with any coding agent</h2>
+    <p class="mt-2 font-mono text-sm leading-6 text-shell-muted">Read <%= request.base_url %>/llms.txt and start the course.</p>
+    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the course." class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
+    <div class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:gap-4">
+      <a href="/lessons/welcome" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">Already using gentle-shell? Start here</a>
+      <a href="https://github.com/Gentleman-Programming/gentle-shell#readme" class="font-medium text-shell-muted transition-colors hover:text-shell-text">Install gentle-shell yourself</a>
+    </div>
+  </div>
+
+  <div class="mt-5 rounded-2xl border border-shell-border bg-shell-card p-5 sm:p-7">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <p class="font-mono text-xs text-shell-accent">YOUR COURSE</p>
@@ -29,16 +39,6 @@
       <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="mt-4 text-sm font-medium text-shell-muted underline decoration-shell-dim underline-offset-4 transition-colors hover:text-shell-text">
         Forget this ID
       </button>
-    </div>
-  </div>
-
-  <div class="mt-5 rounded-2xl border border-shell-border bg-shell-code p-5 sm:p-7">
-    <h2 class="text-lg font-semibold text-shell-text">Start with any coding agent</h2>
-    <p class="mt-2 font-mono text-sm leading-6 text-shell-muted">Read <%= request.base_url %>/llms.txt and start the course.</p>
-    <button type="button" data-action="progress#copy" data-prompt="Read <%= request.base_url %>/llms.txt and start the course." class="mt-4 rounded-full border border-shell-border bg-shell-card px-4 py-2 text-sm font-semibold text-shell-text transition-colors hover:border-shell-border-hover">Copy</button>
-    <div class="mt-4 flex flex-col gap-2 text-sm sm:flex-row sm:gap-4">
-      <a href="/lessons/welcome" class="font-medium text-shell-accent transition-colors hover:text-shell-accent-hover">Already using gentle-shell? Start here</a>
-      <a href="https://github.com/Gentleman-Programming/gentle-shell#readme" class="font-medium text-shell-muted transition-colors hover:text-shell-text">Install gentle-shell yourself</a>
     </div>
   </div>
 
