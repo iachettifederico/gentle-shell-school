@@ -44,7 +44,7 @@
 
   <div class="mt-14 flex items-baseline justify-between gap-5">
     <h2 class="text-2xl font-bold tracking-[-0.035em] text-shell-text">Syllabus</h2>
-    <p class="font-mono text-xs text-shell-dim">29 lessons</p>
+    <p data-lesson-count class="font-mono text-xs text-shell-dim"><%= pluralize(lesson_groups.values.sum(&:size), "lesson") %></p>
   </div>
   <% lesson_groups.each do |module_name, lessons| %>
     <section class="mt-6 overflow-hidden rounded-2xl border border-shell-border bg-shell-card">

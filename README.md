@@ -21,7 +21,7 @@ bin/ci         # lint, security audits, tests
 Run the tiny demo course in development with:
 
 ```sh
-COURSE=demo bin/dev
+COURSE=demo make server
 ```
 
 It contains three short lessons: how the course works, a quiz with a
@@ -31,7 +31,7 @@ production always serve the real course.
 
 To compare the original course on `main` with the improved course on
 `feat/phase-6-gentle-native`, check out each branch in turn and start it with
-`COURSE=demo bin/dev`. The same local demo lessons make the course behavior
+`COURSE=demo make server`. The same local demo lessons make the course behavior
 comparable without affecting either production course.
 
 ## Writing a lesson
