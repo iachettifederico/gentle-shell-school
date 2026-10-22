@@ -1,0 +1,8 @@
+title: Entrega una exploración
+brief: |
+  ## Explora antes de planificar
+
+  Delega una exploración de solo lectura de `src/`. Guarda su entrega como `handoff.md`.
+  Incluye al menos tres referencias con la forma `src/path.js:line` que apunten a
+  líneas reales. Esto hace útil la exploración sin copiar código fuente en la
+  entrega.

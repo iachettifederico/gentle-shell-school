@@ -1,0 +1,8 @@
+title: Escribe un documento de funcionalidad
+brief: |
+  ## Conserva la solicitud antes de implementar
+
+  La solicitud es: "Add a search box that filters the course lessons by title."
+  Crea `odd/tasks/lesson-search.md` con `## Specs`, `## Tasks` y `## Log`.
+  Cita la solicitud **verbatim** en Specs, planifica el trabajo en Tasks y registra la
+  solicitud en Log. Esto proporciona a una sesión posterior una fuente de verdad duradera.

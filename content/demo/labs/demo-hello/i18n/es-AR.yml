@@ -1,0 +1,6 @@
+title: Corregí el saludo
+brief: |
+  ## Hacé que pase una prueba
+
+  Ejecutá `node --test` y después corregí la función de saludo de una línea. Este laboratorio breve te permite
+  ver el ciclo de laboratorio del tutor en el curso de demostración local.

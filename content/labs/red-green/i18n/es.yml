@@ -1,0 +1,7 @@
+title: Haz que las pruebas pasen
+brief: |
+  ## Comienza con la prueba que falla
+
+  Ejecuta `node --test`, implementa `double` en `src/double.js` y haz que pase la
+  prueba proporcionada. Luego agrega una prueba de comportamiento propia. La verificación
+  del conteo de pruebas hace observable el ejemplo adicional.

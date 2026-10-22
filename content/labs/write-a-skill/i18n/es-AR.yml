@@ -1,0 +1,8 @@
+title: Escribí una skill enfocada
+brief: |
+  ## Codificá un contrato de ejecución reutilizable
+
+  Creá `skills/<name>/SKILL.md`. Dale frontmatter YAML con `name` y
+  `description`, y después agregá las seis secciones que exige la guía de estilo:
+  Activation Contract, Hard Rules, Decision Gates, Execution Steps, Output
+  Contract y References. Mantenela enfocada en un flujo de trabajo repetible.

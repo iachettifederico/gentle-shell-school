@@ -1,0 +1,8 @@
+title: Dividí el trabajo en commits
+brief: |
+  ## Mantené cada paso revisable
+
+  Primero ejecutá `git init` en este proyecto de práctica. Hacé que la prueba pase y después creá al
+  menos dos commits de Conventional Commit. Cada commit debería dejar la suite de pruebas
+  pasando. La comprobación se niega a ejecutarse fuera de un repositorio Git, así que su fallo te dice
+  qué hacer primero.
