@@ -3,6 +3,7 @@ title: "Models and Providers"
 slug: models-and-providers
 description: "Choose a model connection, authentication method, and thinking level without confusing subscriptions with API keys."
 order: 7
+module: "Foundations"
 quiz: true
 agent_instructions: |
   Teach the distinction between a provider, a model, credentials, and thinking

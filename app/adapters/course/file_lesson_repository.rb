@@ -15,7 +15,7 @@ module Course
   #   Markdown body...
   class FileLessonRepository
     FRONTMATTER = /\A---\s*\n(?<yaml>.*?)\n---\s*\n(?<body>.*)\z/m
-    KEYS = %w[title slug description order quiz agent_instructions].freeze
+    KEYS = %w[title slug description order quiz module agent_instructions].freeze
 
     def initialize(directory:)
       @directory = directory.to_s
@@ -34,14 +34,19 @@ module Course
     def load_lesson(path)
       frontmatter, body = split(File.read(path))
       reject_unknown_keys(frontmatter)
-      Lesson.new(
-        slug:    frontmatter["slug"],
-        order:   frontmatter["order"],
-        quiz:    frontmatter["quiz"],
-        content: build_content(frontmatter, body)
-      )
+      build_lesson(frontmatter, body)
     rescue InvalidLesson => e
       raise InvalidLesson, "#{path}: #{e.message}"
+    end
+
+    def build_lesson(frontmatter, body)
+      Lesson.new(
+        slug:        frontmatter["slug"],
+        order:       frontmatter["order"],
+        quiz:        frontmatter["quiz"],
+        module_name: frontmatter["module"],
+        content:     build_content(frontmatter, body)
+      )
     end
 
     def build_content(frontmatter, body)

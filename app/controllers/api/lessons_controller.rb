@@ -20,6 +20,7 @@ module Api
         slug:              lesson.slug,
         title:             lesson.title,
         description:       lesson.description,
+        module:            lesson.module_name,
         agentInstructions: lesson.agent_instructions_for(origin: origin),
         content:           lesson.body_for(origin: origin),
       }

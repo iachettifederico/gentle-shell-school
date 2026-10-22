@@ -3,6 +3,7 @@ title: "Test-First and Verification"
 slug: test-first-and-verification
 description: "Produce observable proof with RED, GREEN, alternate cases, and proportionate verification."
 order: 12
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach applicable test-first development and the verification rule. Distinguish

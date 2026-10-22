@@ -13,6 +13,18 @@ RSpec.describe Course::LessonsSystem do
     expect(system.lessons).to eq([ welcome ])
   end
 
+  it "groups lessons by module in lesson order" do
+    foundations = build_lesson(slug: "layers", order: 2, module_name: "Foundations")
+    introduction = build_lesson(slug: "welcome", order: 1, module_name: "Getting started")
+    catalog = Course::Catalog.new([ foundations, introduction ])
+    repository = instance_double("Course::FileLessonRepository", catalog: catalog)
+
+    groups = described_class.new(repository: repository).lesson_groups
+
+    expect(groups.map { |name, lessons| [ name, lessons.map(&:slug) ] })
+      .to eq([[ "Getting started", [ "welcome" ] ], [ "Foundations", [ "layers" ] ]])
+  end
+
   it "finds a lesson by slug" do
     expect(system.find_lesson("welcome")).to eq(welcome)
   end

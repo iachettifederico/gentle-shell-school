@@ -6,11 +6,19 @@ RSpec.describe Course::Lesson do
 
   let(:origin) { "https://school.test" }
 
-  it "exposes its placement and text" do
-    lesson = build_lesson(slug: "welcome", order: 1, title: "Welcome", description: "Meet the course.")
+  it "exposes its placement, module, and text" do
+    lesson = build_lesson(
+      slug: "welcome", order: 1, module_name: "Getting started", title: "Welcome", description: "Meet the course."
+    )
 
-    expect(lesson).to have_attributes(slug: "welcome", order: 1, title: "Welcome", description: "Meet the course.")
+    expect(lesson).to have_attributes(
+      slug: "welcome", order: 1, module_name: "Getting started", title: "Welcome", description: "Meet the course."
+    )
     expect(lesson.quiz?).to be(false)
+  end
+
+  it "allows a lesson without a module" do
+    expect(build_lesson.module_name).to be_nil
   end
 
   describe "#agent_instructions_for" do

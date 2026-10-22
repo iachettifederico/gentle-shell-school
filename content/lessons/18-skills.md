@@ -3,6 +3,7 @@ title: "Skills"
 slug: skills
 description: "Learn how Pi discovers and loads focused instruction contracts for recurring work."
 order: 18
+module: "Memory and skills"
 quiz: true
 agent_instructions: |
   Teach skills as lazily loaded, focused instructions for recurring workflows.

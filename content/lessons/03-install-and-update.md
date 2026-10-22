@@ -3,6 +3,7 @@ title: "Install, Check, Update, and Remove"
 slug: install-and-update
 description: "Choose an installation path and maintain it without confusing Pi and Gentle Shell updates."
 order: 3
+module: "Foundations"
 quiz: true
 agent_instructions: |
   Teach installation as an ownership choice. Contrast an isolated standalone

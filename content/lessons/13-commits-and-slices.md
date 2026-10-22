@@ -3,6 +3,7 @@ title: "Commits and Slices"
 slug: commits-and-slices
 description: "Package coherent behavior into reviewable work units and keep oversized delivery explicit."
 order: 13
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach commits as reviewable work units and explain the advisory review budget,

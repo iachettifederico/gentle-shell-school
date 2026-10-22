@@ -3,6 +3,7 @@ title: "Model Profiles and Routing"
 slug: model-profiles
 description: "Assign models deliberately to the orchestrator and focused roles."
 order: 15
+module: "Delegation"
 quiz: true
 agent_instructions: |
   Teach model routing as a deliberate, per-role configuration choice. Explain

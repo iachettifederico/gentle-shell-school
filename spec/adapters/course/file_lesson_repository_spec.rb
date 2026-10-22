@@ -52,6 +52,12 @@ RSpec.describe Course::FileLessonRepository do
       .to start_with("Confirm http://x.test works.\nThen mark it complete.")
   end
 
+  it "loads an optional module from frontmatter" do
+    write_lesson("01-welcome.md", lesson_file(slug: "welcome", order: 1, extra: "module: Foundations\n"))
+
+    expect(repository.catalog.lessons.first.module_name).to eq("Foundations")
+  end
+
   it "returns an empty catalog for an empty directory" do
     expect(repository.catalog.lessons).to eq([])
   end

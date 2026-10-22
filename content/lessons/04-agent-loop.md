@@ -3,6 +3,7 @@ title: "The Agent Loop"
 slug: agent-loop
 description: "Understand how Pi turns your message into model requests, tool calls, and recorded evidence."
 order: 4
+module: "Foundations"
 quiz: true
 agent_instructions: |
   Teach the Pi agent loop as a repeatable mechanism: context assembly, provider

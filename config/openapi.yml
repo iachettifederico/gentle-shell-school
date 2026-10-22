@@ -241,6 +241,9 @@ components:
           type: string
         description:
           type: string
+        module:
+          type: [string, "null"]
+          description: Optional syllabus module containing the lesson.
         agentInstructions:
           type: string
           description: >-

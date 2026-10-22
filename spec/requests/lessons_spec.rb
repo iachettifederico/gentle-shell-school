@@ -6,10 +6,16 @@ RSpec.describe "Lesson pages", type: :request do
 
   let(:lessons) {
     {
-      "02-odd.md"     => lesson_markdown(slug: "odd", order: 2, title: "Organic driven development",
-                                         body: "## Steps\n\nExplore first."),
-      "01-welcome.md" => lesson_markdown(slug: "welcome", order: 1, title: "Welcome", body: "Read {origin}/llms.txt"),
-      "03-unsafe.md"  => lesson_markdown(slug: "unsafe", order: 3, title: "Unsafe", body: "<script>alert(1)</script>"),
+      "02-odd.md"     => lesson_markdown(
+        slug: "odd", order: 2, title: "Organic driven development",
+        body: "## Steps\n\nExplore first.", module_name: "Foundations"
+      ),
+      "01-welcome.md" => lesson_markdown(
+        slug: "welcome", order: 1, title: "Welcome", body: "Read {origin}/llms.txt", module_name: "Getting started"
+      ),
+      "03-unsafe.md"  => lesson_markdown(
+        slug: "unsafe", order: 3, title: "Unsafe", body: "<script>alert(1)</script>", module_name: "Foundations"
+      ),
     }
   }
 
@@ -28,6 +34,10 @@ RSpec.describe "Lesson pages", type: :request do
                             [ "Unsafe", "/lessons/unsafe" ]
                           ])
       expect(response.body).to include("About organic driven development.")
+      expect(page.css("h3[data-module-name]").pluck("data-module-name"))
+        .to eq([ "Getting started", "Foundations" ])
+      expect(page.css("[data-module-total]").map { |count| [ count["data-module-total"], count.text.strip ] })
+        .to eq([[ "1", "0/1 done" ], [ "2", "0/2 done" ]])
     end
 
     it "renders the enrollment controls and progress hooks" do

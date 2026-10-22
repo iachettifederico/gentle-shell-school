@@ -7,7 +7,9 @@ RSpec.describe "Lessons API", type: :request do
   let(:lessons) {
     {
       "02-odd.md"     => lesson_markdown(slug: "odd", order: 2, title: "Odd", body: "Explore first.", quiz: true),
-      "01-welcome.md" => lesson_markdown(slug: "welcome", order: 1, title: "Welcome", body: "Read {origin}/llms.txt"),
+      "01-welcome.md" => lesson_markdown(
+        slug: "welcome", order: 1, title: "Welcome", body: "Read {origin}/llms.txt", module_name: "Getting started"
+      ),
     }
   }
 
@@ -26,6 +28,7 @@ RSpec.describe "Lessons API", type: :request do
         "slug"              => "welcome",
         "title"             => "Welcome",
         "description"       => "About welcome.",
+        "module"            => "Getting started",
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n",
       }
@@ -36,6 +39,7 @@ RSpec.describe "Lessons API", type: :request do
         "slug"              => "odd",
         "title"             => "Odd",
         "description"       => "About odd.",
+        "module"            => nil,
         "agentInstructions" => "Verify odd at http://www.example.com/lessons/odd.\n\n#{Course::QuizInstructions::TEXT}",
         "content"           => "Explore first.\n",
       }
@@ -61,8 +65,15 @@ RSpec.describe "Lessons API", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect_cors_headers
-      expect(response.parsed_body)
-        .to include("slug" => "welcome", "content" => "Read http://www.example.com/llms.txt\n")
+      expect(response.parsed_body).to eq(
+        "order"             => 1,
+        "slug"              => "welcome",
+        "title"             => "Welcome",
+        "description"       => "About welcome.",
+        "module"            => "Getting started",
+        "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
+        "content"           => "Read http://www.example.com/llms.txt\n"
+      )
     end
 
     it "returns 404 with an error for an unknown lesson" do

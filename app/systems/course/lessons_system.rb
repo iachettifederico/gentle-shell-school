@@ -11,6 +11,10 @@ module Course
       catalog.find(slug)
     end
 
+    def lesson_groups
+      lessons.group_by(&:module_name)
+    end
+
     private
 
     def catalog

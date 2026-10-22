@@ -3,6 +3,7 @@ title: "MCP and codemode"
 slug: mcp-and-codemode
 description: "Connect external tool servers and compose bounded tool work with scripts."
 order: 25
+module: "Power user"
 quiz: true
 agent_instructions: |
   Teach MCP as a tool/resource connection boundary and codemode as a constrained

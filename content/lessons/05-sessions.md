@@ -3,6 +3,7 @@ title: "Sessions and Context"
 slug: sessions
 description: "Use Pi's JSONL session trees, branches, and compaction without losing the thread of work."
 order: 5
+module: "Foundations"
 quiz: true
 agent_instructions: |
   Teach sessions as persisted JSONL trees whose active branch supplies model

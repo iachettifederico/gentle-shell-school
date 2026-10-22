@@ -3,6 +3,7 @@ title: "Background Work"
 slug: background-work
 description: "Run and observe long-lived work without wasting turns polling it."
 order: 16
+module: "Delegation"
 quiz: true
 agent_instructions: |
   Teach the difference between a background command and a monitor, why events

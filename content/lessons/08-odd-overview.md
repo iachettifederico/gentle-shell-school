@@ -3,6 +3,7 @@ title: "Organic Driven Development"
 slug: odd-overview
 description: "Use ODD to turn an authorized request into recoverable, proportionate work."
 order: 8
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach Organic Driven Development as a proportional workflow rather than a

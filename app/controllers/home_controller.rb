@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render locals: { lessons: lessons_system.lessons }
+    render locals: { lesson_groups: lessons_system.lesson_groups }
   end
 end

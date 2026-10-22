@@ -9,5 +9,6 @@ RSpec.describe "Course content" do
 
     expect(system.lessons).not_to be_empty
     expect(system.lessons.first.slug).to eq("welcome")
+    expect(system.lessons.map(&:module_name)).to all(match(/\S/))
   end
 end

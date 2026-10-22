@@ -22,15 +22,23 @@
   </div>
 
   <h2 class="mt-12 text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lessons</h2>
-  <ol class="mt-4 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
-    <% lessons.each do |lesson| %>
-      <li data-progress-target="lesson" data-lesson-slug="<%= lesson.slug %>" class="px-6 py-4">
-        <a href="<%= lesson_path(lesson.slug) %>" data-lesson class="text-lg font-medium text-slate-900 hover:text-emerald-700">
-          <%= lesson.title %>
-        </a>
-        <span data-progress-target="completion" data-lesson-slug="<%= lesson.slug %>" hidden aria-label="Completed" class="ml-2 text-emerald-700">✓</span>
-        <p class="mt-1 text-sm text-slate-600"><%= lesson.description %></p>
-      </li>
-    <% end %>
-  </ol>
+  <% lesson_groups.each do |module_name, lessons| %>
+    <div class="mt-6">
+      <h3 data-module-name="<%= module_name %>" class="flex items-center justify-between text-xl font-semibold text-slate-900">
+        <%= module_name %>
+        <span hidden data-module-total="<%= lessons.size %>" data-progress-module-count class="text-sm font-normal text-slate-600"><%= "0/#{lessons.size} done" %></span>
+      </h3>
+      <ol class="mt-3 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+        <% lessons.each do |lesson| %>
+          <li data-progress-target="lesson" data-lesson-slug="<%= lesson.slug %>" class="px-6 py-4">
+            <a href="<%= lesson_path(lesson.slug) %>" data-lesson class="text-lg font-medium text-slate-900 hover:text-emerald-700">
+              <%= lesson.title %>
+            </a>
+            <span data-progress-target="completion" data-lesson-slug="<%= lesson.slug %>" hidden aria-label="Completed" class="ml-2 text-emerald-700">✓</span>
+            <p class="mt-1 text-sm text-slate-600"><%= lesson.description %></p>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
 </section>

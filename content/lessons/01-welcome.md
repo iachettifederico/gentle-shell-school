@@ -3,6 +3,7 @@ title: "Welcome"
 slug: welcome
 description: "Meet Gentle Shell School and how your agent will teach you."
 order: 1
+module: "Getting started"
 quiz: false
 agent_instructions: |
   This lesson is complete once the student is talking to you through

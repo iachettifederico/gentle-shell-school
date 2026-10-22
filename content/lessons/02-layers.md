@@ -3,6 +3,7 @@ title: "The Layers of Gentle Shell"
 slug: layers
 description: "Distinguish Pi, gentle-shell, gentle-pi, Gentle AI, and optional companions."
 order: 2
+module: "Foundations"
 quiz: true
 agent_instructions: |
   Teach the product layers as separate responsibilities: Pi is the agent runtime,

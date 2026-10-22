@@ -15,19 +15,23 @@ module LessonFixtures
     end
   end
 
-  def lesson_markdown(slug:, order:, title:, body:, quiz: false)
+  def lesson_markdown(slug:, order:, title:, body:, **options)
     <<~MD
       ---
       title: "#{title}"
       slug: #{slug}
       description: "About #{title.downcase}."
       order: #{order}
-      quiz: #{quiz}
-      agent_instructions: |
+      quiz: #{options.fetch(:quiz, false)}
+      #{module_frontmatter(options[:module_name])}agent_instructions: |
         Verify #{slug} at {origin}/lessons/#{slug}.
       ---
 
       #{body}
     MD
+  end
+
+  def module_frontmatter(module_name)
+    "module: #{module_name}\n" if module_name
   end
 end

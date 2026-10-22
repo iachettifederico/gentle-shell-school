@@ -3,6 +3,7 @@ title: "Focused Subagents"
 slug: subagents
 description: "Delegate bounded work without giving up ownership of the outcome."
 order: 14
+module: "Delegation"
 quiz: true
 agent_instructions: |
   Teach why focused subagents are a coordination tool rather than a way to

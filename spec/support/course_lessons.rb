@@ -6,8 +6,10 @@ require_relative "../../app/domain/course/catalog"
 
 # Builds domain lessons for specs without loading Rails.
 module CourseLessons
-  def build_lesson(slug: "welcome", order: 1, quiz: false, **content)
-    Course::Lesson.new(slug: slug, order: order, quiz: quiz, content: build_lesson_content(**content))
+  def build_lesson(slug: "welcome", order: 1, quiz: false, module_name: nil, **content)
+    Course::Lesson.new(
+      slug: slug, order: order, quiz: quiz, module_name: module_name, content: build_lesson_content(**content)
+    )
   end
 
   def build_lesson_content(**overrides)

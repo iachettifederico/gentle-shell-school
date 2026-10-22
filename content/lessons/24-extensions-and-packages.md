@@ -3,6 +3,7 @@ title: "Extensions and packages"
 slug: extensions-and-packages
 description: "Add trusted executable behavior to Pi and distribute related resources together."
 order: 24
+module: "Power user"
 quiz: true
 agent_instructions: |
   Teach the difference between instructions, extensions, and packages; explain

@@ -3,6 +3,7 @@ title: "Feature Tracking"
 slug: feature-tracking
 description: "Keep large work recoverable with one feature document, a memory mirror, and a todo projection."
 order: 11
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach the anatomy and authority boundaries of an ODD feature document. Explain

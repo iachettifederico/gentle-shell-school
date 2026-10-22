@@ -3,6 +3,7 @@ title: "Multi-session coordination"
 slug: multi-session
 description: "Coordinate active orchestrator sessions without mistaking metadata for authority."
 order: 23
+module: "Power user"
 quiz: true
 agent_instructions: |
   Teach cross-session coordination as a way to discover context and reduce

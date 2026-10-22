@@ -3,6 +3,7 @@ title: "Capstone: a small feature end to end"
 slug: capstone
 description: "Lead a small scratch-repository feature through ODD, evidence, delegation, and review."
 order: 27
+module: "Power user"
 quiz: true
 agent_instructions: |
   Guide the student through a real small feature in a scratch repository. Do

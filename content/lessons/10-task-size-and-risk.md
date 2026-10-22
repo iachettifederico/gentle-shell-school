@@ -3,6 +3,7 @@ title: "Task Size and Risk"
 slug: task-size-and-risk
 description: "Classify work by understanding, resumability, and consequences—not counts."
 order: 10
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach the small/large classification and the high-risk list. Make clear that

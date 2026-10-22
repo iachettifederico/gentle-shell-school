@@ -3,6 +3,7 @@ title: "Authorize and Explore"
 slug: authorize-and-explore
 description: "Separate permission to investigate from permission to change a project."
 order: 9
+module: "Organic Driven Development"
 quiz: true
 agent_instructions: |
   Teach the authorization boundary and proportionate exploration. Emphasize that
