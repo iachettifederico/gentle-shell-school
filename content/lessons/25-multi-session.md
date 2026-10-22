@@ -24,8 +24,11 @@ agent_instructions: |
   Concrete setup check: ask the student to call orchestrator_session_id with a
   short non-sensitive subject and then use orchestrator_list without arguments;
   have them identify their current alias and stable routing ID in the result.
-  Done means the student can state what their session publishes, what a peer can
-  safely infer, and when to consult versus message.
+  Then demonstrate the course study-partner flow: have the student name their
+  work-session subject, use orchestrator_list and metadata orchestrator_consult to
+  follow published progress, and ask for model-cost permission before any reasoning
+  consult. Done means the student can state what their session publishes, what a
+  peer can safely infer, and when to consult versus message.
 ---
 
 # Multi-session coordination

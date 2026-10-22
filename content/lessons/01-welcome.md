@@ -14,7 +14,9 @@ agent_instructions: |
   `open-gentle-shell` next; they install Gentle Shell and hand the student's
   anonymous student ID to it. If you are gentle-shell, follow the conditional
   instructions in `install-gentle-shell`, which verify that fact and skip both
-  setup lessons. Course lessons are listed at {origin}/api/lessons. When
+  setup lessons; then mention that the packaged course tutor is installed with
+  `pi install git:github.com/iachettifederico/gentle-shell-school` and started
+  with `/school`. Course lessons are listed at {origin}/api/lessons. When
   something in a lesson is wrong, follow the Reporting problems section of
   {origin}/llms.txt.
 ---
@@ -36,6 +38,13 @@ questions where appropriate, and verifies your real setup before marking a
 lesson complete. If that first agent is not gentle-shell, the next two lessons
 help you install and open Gentle Shell, then transfer your course progress to
 its agent.
+
+Already using gentle-shell? Install the course tutor package, restart Pi, then
+use `/school` to begin or continue the course:
+
+```sh
+pi install git:github.com/iachettifederico/gentle-shell-school
+```
 
 Found a problem? Your agent can report it as a GitHub issue with your consent,
 or use the "Report a problem" link.

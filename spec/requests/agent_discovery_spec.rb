@@ -29,6 +29,8 @@ RSpec.describe "Agent discovery", type: :request do
       expect(response.body).to include("gh issue create --repo iachettifederico/gentle-shell-school")
       expect(response.body).to include("issues/new?template=course-feedback.yml")
       expect(response.body).to include('"Log in with gh now", "Open a prefilled link in my browser", "Skip reporting"')
+      expect(response.body).to include("pi install git:github.com/iachettifederico/gentle-shell-school")
+      expect(response.body).to include("/school")
       expect(response.body).not_to include("Progress tracking is not available yet")
       expect(response.body).not_to include("{origin}")
     end

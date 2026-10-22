@@ -34,6 +34,18 @@ To compare the original course on `main` with the improved course on
 `COURSE=demo make server`. The same local demo lessons make the course behavior
 comparable without affecting either production course.
 
+## Course skill
+
+Install the Pi package and restart Pi:
+
+```sh
+pi install git:github.com/iachettifederico/gentle-shell-school
+```
+
+Then use `/school` to start or continue the course, or `/school <lesson-slug>`
+to choose a lesson. `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`
+forwards the same Pi install command to the selected Gentle Shell home.
+
 ## Writing a lesson
 
 Lessons are Markdown files in `content/lessons/`, not database rows. The file

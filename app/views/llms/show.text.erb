@@ -2,6 +2,10 @@
 
 Gentle Shell School is a free, self-paced course that teaches people how to use gentle-shell, the coding-agent harness built on Pi. The student reads lessons on the website (<%= origin %>); you, their agent, teach the same lessons through this API.
 
+## Use the course skill
+
+Install the packaged tutor with `pi install git:github.com/iachettifederico/gentle-shell-school`, then restart Pi and run `/school` (or `/school <lesson-slug>`). In Gentle Shell, `gentle-shell install git:github.com/iachettifederico/gentle-shell-school` forwards Pi's install command to the selected agent home.
+
 ## Progress
 
 Start with the enrollment handshake: POST <%= origin %>/api/enrollments, give the student the returned `enrollUrl`, and explain that enrolling is voluntary. When they say they enrolled (or every few seconds until `expiresAt`), check GET <%= origin %>/api/enrollments/{code}. Once it says `enrolled`, use its `studentId`. If they decline, teach without progress tracking.

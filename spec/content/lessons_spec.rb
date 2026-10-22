@@ -30,4 +30,15 @@ RSpec.describe "Course content" do
     expect(system.lessons.map(&:module_name)).to all(eq("Demo"))
     expect(system.lessons.map(&:slug)).to eq(%w[demo-welcome demo-quiz-and-check demo-feedback])
   end
+
+  it "ships a discoverable Pi course skill and prompt" do
+    package = JSON.parse(Rails.root.join("package.json").read)
+    skill_path = Rails.root.join("agent/skills/gentle-shell-school/SKILL.md")
+
+    expect(package.dig("pi", "skills")).to eq([ "./agent/skills" ])
+    expect(package.dig("pi", "prompts")).to eq([ "./agent/prompts/*.md" ])
+    expect(skill_path).to exist
+    expect(skill_path.read).to match(/^---\nname: gentle-shell-school\ndescription: .+\n/m)
+    expect(Rails.root.join("agent/prompts/school.md")).to exist
+  end
 end
