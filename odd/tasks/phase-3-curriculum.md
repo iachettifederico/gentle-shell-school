@@ -50,17 +50,17 @@ Order = file prefix. `01-welcome.md` already exists. Modules are a writing group
 
 ## Tasks
 
-- [x] T1 — Module A lessons 02–07. S1, S3. Route: gentle-ai-worker (openai-codex/gpt-5.6-terra). Commit: `486589d`
-- [x] T2 — Module B lessons 08–13. S1, S3. Route: gentle-ai-worker. Commit: `79344a1`
-- [x] T3 — Module C lessons 14–16. S1, S2, S3. Route: gentle-ai-worker. Commit: `aa552bf`
-- [x] T4 — Module D lessons 17–19. S1, S3. Route: gentle-ai-worker. Commit: `3a4b514`
-- [x] T5 — Module E lessons 20–22. S1, S3. Route: gentle-ai-worker. Commit: `7ffffe7`
-- [x] T6 — Module F lessons 23–27. S1, S3. Route: gentle-ai-worker. Commit: `2d2dd99`
+- [x] T1 — Module A lessons 02–07. S1, S3. Route: gentle-ai-worker (openai-codex/gpt-5.6-terra). Commit: `265505e`
+- [x] T2 — Module B lessons 08–13. S1, S3. Route: gentle-ai-worker. Commit: `6f24f85`
+- [x] T3 — Module C lessons 14–16. S1, S2, S3. Route: gentle-ai-worker. Commit: `870896b`
+- [x] T4 — Module D lessons 17–19. S1, S3. Route: gentle-ai-worker. Commit: `19385e7`
+- [x] T5 — Module E lessons 20–22. S1, S3. Route: gentle-ai-worker. Commit: `04652ed`
+- [x] T6 — Module F lessons 23–27. S1, S3. Route: gentle-ai-worker. Commit: `9301448`
 - [x] T7 — Fact check every lesson against sources; fix inaccuracies. S1, S3. Route: 3× gentle-ai-verify (openai-codex/gpt-6-sol) find, gentle-ai-worker fixes. Commit: fixes folded into the module commits above
 
 ### Slices
 
-Content-only, one commit per module (lesson files are independent; each module is one review unit): A `486589d` (1046 lines), B `79344a1` (960), C `aa552bf` (441), D `3a4b514` (504), E `7ffffe7` (562), F `2d2dd99` (834). Total ~4.3k lines of Markdown; no code changed.
+Content-only, one commit per module (lesson files are independent; each module is one review unit): A `265505e` (1046 lines), B `6f24f85` (960), C `870896b` (441), D `19385e7` (504), E `04652ed` (562), F `9301448` (834). Total ~4.3k lines of Markdown; no code changed.
 
 ## Conventions for workers
 

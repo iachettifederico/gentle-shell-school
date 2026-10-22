@@ -1,7 +1,7 @@
 # Phase 2 — anonymous enrollment and progress tracking
 
 Students enroll anonymously, get a student ID, and their agent marks lessons complete through the API; the website shows progress. Mirrors opencode.school's `/api/enroll`, `/api/progress/{studentId}`, `/api/instructions/{studentId}`.
-Branch: `feat/phase-2-progress` (from `feat/phase-1-lessons` @ `4156c19`). Delivery: `feature-branch-chain` (same choice as phase 1, L8 there).
+Branch: `feat/phase-2-progress` (from `feat/phase-1-lessons` @ `0bd2ea8`). Delivery: `feature-branch-chain` (same choice as phase 1, L8 there).
 
 ## Specs
 
@@ -18,19 +18,19 @@ Branch: `feat/phase-2-progress` (from `feat/phase-1-lessons` @ `4156c19`). Deliv
 
 ## Tasks
 
-- [x] T1 — Domain: `Course::StudentId` (generate with an injected random source, `valid?`), `Course::StudentProgress` aggregate (complete idempotently, uncomplete, reset, clock injected), completion source policy. S1, S4, S5, S6. Route: gentle-ai-worker (context backstop). Commit: `0f089e0`.
-- [x] T2 — Persistence + system: migration (`students`, `lesson_completions`, unique index on student+slug), Active Record models, progress repository adapter, `Course::ProgressSystem` (enroll with collision retry, find, complete/uncomplete/reset validating slugs against the lesson catalog, transactions). S1–S6. Risk: item 1 (new tables, deletes on reset) → own commit. Route: gentle-ai-worker. Commit: `e69078c`.
-- [x] T3 — API: enroll, progress GET/PUT/DELETE, instructions, CORS/preflight, OpenAPI, llms.txt, README. S2–S8, S10. Route: gentle-ai-worker. Commit: `871e2db`.
-- [x] T4 — Website: enroll button, localStorage ID, forget action, checkmarks via Stimulus. S9. Route: gentle-ai-worker. Commit: `28dddd4`.
+- [x] T1 — Domain: `Course::StudentId` (generate with an injected random source, `valid?`), `Course::StudentProgress` aggregate (complete idempotently, uncomplete, reset, clock injected), completion source policy. S1, S4, S5, S6. Route: gentle-ai-worker (context backstop). Commit: `961587f`.
+- [x] T2 — Persistence + system: migration (`students`, `lesson_completions`, unique index on student+slug), Active Record models, progress repository adapter, `Course::ProgressSystem` (enroll with collision retry, find, complete/uncomplete/reset validating slugs against the lesson catalog, transactions). S1–S6. Risk: item 1 (new tables, deletes on reset) → own commit. Route: gentle-ai-worker. Commit: `301b1d0`.
+- [x] T3 — API: enroll, progress GET/PUT/DELETE, instructions, CORS/preflight, OpenAPI, llms.txt, README. S2–S8, S10. Route: gentle-ai-worker. Commit: `3035707`.
+- [x] T4 — Website: enroll button, localStorage ID, forget action, checkmarks via Stimulus. S9. Route: gentle-ai-worker. Commit: `416f717`.
 
 Forecast: ~900 authored changed lines → 3–4 slices on the chain.
 
 ### Slices (feature-branch chain, continuing phase 1's three)
 
-4. `4156c19` build: Rails main configuration (from distribute). Risk: item 5.
-5. `0f089e0` + `e69078c` domain + persistence (T1, T2). Risk: item 1 (new tables, deletes) — independently verified (L6).
-6. `871e2db` progress API + docs (T3).
-7. `28dddd4` website enrollment + checkmarks (T4).
+4. `0bd2ea8` build: Rails main configuration (from distribute). Risk: item 5.
+5. `961587f` + `301b1d0` domain + persistence (T1, T2). Risk: item 1 (new tables, deletes) — independently verified (L6).
+6. `3035707` progress API + docs (T3).
+7. `416f717` website enrollment + checkmarks (T4).
 
 ## Conventions for workers
 

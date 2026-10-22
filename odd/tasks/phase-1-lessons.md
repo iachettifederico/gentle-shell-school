@@ -15,18 +15,18 @@ Selected scope (user choice, verbatim): "Yes, phase 1 with SQLite" — "Generate
 ## Tasks
 
 - [x] T0 — Generate app from rails-starter-template (SQLite). Route: inline. Commit: `8d189d8`.
-- [x] T1 — Domain: `Course::Lesson`, `Course::LessonContent`, `Course::Catalog`, agent-instruction policy (quiz boilerplate, `{origin}`). S1, S3. Route: inline. Commit: `b37550d`.
-- [x] T2 — Adapter + system: file lesson repository, `Course::LessonsSystem` facade, seed `welcome` lesson. S1. Route: inline. Commit: `b37550d`.
-- [x] T3 — HTML: home lesson list, `/lessons/:slug`, Markdown rendering (commonmarker). S2. Route: inline. Commit: `a0c5f04`.
-- [x] T4 — API: `/api/lessons`, `/api/lessons/:slug`, CORS, `/llms.txt`, `/api/openapi.json`. S3, S4. Route: inline. Commit: `f5f975e`.
+- [x] T1 — Domain: `Course::Lesson`, `Course::LessonContent`, `Course::Catalog`, agent-instruction policy (quiz boilerplate, `{origin}`). S1, S3. Route: inline. Commit: `fb04490`.
+- [x] T2 — Adapter + system: file lesson repository, `Course::LessonsSystem` facade, seed `welcome` lesson. S1. Route: inline. Commit: `fb04490`.
+- [x] T3 — HTML: home lesson list, `/lessons/:slug`, Markdown rendering (commonmarker). S2. Route: inline. Commit: `138bc63`.
+- [x] T4 — API: `/api/lessons`, `/api/lessons/:slug`, CORS, `/llms.txt`, `/api/openapi.json`. S3, S4. Route: inline. Commit: `4d1d1bf`.
 
 Forecast: ~700 authored changed lines across T1–T4. Actual: ~1,160 (hook count, lock files excluded).
 
 ### Slices (feature-branch chain)
 
-1. PR 1 — `b37550d` domain + file-backed lessons (T1, T2).
-2. PR 2 — `a0c5f04` lesson pages + Markdown rendering (T3). Risk: item 5 (new dependency `commonmarker`), item 2 (HTML rendering of authored content).
-3. PR 3 — `f5f975e` agent API, llms.txt, OpenAPI, README (T4). Risk: none beyond a public read-only CORS API serving lesson content only.
+1. PR 1 — `fb04490` domain + file-backed lessons (T1, T2).
+2. PR 2 — `138bc63` lesson pages + Markdown rendering (T3). Risk: item 5 (new dependency `commonmarker`), item 2 (HTML rendering of authored content).
+3. PR 3 — `4d1d1bf` agent API, llms.txt, OpenAPI, README (T4). Risk: none beyond a public read-only CORS API serving lesson content only.
 
 ## Log
 
