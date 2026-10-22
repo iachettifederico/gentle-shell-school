@@ -2,7 +2,7 @@
 title: "Permission modes"
 slug: permission-modes
 description: "Choose Normal, Auto, or YOLO without confusing convenience for a security boundary."
-order: 20
+order: 22
 module: "Safety and review"
 quiz: true
 agent_instructions: |

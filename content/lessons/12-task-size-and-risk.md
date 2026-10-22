@@ -2,7 +2,7 @@
 title: "Task Size and Risk"
 slug: task-size-and-risk
 description: "Classify work by understanding, resumability, and consequences—not counts."
-order: 10
+order: 12
 module: "Organic Driven Development"
 quiz: true
 agent_instructions: |

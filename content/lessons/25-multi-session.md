@@ -2,7 +2,7 @@
 title: "Multi-session coordination"
 slug: multi-session
 description: "Coordinate active orchestrator sessions without mistaking metadata for authority."
-order: 23
+order: 25
 module: "Power user"
 quiz: true
 agent_instructions: |

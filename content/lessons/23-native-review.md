@@ -2,7 +2,7 @@
 title: "Native review"
 slug: native-review
 description: "Review a frozen candidate through independent lenses while keeping delivery decisions in repository policy."
-order: 21
+order: 23
 module: "Safety and review"
 quiz: true
 agent_instructions: |

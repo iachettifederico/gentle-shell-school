@@ -2,7 +2,7 @@
 title: "Customization"
 slug: customization
 description: "Customize Pi and Gentle Shell deliberately while preserving clear configuration boundaries."
-order: 26
+order: 28
 module: "Power user"
 quiz: true
 agent_instructions: |

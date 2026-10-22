@@ -2,7 +2,7 @@
 title: "Background Work"
 slug: background-work
 description: "Run and observe long-lived work without wasting turns polling it."
-order: 16
+order: 18
 module: "Delegation"
 quiz: true
 agent_instructions: |

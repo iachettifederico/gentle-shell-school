@@ -2,7 +2,7 @@
 title: "Focused Subagents"
 slug: subagents
 description: "Delegate bounded work without giving up ownership of the outcome."
-order: 14
+order: 16
 module: "Delegation"
 quiz: true
 agent_instructions: |

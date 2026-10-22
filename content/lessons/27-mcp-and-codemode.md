@@ -2,7 +2,7 @@
 title: "MCP and codemode"
 slug: mcp-and-codemode
 description: "Connect external tool servers and compose bounded tool work with scripts."
-order: 25
+order: 27
 module: "Power user"
 quiz: true
 agent_instructions: |

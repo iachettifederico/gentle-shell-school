@@ -2,7 +2,7 @@
 title: "Feature Tracking"
 slug: feature-tracking
 description: "Keep large work recoverable with one feature document, a memory mirror, and a todo projection."
-order: 11
+order: 13
 module: "Organic Driven Development"
 quiz: true
 agent_instructions: |

@@ -2,7 +2,7 @@
 title: "Writing Skills"
 slug: writing-skills
 description: "Create concise, reusable LLM instruction contracts that make recurring work safer and clearer."
-order: 19
+order: 21
 module: "Memory and skills"
 quiz: true
 agent_instructions: |

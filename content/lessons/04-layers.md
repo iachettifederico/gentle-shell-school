@@ -2,7 +2,7 @@
 title: "The Layers of Gentle Shell"
 slug: layers
 description: "Distinguish Pi, gentle-shell, gentle-pi, Gentle AI, and optional companions."
-order: 2
+order: 4
 module: "Foundations"
 quiz: true
 agent_instructions: |

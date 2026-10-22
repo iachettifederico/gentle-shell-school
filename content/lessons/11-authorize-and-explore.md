@@ -2,7 +2,7 @@
 title: "Authorize and Explore"
 slug: authorize-and-explore
 description: "Separate permission to investigate from permission to change a project."
-order: 9
+order: 11
 module: "Organic Driven Development"
 quiz: true
 agent_instructions: |

@@ -2,7 +2,7 @@
 title: "Judgment day"
 slug: judgment-day
 description: "Use a bounded blind dual adversarial review without turning reviewer output into delivery authority."
-order: 22
+order: 24
 module: "Safety and review"
 quiz: true
 agent_instructions: |

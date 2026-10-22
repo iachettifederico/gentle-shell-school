@@ -2,7 +2,7 @@
 title: "Engram Memory"
 slug: engram-memory
 description: "Use optional persistent memory to preserve verified context across Pi sessions."
-order: 17
+order: 19
 module: "Memory and skills"
 quiz: true
 agent_instructions: |

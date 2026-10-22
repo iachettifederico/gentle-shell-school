@@ -2,7 +2,7 @@
 title: "Install, Check, Update, and Remove"
 slug: install-and-update
 description: "Choose an installation path and maintain it without confusing Pi and Gentle Shell updates."
-order: 3
+order: 5
 module: "Foundations"
 quiz: true
 agent_instructions: |

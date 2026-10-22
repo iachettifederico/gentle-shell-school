@@ -2,7 +2,7 @@
 title: "Organic Driven Development"
 slug: odd-overview
 description: "Use ODD to turn an authorized request into recoverable, proportionate work."
-order: 8
+order: 10
 module: "Organic Driven Development"
 quiz: true
 agent_instructions: |

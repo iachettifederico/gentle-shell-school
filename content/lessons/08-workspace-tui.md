@@ -2,7 +2,7 @@
 title: "The Workspace and Terminal UI"
 slug: workspace-tui
 description: "Navigate Pi and Gentle Shell's terminal workspace without mistaking views for hidden automation."
-order: 6
+order: 8
 module: "Foundations"
 quiz: true
 agent_instructions: |

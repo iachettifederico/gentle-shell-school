@@ -2,7 +2,7 @@
 title: "The Agent Loop"
 slug: agent-loop
 description: "Understand how Pi turns your message into model requests, tool calls, and recorded evidence."
-order: 4
+order: 6
 module: "Foundations"
 quiz: true
 agent_instructions: |

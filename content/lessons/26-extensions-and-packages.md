@@ -2,7 +2,7 @@
 title: "Extensions and packages"
 slug: extensions-and-packages
 description: "Add trusted executable behavior to Pi and distribute related resources together."
-order: 24
+order: 26
 module: "Power user"
 quiz: true
 agent_instructions: |
