@@ -26,6 +26,23 @@ RSpec.describe Course::Catalog do
     expect(catalog.find("missing")).to be_nil
   end
 
+  it "finds the lessons immediately before and after a lesson by order" do
+    welcome = lesson("welcome", 1)
+    odd = lesson("odd", 2)
+    sessions = lesson("sessions", 3)
+    catalog = described_class.new([ sessions, welcome, odd ])
+
+    expect(catalog.neighbors_for("odd")).to eq([ welcome, sessions ])
+    expect(catalog.neighbors_for("welcome")).to eq([ nil, odd ])
+    expect(catalog.neighbors_for("sessions")).to eq([ odd, nil ])
+  end
+
+  it "has no neighbors for an unknown lesson" do
+    catalog = described_class.new([ lesson("welcome", 1) ])
+
+    expect(catalog.neighbors_for("missing")).to eq([ nil, nil ])
+  end
+
   it "rejects duplicate slugs" do
     expect { described_class.new([ lesson("welcome", 1), lesson("welcome", 2) ]) }
       .to raise_error(Course::InvalidLesson, /duplicate lesson slug "welcome"/)

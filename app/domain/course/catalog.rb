@@ -17,6 +17,13 @@ module Course
       @lessons.find { |lesson| lesson.slug == slug }
     end
 
+    def neighbors_for(slug)
+      index = @lessons.index { |lesson| lesson.slug == slug }
+      return [ nil, nil ] unless index
+
+      [ index.zero? ? nil : @lessons[index - 1], @lessons[index + 1] ]
+    end
+
     private
 
     def reject_duplicates(attribute)

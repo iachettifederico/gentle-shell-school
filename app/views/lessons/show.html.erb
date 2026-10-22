@@ -1,9 +1,37 @@
 <% content_for :title, "#{lesson.title} · Gentle Shell School" %>
 
-<p class="text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lesson <%= lesson.order %></p>
-<h1 class="mt-2 text-4xl font-semibold tracking-tight text-slate-950"><%= lesson.title %></h1>
-<p class="mt-3 text-lg text-slate-600"><%= lesson.description %></p>
+<section data-controller="progress" data-progress-lesson-slug-value="<%= lesson.slug %>">
+  <% if lesson.module_name.present? %>
+    <p data-lesson-module class="text-sm font-mono uppercase tracking-[0.15em] text-emerald-700"><%= lesson.module_name %></p>
+  <% end %>
+  <p class="mt-2 text-sm font-mono uppercase tracking-[0.15em] text-slate-500">Lesson <%= lesson.order %></p>
+  <h1 class="mt-2 text-4xl font-semibold tracking-tight text-slate-950"><%= lesson.title %></h1>
+  <p class="mt-3 text-lg text-slate-600"><%= lesson.description %></p>
 
-<article class="prose prose-slate mt-10 max-w-none">
-  <%= sanitize body_html %>
-</article>
+  <div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+    <p data-progress-target="enrollmentPrompt" class="text-sm text-slate-700">Track your progress by <a href="<%= root_path %>" class="font-medium text-emerald-700 underline hover:text-emerald-900">enrolling on the home page</a>.</p>
+    <div data-progress-target="lessonProgress" hidden>
+      <p data-progress-target="status" class="text-sm font-medium text-slate-800"></p>
+      <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="mt-3 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800"></button>
+    </div>
+  </div>
+
+  <article class="prose prose-slate mt-10 max-w-none">
+    <%= sanitize body_html %>
+  </article>
+
+  <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+    <h2 class="text-lg font-semibold text-slate-950">Teach me this lesson</h2>
+    <p data-teach-me-prompt class="mt-2 font-mono text-sm leading-6 text-slate-700"><%= teach_me_prompt %></p>
+    <button type="button" data-action="progress#copy" data-prompt="<%= teach_me_prompt %>" class="mt-4 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">Copy</button>
+  </div>
+
+  <nav data-lesson-navigation class="mt-10 flex flex-wrap justify-between gap-4 border-t border-slate-200 pt-6">
+    <% if previous_lesson %>
+      <%= link_to "Previous: #{previous_lesson.title}", lesson_path(previous_lesson.slug), class: "font-medium text-emerald-700 hover:text-emerald-900" %>
+    <% end %>
+    <% if next_lesson %>
+      <%= link_to "Next: #{next_lesson.title}", lesson_path(next_lesson.slug), class: "font-medium text-emerald-700 hover:text-emerald-900" %>
+    <% end %>
+  </nav>
+</section>

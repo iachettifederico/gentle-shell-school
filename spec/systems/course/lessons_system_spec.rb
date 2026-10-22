@@ -29,6 +29,13 @@ RSpec.describe Course::LessonsSystem do
     expect(system.find_lesson("welcome")).to eq(welcome)
   end
 
+  it "exposes the lessons adjacent to a lesson" do
+    odd = build_lesson(slug: "odd", order: 2)
+    repository = instance_double("Course::FileLessonRepository", catalog: Course::Catalog.new([ welcome, odd ]))
+
+    expect(described_class.new(repository: repository).lesson_neighbors("welcome")).to eq([ nil, odd ])
+  end
+
   it "returns nil for an unknown slug" do
     expect(system.find_lesson("missing")).to be_nil
   end

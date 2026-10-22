@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["enrollButton", "student", "studentId", "instructionsUrl", "forgetButton", "lesson", "completion"]
+  static targets = ["enrollButton", "student", "studentId", "instructionsUrl", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
+  static values = { lessonSlug: String }
 
   connect() {
     const studentId = localStorage.getItem("studentId")
@@ -23,32 +24,115 @@ export default class extends Controller {
 
   forget() {
     localStorage.removeItem("studentId")
-    this.enrollButtonTarget.hidden = false
-    this.studentTarget.hidden = true
-    this.showProgress({ completedLessons: [] })
+    if (this.hasEnrollButtonTarget) this.enrollButtonTarget.hidden = false
+    if (this.hasStudentTarget) this.studentTarget.hidden = true
+    if (this.hasEnrollmentPromptTarget) this.enrollmentPromptTarget.hidden = false
+    if (this.hasLessonProgressTarget) this.lessonProgressTarget.hidden = true
+    this.showCompletions([])
+    this.hideModuleCounts()
   }
 
   async fetchProgress(studentId) {
     const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`)
-    if (response.status === 400 || response.status === 404) {
-      this.forget()
-      return
-    }
+    if (this.staleStudent(response)) return
     if (response.ok) this.showProgress(await response.json())
   }
 
+  async toggleCompletion() {
+    const studentId = localStorage.getItem("studentId")
+    if (!studentId || !this.hasLessonSlugValue) return
+
+    const completed = this.statusTarget.textContent === "Completed ✓"
+    const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`, this.progressRequest(completed))
+    if (this.staleStudent(response)) return
+    if (response.ok) this.showProgress(await response.json())
+  }
+
+  copy(event) {
+    navigator.clipboard.writeText(event.currentTarget.dataset.prompt)
+    event.currentTarget.textContent = "Copied"
+    setTimeout(() => { event.currentTarget.textContent = "Copy" }, 1200)
+  }
+
   showStudent(studentId) {
-    this.enrollButtonTarget.hidden = true
-    this.studentTarget.hidden = false
-    this.studentIdTarget.textContent = studentId
-    this.instructionsUrlTarget.href = `/api/instructions/${encodeURIComponent(studentId)}`
-    this.instructionsUrlTarget.textContent = this.instructionsUrlTarget.href
+    if (this.hasEnrollButtonTarget) this.enrollButtonTarget.hidden = true
+    if (this.hasStudentTarget) this.studentTarget.hidden = false
+    if (this.hasStudentIdTarget) this.studentIdTarget.textContent = studentId
+    if (this.hasInstructionsUrlTarget) this.showInstructionsUrl(studentId)
   }
 
   showProgress(progress) {
     const completedSlugs = progress.completedLessons.map((completion) => completion.slug)
+    this.showCompletions(completedSlugs)
+    this.showLessonProgress(completedSlugs)
+    this.showHomeProgress(completedSlugs)
+  }
+
+  progressRequest(completed) {
+    const options = { method: completed ? "DELETE" : "PUT", headers: { "Content-Type": "application/json" } }
+    options.body = JSON.stringify(completed ? { lessonSlug: this.lessonSlugValue } : { lessonSlug: this.lessonSlugValue, source: "browser" })
+    return options
+  }
+
+  staleStudent(response) {
+    if (response.status !== 400 && response.status !== 404) return false
+
+    this.forget()
+    return true
+  }
+
+  showInstructionsUrl(studentId) {
+    const url = `/api/instructions/${encodeURIComponent(studentId)}`
+    this.instructionsUrlTarget.href = url
+    this.instructionsUrlTarget.textContent = new URL(url, window.location.origin).href
+  }
+
+  showCompletions(completedSlugs) {
     this.completionTargets.forEach((completion) => {
       completion.hidden = !completedSlugs.includes(completion.dataset.lessonSlug)
     })
+  }
+
+  showLessonProgress(completedSlugs) {
+    if (!this.hasLessonProgressTarget) return
+
+    const completed = completedSlugs.includes(this.lessonSlugValue)
+    this.enrollmentPromptTarget.hidden = true
+    this.lessonProgressTarget.hidden = false
+    this.statusTarget.textContent = completed ? "Completed ✓" : "Not completed yet"
+    this.completionButtonTarget.textContent = completed ? "Mark not complete" : "Mark complete"
+  }
+
+  showHomeProgress(completedSlugs) {
+    if (!this.hasSummaryTarget) return
+
+    const total = this.lessonTargets.length
+    this.summaryTarget.textContent = completedSlugs.length === total ? "All lessons complete." : `${completedSlugs.length} of ${total} lessons complete`
+    this.showContinueLink(completedSlugs)
+    this.showModuleCounts(completedSlugs)
+  }
+
+  showContinueLink(completedSlugs) {
+    const nextLesson = this.lessonTargets.find((lesson) => !completedSlugs.includes(lesson.dataset.lessonSlug))
+    this.continueTarget.hidden = !nextLesson
+    if (!nextLesson) return
+
+    const link = this.continueTarget.querySelector("a")
+    const lessonLink = nextLesson.querySelector("a[data-lesson]")
+    link.href = lessonLink.href
+    link.textContent = `Continue with: ${lessonLink.textContent.trim()}`
+  }
+
+  showModuleCounts(completedSlugs) {
+    this.element.querySelectorAll("[data-progress-module-count]").forEach((count) => {
+      const moduleLessons = this.lessonTargets.filter((lesson) => lesson.dataset.moduleName === count.dataset.moduleName)
+      const completed = moduleLessons.filter((lesson) => completedSlugs.includes(lesson.dataset.lessonSlug)).length
+      count.textContent = `${completed}/${count.dataset.moduleTotal} done`
+      count.hidden = false
+    })
+  }
+
+  hideModuleCounts() {
+    this.element.querySelectorAll("[data-progress-module-count]").forEach((count) => { count.hidden = true })
   }
 }

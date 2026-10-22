@@ -75,6 +75,30 @@ RSpec.describe "Lesson pages", type: :request do
       expect(page.at_css("title").text).to eq("Organic driven development · Gentle Shell School")
     end
 
+    it "renders navigation, module, and teach-me prompt for the lesson" do
+      with_lessons(lessons) do
+        get "/lessons/odd"
+      end
+
+      expect(response).to have_http_status(:ok)
+      page = response.parsed_body
+      expect(page.at_css("[data-lesson-module]").text.strip).to eq("Foundations")
+      expect(page.css("[data-lesson-navigation] a").map { |link| [ link.text.strip, link["href"] ] })
+        .to eq([[ "Previous: Welcome", "/lessons/welcome" ], [ "Next: Unsafe", "/lessons/unsafe" ]])
+      expect(page.at_css("[data-teach-me-prompt]").text.strip)
+        .to eq('Read http://www.example.com/llms.txt and teach me the "Organic driven development" lesson (odd).')
+    end
+
+    it "omits unavailable previous or next navigation links" do
+      with_lessons(lessons) do
+        get "/lessons/welcome"
+      end
+
+      expect(response).to have_http_status(:ok)
+      navigation = response.parsed_body.css("[data-lesson-navigation] a").map(&:text).map(&:strip)
+      expect(navigation).to eq([ "Next: Organic driven development" ])
+    end
+
     it "resolves {origin} in the body to the request origin" do
       with_lessons(lessons) do
         get "/lessons/welcome"

@@ -1,3 +1,5 @@
+require "active_support/core_ext/module/delegation"
+
 module Course
   # Entry point for reading course lessons from any delivery channel.
   class LessonsSystem
@@ -9,6 +11,10 @@ module Course
 
     def find_lesson(slug)
       catalog.find(slug)
+    end
+
+    def lesson_neighbors(slug)
+      catalog.neighbors_for(slug)
     end
 
     def lesson_groups
