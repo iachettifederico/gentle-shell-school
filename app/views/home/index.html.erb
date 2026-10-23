@@ -1,43 +1,45 @@
 <% content_for :description, t("site.description") %>
 <% completed_placeholder = [ "%", "{completed}" ].join %><% total_placeholder = [ "%", "{total}" ].join %><% title_placeholder = [ "%", "{title}" ].join %>
 <div data-controller="progress" data-progress-copy-label-value="<%= t("home.copy") %>" data-progress-copied-label-value="<%= t("progress.copied") %>" data-progress-not-completed-label-value="<%= t("progress.not_completed") %>" data-progress-mark-incomplete-label-value="<%= t("progress.mark_incomplete") %>" data-progress-mark-complete-label-value="<%= t("progress.mark_complete") %>" data-progress-verified-label-value="<%= t("progress.verified") %>" data-progress-independently-verified-label-value="<%= t("progress.independently_verified") %>" data-progress-all-complete-label-value="<%= t("progress.all_complete") %>" data-progress-complete-count-label-value="<%= t("progress.complete_count", completed: completed_placeholder, total: total_placeholder) %>" data-progress-continue-label-value="<%= t("progress.continue", title: title_placeholder) %>" data-progress-module-count-label-value="<%= t("progress.module_count", completed: completed_placeholder, total: total_placeholder) %>">
-  <section class="relative isolate grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+  <section data-hero class="relative isolate grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
     <div aria-hidden="true" class="pointer-events-none absolute -top-24 -left-24 -z-10 h-80 w-[36rem] max-w-full rounded-full bg-brand-600/20 blur-3xl"></div>
-    <div>
+    <div class="min-w-0">
       <p class="inline-flex rounded-full bg-brand-950 px-3 py-1 font-mono text-xs font-medium text-brand-300 ring-1 ring-brand-500/30"><%= t("home.badge") %></p>
       <h1 class="mt-6 text-5xl leading-[0.95] font-extrabold tracking-[-0.055em] text-fg sm:text-7xl">Gentle <span class="text-brand-500">Shell</span><br>School</h1>
       <p class="mt-6 max-w-xl text-lg leading-8 text-pretty text-fg-muted"><%= t("home.intro") %></p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <a href="#start" data-hero-cta class="btn btn-primary"><%= t("home.start") %></a>
-        <a href="<%= locale_context.llms_path %>" class="btn btn-secondary font-mono">llms.txt</a>
-      </div>
+      <p class="mt-8 max-w-xl text-lg leading-8 font-semibold text-pretty text-fg"><%= t("home.cta_lead") %></p>
+      <p class="mt-2 max-w-xl text-base leading-7 text-pretty text-fg-subtle"><%= t("home.cta_note") %></p>
     </div>
-    <%= render layout: "shared/prompt_card", locals: { id: "start", heading: t("home.start"), prompt: start_prompt, template: start_template, hint: t("home.start_hint"), copy_label: t("home.copy") } do %>
-      <a href="<%= locale_context.lesson_path("install-gentle-shell") %>" class="link text-sm"><%= t("home.need_install") %></a>
-    <% end %>
-  </section>
-
-  <section aria-labelledby="course-heading" class="card mt-16 p-5 sm:p-7">
-    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-      <div class="flex items-start gap-4">
-        <span aria-hidden="true" class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-950 text-brand-400 ring-1 ring-brand-500/30">
-          <svg viewBox="0 0 20 20" fill="currentColor" class="size-5"><path d="M5 2.75A1.75 1.75 0 0 1 6.75 1h6.5A1.75 1.75 0 0 1 15 2.75v15.5a.75.75 0 0 1-1.2.6L10 16.06l-3.8 2.79a.75.75 0 0 1-1.2-.6V2.75Z" /></svg>
-        </span>
+    <div class="grid min-w-0 gap-6">
+    <section aria-labelledby="course-heading" class="card p-5 sm:p-7">
+      <div class="flex flex-col gap-5">
+        <div class="flex items-start gap-4">
+          <span aria-hidden="true" class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-950 text-brand-400 ring-1 ring-brand-500/30">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="size-5"><path d="M5 2.75A1.75 1.75 0 0 1 6.75 1h6.5A1.75 1.75 0 0 1 15 2.75v15.5a.75.75 0 0 1-1.2.6L10 16.06l-3.8 2.79a.75.75 0 0 1-1.2-.6V2.75Z" /></svg>
+          </span>
+          <div>
+            <h2 id="course-heading" class="eyebrow"><%= t("home.course") %></h2>
+            <p class="mt-1.5 text-base leading-7 text-fg-muted"><%= t("home.keep_place") %></p>
+          </div>
+        </div>
+        <button type="button" data-action="progress#enroll" data-progress-target="enrollButton" class="btn btn-primary self-start"><%= t("home.enroll") %></button>
+      </div>
+      <div data-progress-target="student" hidden class="mt-6 grid gap-6 border-t border-line pt-6">
         <div>
-          <h2 id="course-heading" class="eyebrow"><%= t("home.course") %></h2>
-          <p class="mt-1.5 text-base leading-7 text-fg-muted"><%= t("home.keep_place") %></p>
+          <p data-progress-target="summary" aria-live="polite" class="text-xl font-bold tracking-[-0.02em] text-fg"></p>
+          <p data-progress-target="continue" class="mt-3" hidden><a href="<%= locale_context.lesson_path("welcome") %>" class="btn btn-secondary btn-sm"></a></p>
+        </div>
+        <div class="space-y-3 text-sm leading-6 text-fg-muted">
+          <p><%= t("home.student_id") %> <span data-progress-target="studentId" class="chip text-fg"></span></p>
+          <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="btn-ghost min-h-6 text-sm font-medium underline"><%= t("home.forget") %></button>
         </div>
       </div>
-      <button type="button" data-action="progress#enroll" data-progress-target="enrollButton" class="btn btn-primary shrink-0"><%= t("home.enroll") %></button>
-    </div>
-    <div data-progress-target="student" hidden class="mt-6 grid gap-6 border-t border-line pt-6 lg:grid-cols-2">
-      <div>
-        <p data-progress-target="summary" aria-live="polite" class="text-xl font-bold tracking-[-0.02em] text-fg"></p>
-        <p data-progress-target="continue" class="mt-3" hidden><a href="<%= locale_context.lesson_path("welcome") %>" class="btn btn-secondary btn-sm"></a></p>
-      </div>
-      <div class="space-y-3 text-sm leading-6 text-fg-muted">
-        <p><%= t("home.student_id") %> <span data-progress-target="studentId" class="chip text-fg"></span></p>
-        <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="btn-ghost min-h-6 text-sm font-medium underline"><%= t("home.forget") %></button>
+      <p class="mt-5 border-t border-line pt-4 text-sm"><a href="<%= locale_context.lesson_path("install-gentle-shell") %>" class="link"><%= t("home.need_install") %></a></p>
+    </section>
+      <div data-progress-target="enrolledOnly" hidden>
+        <%= render layout: "shared/prompt_card", locals: { id: "start", heading: t("home.start"), prompt: start_prompt, template: start_template, hint: t("home.start_hint"), copy_label: t("home.copy") } do %>
+          <a href="<%= locale_context.lesson_path("welcome") %>" class="link text-sm"><%= t("home.read_first") %></a>
+        <% end %>
       </div>
     </div>
   </section>

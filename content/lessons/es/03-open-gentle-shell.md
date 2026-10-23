@@ -24,9 +24,9 @@ editar un agente Pi existente. Espera hasta que la sesión interactiva esté lis
 
 ## Pega tu primer prompt
 
-¿Quieres conservar tu lugar? Inscríbete primero con el botón de la página de inicio y
-luego regresa aquí: el prompt en la parte superior de esta página incluirá entonces tu
-ID anónimo de estudiante.
+¿Todavía no te inscribiste? Inscríbete con el botón de la página de inicio y luego
+regresa aquí: el prompt aparecerá en la parte superior de esta página, con tu ID
+anónimo de estudiante.
 
 Copia el prompt en la parte superior de esta página y pégalo en Gentle Shell. Tu agente
 lee las instrucciones del curso en tu idioma, confirma que Gentle Shell funciona,

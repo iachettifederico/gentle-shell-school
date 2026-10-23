@@ -44,14 +44,15 @@ Every lesson works the same way:
    session. Your lesson page shows the same prompt.
 
 The prompt carries everything the agent needs: which lesson to teach, where the
-course instructions live, and, once you enroll, your anonymous student ID.
+course instructions live, and your anonymous student ID.
 
-## Keep your place
+## Enroll to start
 
-Enroll with the button on the home page. You get an anonymous student ID: no
-account and no login. From then on every lesson prompt includes it, your agent
-records completed lessons with it, and this site shows your progress, updating
-by itself while the page is open.
+Enrolling is the only step on the site: press the button on the home page. There
+is no account, no email, and no password; this browser just gets an anonymous
+student ID. Once you are enrolled, every lesson page shows its prompt with that
+ID, your agent records completed lessons with it, and this site shows your
+progress, updating by itself while the page is open.
 
 ## Your language
 

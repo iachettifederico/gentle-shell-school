@@ -46,27 +46,30 @@ RSpec.describe "Lesson pages", type: :request do
         .to eq("Report a problem")
     end
 
-    it "offers the first lesson's prompt for gentle-shell and an install link" do
+    it "makes Enroll the only call to action and keeps the start prompt until there is an ID" do
       with_lessons(lessons) do
         get "/"
       end
 
       expect(response).to have_http_status(:ok)
       page = response.parsed_body
-      hero_cta = page.at_css("section a[data-hero-cta]")
-      expect(hero_cta.text.strip).to eq("Start the course in gentle-shell")
-      expect(hero_cta["href"]).to eq("#start")
-      expect(page.at_css("#start h2").text).to eq("Start the course in gentle-shell")
-      anonymous = 'Let\'s do the "Welcome" lesson (welcome). Fetch http://www.example.com/llms.txt for instructions.'
-      prompt = page.at_css("#start [data-prompt-text]")
-      expect(prompt.text).to eq(anonymous)
-      expect(prompt["data-prompt-template"]).to eq("I'm enrolled in Gentle Shell School as {studentId}. #{anonymous}")
-      copy_button = page.at_css('#start button[data-action="progress#copy"]')
-      expect(copy_button["data-prompt"]).to eq(anonymous)
-      expect(copy_button.text.strip).to eq("Copy")
-      expect(page.at_css('#start a[href="/lessons/install-gentle-shell"]')&.text&.strip)
+      hero = page.at_css("[data-hero]")
+      visible_ctas = hero.css("a.btn, button.btn").reject { |cta| cta.ancestors("[hidden]").any? }
+      expect(visible_ctas.map { |cta| cta.text.strip }).to eq([ "Enroll" ])
+      expect(hero.text.squish).to include(
+        "Enroll to start the course: every lesson then gives you a prompt to paste into gentle-shell.",
+        "No account, no email, no password. Enrolling gives this browser an anonymous student ID that keeps your place."
+      )
+      expect(page.at_css("a[data-hero-cta]")).to be_nil
+      expect(hero.at_css('a[href="/lessons/install-gentle-shell"]')&.text&.strip)
         .to eq("No gentle-shell yet? Install it first")
-      expect(response.body).not_to include("Start with any coding agent")
+
+      start = page.at_css('[data-progress-target="enrolledOnly"]')
+      expect(start["hidden"]).not_to be_nil
+      anonymous = 'Let\'s do the "Welcome" lesson (welcome). Fetch http://www.example.com/llms.txt for instructions.'
+      prompt = start.at_css("#start [data-prompt-text]")
+      expect(prompt["data-prompt-template"]).to eq("I'm enrolled in Gentle Shell School as {studentId}. #{anonymous}")
+      expect(start.at_css("#start h2").text).to eq("Start the course in gentle-shell")
     end
 
     it "points the Argentinian Spanish start prompt at the es-AR llms.txt" do
@@ -135,6 +138,11 @@ RSpec.describe "Lesson pages", type: :request do
       expect(navigation.pluck("href")).to eq([ "/lessons/welcome", "/lessons/unsafe" ])
       expect(navigation.map(&:text).map(&:squish))
         .to eq([ "Previous lesson Welcome", "Next lesson Unsafe" ])
+      lesson_prompt = page.at_css('[data-lesson-prompt][data-progress-target="enrolledOnly"]')
+      expect(lesson_prompt["hidden"]).not_to be_nil
+      expect(page.at_css('[data-progress-target="enrollmentPrompt"]').text.squish)
+        .to eq("Enroll on the home page to get this lesson's prompt for gentle-shell.")
+      expect(page.at_css('[data-progress-target="enrollmentPrompt"] a')["href"]).to eq("/")
       expect(page.at_css("[data-lesson-prompt] h2").text).to eq("Start this lesson in gentle-shell")
       anonymous = 'Let\'s do the "Organic driven development" lesson (odd). ' \
                   "Fetch http://www.example.com/llms.txt for instructions."

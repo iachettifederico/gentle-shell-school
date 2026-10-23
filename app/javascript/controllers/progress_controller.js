@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["enrollButton", "student", "studentId", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton", "completedBanner"]
+  static targets = ["enrollButton", "student", "studentId", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton", "completedBanner", "enrolledOnly"]
   static values = { lessonSlug: String, completedLabel: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
 
   connect() {
@@ -64,6 +64,7 @@ export default class extends Controller {
     this.showCompletions([])
     this.hideModuleCounts()
     this.fillPrompts(null)
+    this.enrolledOnlyTargets.forEach((element) => { element.hidden = true })
   }
 
   async fetchProgress(studentId) {
@@ -106,6 +107,7 @@ export default class extends Controller {
     if (this.hasEnrollButtonTarget) this.enrollButtonTarget.hidden = true
     if (this.hasStudentTarget) this.studentTarget.hidden = false
     if (this.hasStudentIdTarget) this.studentIdTarget.textContent = studentId
+    this.enrolledOnlyTargets.forEach((element) => { element.hidden = false })
     this.fillPrompts(studentId)
   }
 

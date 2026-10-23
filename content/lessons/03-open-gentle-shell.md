@@ -37,9 +37,8 @@ existing Pi agent. Wait until the interactive session is ready.
 
 ## Paste your first prompt
 
-Want to keep your place? Enroll first with the button on the home page, then
-come back here: the prompt at the top of this page then includes your anonymous
-student ID.
+Not enrolled yet? Enroll with the button on the home page, then come back here:
+the prompt appears at the top of this page, with your anonymous student ID.
 
 Copy the prompt at the top of this page and paste it into Gentle Shell. Your
 agent reads the course instructions in your language, confirms that Gentle Shell

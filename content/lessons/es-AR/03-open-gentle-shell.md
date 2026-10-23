@@ -25,9 +25,8 @@ lista.
 
 ## Pegá tu primer prompt
 
-¿Querés conservar tu lugar? Inscribite primero con el botón de la página de inicio y
-volvé acá: el prompt que está arriba de esta página va a incluir entonces tu ID anónimo
-de estudiante.
+¿Todavía no te inscribiste? Inscribite con el botón de la página de inicio y volvé
+acá: el prompt va a aparecer arriba de esta página, con tu ID anónimo de estudiante.
 
 Copiá el prompt que está arriba de esta página y pegalo en Gentle Shell. Tu agente lee
 las instrucciones del curso en tu idioma, confirma que Gentle Shell funciona, registra

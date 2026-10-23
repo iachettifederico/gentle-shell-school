@@ -21,12 +21,13 @@ Todas las lecciones funcionan de la misma manera:
    nueva. Tu página de lección muestra el mismo prompt.
 
 El prompt contiene todo lo que el agente necesita: qué lección enseñar, dónde están
-las instrucciones del curso y, una vez que te inscribes, tu ID anónimo de estudiante.
+las instrucciones del curso y tu ID anónimo de estudiante.
 
-## Conserva tu lugar
+## Inscríbete para empezar
 
-Inscríbete con el botón de la página de inicio. Obtendrás un ID anónimo de estudiante:
-sin cuenta ni inicio de sesión. Desde entonces, cada prompt de lección lo incluye, tu
+Inscribirte es el único paso en el sitio: usa el botón de la página de inicio. No hay
+cuenta, ni correo, ni contraseña; este navegador solo recibe un ID anónimo de
+estudiante. Una vez inscrito, cada página de lección muestra su prompt con ese ID, tu
 agente registra con él las lecciones completadas y este sitio muestra tu progreso,
 actualizándose por sí solo mientras la página está abierta.
 

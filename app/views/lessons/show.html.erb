@@ -14,7 +14,7 @@
   </header>
 
   <section aria-label="<%= t("lesson.label", number: format("%02d", lesson.order)) %>" class="card mt-10 p-5 sm:p-6">
-    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-fg-muted"><%= t("lesson.track_html", link: link_to(t("lesson.enroll_home"), locale_context.root_path, class: "link")) %></p>
+    <p data-progress-target="enrollmentPrompt" class="text-sm leading-6 text-fg-muted"><%= t("lesson.enroll_for_prompt_html", link: link_to(t("lesson.enroll_home"), locale_context.root_path, class: "link")) %></p>
     <div data-progress-target="lessonProgress" hidden class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <p data-progress-target="status" aria-live="polite" class="text-sm font-semibold text-fg"></p>
       <button type="button" data-action="progress#toggleCompletion" data-progress-target="completionButton" class="btn btn-primary btn-sm shrink-0 self-start sm:self-auto"></button>
@@ -30,7 +30,7 @@
     <% end %>
   </div>
 
-  <div data-lesson-prompt class="mt-8">
+  <div data-lesson-prompt data-progress-target="enrolledOnly" hidden class="mt-8">
     <%= render layout: "shared/prompt_card", locals: { heading: t("lesson.start_prompt"), prompt: prompt, template: template, hint: t("lesson.start_hint"), copy_label: t("home.copy") } do %>
       <a href="<%= locale_context.lesson_path("install-gentle-shell") %>" class="link text-sm"><%= t("home.need_install") %></a>
     <% end %>
