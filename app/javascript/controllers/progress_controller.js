@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["enrollButton", "student", "studentId", "instructionsUrl", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
+  static targets = ["enrollButton", "student", "studentId", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
   static values = { lessonSlug: String, completedLabel: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
 
   connect() {
+    this.adoptStudentFromUrl()
     const studentId = localStorage.getItem("studentId")
     if (studentId) {
       this.showStudent(studentId)
@@ -30,6 +31,7 @@ export default class extends Controller {
     if (this.hasLessonProgressTarget) this.lessonProgressTarget.hidden = true
     this.showCompletions([])
     this.hideModuleCounts()
+    this.fillPrompts(null)
   }
 
   async fetchProgress(studentId) {
@@ -64,7 +66,30 @@ export default class extends Controller {
     if (this.hasEnrollButtonTarget) this.enrollButtonTarget.hidden = true
     if (this.hasStudentTarget) this.studentTarget.hidden = false
     if (this.hasStudentIdTarget) this.studentIdTarget.textContent = studentId
-    if (this.hasInstructionsUrlTarget) this.showInstructionsUrl(studentId)
+    this.fillPrompts(studentId)
+  }
+
+  // An agent hands the student a `?sid=<id>` link; keep the ID and drop it from the address bar.
+  adoptStudentFromUrl() {
+    const url = new URL(window.location.href)
+    const studentId = url.searchParams.get("sid")
+    if (!studentId) return
+
+    localStorage.setItem("studentId", studentId)
+    url.searchParams.delete("sid")
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash)
+  }
+
+  // Enrolled prompts carry the student ID; pass null to restore the anonymous prompts.
+  fillPrompts(studentId) {
+    this.element.querySelectorAll("[data-prompt-template]").forEach((text) => {
+      if (!text.dataset.promptTemplate) return
+
+      text.dataset.promptAnonymous ||= text.textContent
+      const prompt = studentId ? text.dataset.promptTemplate.replace("{studentId}", studentId) : text.dataset.promptAnonymous
+      text.textContent = prompt
+      text.closest(".card").querySelector("[data-action='progress#copy']").dataset.prompt = prompt
+    })
   }
 
   showProgress(progress) {
@@ -86,12 +111,6 @@ export default class extends Controller {
 
     this.forget()
     return true
-  }
-
-  showInstructionsUrl(studentId) {
-    const url = `/api/instructions/${encodeURIComponent(studentId)}`
-    this.instructionsUrlTarget.href = url
-    this.instructionsUrlTarget.textContent = new URL(url, window.location.origin).href
   }
 
   showCompletions(completions) {

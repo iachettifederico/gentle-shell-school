@@ -17,9 +17,8 @@ class LessonsController < ApplicationController
     lab = labs_system.lab_for_lesson(lesson.slug, locale: @current_locale)
     {
       lesson: lesson, previous_lesson: previous_lesson, next_lesson: next_lesson,
-      body_html: rendered_body(lesson), teach_me_prompt: teach_me_prompt(lesson),
-      lab: lab, lab_brief_html: lab_brief_html(lab),
-    }
+      body_html: rendered_body(lesson), lab: lab, lab_brief_html: lab_brief_html(lab),
+    }.merge(prompt_locals(lesson, ""))
   end
 
   def lab_brief_html(lab)
@@ -28,9 +27,5 @@ class LessonsController < ApplicationController
 
   def rendered_body(lesson)
     MarkdownRenderer.new.render(lesson.body_for(origin: request.base_url))
-  end
-
-  def teach_me_prompt(lesson)
-    I18n.t("lesson.teach_prompt", origin: request.base_url, title: lesson.title, slug: lesson.slug)
   end
 end

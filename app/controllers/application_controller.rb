@@ -20,6 +20,15 @@ class ApplicationController < ActionController::Base
     { locale_context: @locale_context }
   end
 
+  def lesson_prompt
+    @lesson_prompt ||= LessonPrompt.new(origin: request.base_url, locale: @current_locale)
+  end
+
+  # The anonymous prompt for a lesson and the enrolled template the browser fills with its student ID.
+  def prompt_locals(lesson, prefix)
+    { "#{prefix}prompt": lesson_prompt.for(lesson, student_id: nil), "#{prefix}template": lesson_prompt.for(lesson) }
+  end
+
   def labs_system
     @labs_system ||= Course::LabsSystem.new(
       repository: Course::FileLabRepository.new(directory: Rails.configuration.x.labs_directory)

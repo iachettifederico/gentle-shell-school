@@ -23,8 +23,8 @@ Branch `feat/phase-11-single-path`, from `main` (`54152bd`). Reference design: g
 
 ## Tasks
 
-- [ ] T1 — Prompt model + localized llms.txt + API `next` (template, routes, llms rewrite to the single loop). Route: inline. Commit: —
-- [ ] T2 — Site: lesson/home prompt cards built from the template, `?sid=` adoption, remove ID/instructions UI, lab box without prompt, backtick fix. Route: inline. Commit: —
+- [x] T1 — Prompt model + localized llms.txt + API `next` (template, routes, llms rewrite to the single loop). Route: inline. Commit: `49a37d9`
+- [x] T2 — Site: lesson/home prompt cards built from the template, `?sid=` adoption, remove ID/instructions UI, lab box without prompt, backtick fix. Route: inline. Commit: see L6
 - [ ] T3 — Live sync polling (D6). Route: inline. Commit: —
 - [ ] T4 — Remove second paths (D3 handshake code/pages/JS/locales/openapi, D4 package). Route: inline. Commit: —
 - [ ] T5 — Content: lessons 01–03 and capstone (en/es/es-AR), README, any lesson text about handshake/hand-off/`/school`/"any agent". Route: inline. Commit: —
@@ -37,3 +37,4 @@ Branch `feat/phase-11-single-path`, from `main` (`54152bd`). Reference design: g
 - L3 — User: read opencode.school first. Findings: site-only enrollment, browser-built prompt with ID, 1s progress polling (`Base.astro:891`), `?sid=` adoption, install read in browser, no package; English only.
 - L4 — User approved: "Yes, plan it" (refined proposal) and live sync "Yes, in this feature".
 - L5 — `fix/lab-prompt` (`6e428f0`, unmerged) is superseded by D7; only its inline-code backtick CSS fix is carried into T2.
+- L6 — T2 browser check (es-AR, /tmp/gss-design/prompt.mjs): anonymous lesson prompt, `?sid=` adopted and stripped from the URL, lesson and home prompts carry the ID (copy button matches), forget restores the anonymous prompt, an invalid `?sid=` is forgotten — 6/6 PASS, no JS errors.

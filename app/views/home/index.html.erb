@@ -12,10 +12,8 @@
         <a href="/llms.txt" class="btn btn-secondary font-mono">llms.txt</a>
       </div>
     </div>
-    <% prompt = t("home.start_prompt", origin: request.base_url) %>
-    <%= render layout: "shared/prompt_card", locals: { id: "start", heading: t("home.start"), prompt: prompt, copy_label: t("home.copy") } do %>
-      <a href="<%= locale_context.lesson_path("welcome") %>" class="link text-sm"><%= t("home.already_using") %></a>
-      <a href="https://github.com/Gentleman-Programming/gentle-shell#readme" class="btn-ghost text-sm font-medium"><%= t("home.install") %></a>
+    <%= render layout: "shared/prompt_card", locals: { id: "start", heading: t("home.start"), prompt: start_prompt, template: start_template, hint: t("home.start_hint"), copy_label: t("home.copy") } do %>
+      <a href="<%= locale_context.lesson_path("install-gentle-shell") %>" class="link text-sm"><%= t("home.need_install") %></a>
     <% end %>
   </section>
 
@@ -39,7 +37,6 @@
       </div>
       <div class="space-y-3 text-sm leading-6 text-fg-muted">
         <p><%= t("home.student_id") %> <span data-progress-target="studentId" class="chip text-fg"></span></p>
-        <p class="break-words"><%= t("home.give_id") %> <a href="/llms.txt" data-progress-target="instructionsUrl" class="link font-mono break-all"></a></p>
         <button type="button" data-action="progress#forget" data-progress-target="forgetButton" class="btn-ghost min-h-6 text-sm font-medium underline"><%= t("home.forget") %></button>
       </div>
     </div>
