@@ -4,7 +4,6 @@ module Api
     include LessonsAccess
     include ProgressAccess
     include ProgressRendering
-    include EnrollmentAccess
 
     CORS_METHODS = "GET, OPTIONS".freeze
 
@@ -23,14 +22,6 @@ module Api
 
     rescue_from Course::InvalidStudentId, Course::StudentNotFound, Course::UnknownLesson do |error|
       render json: { error: error.message }, status: error.is_a?(Course::StudentNotFound) ? :not_found : :bad_request
-    end
-
-    rescue_from Course::EnrollmentNotFound do |error|
-      render json: { error: error.message }, status: :not_found
-    end
-
-    rescue_from Course::EnrollmentExpired do |error|
-      render json: { error: error.message }, status: :gone
     end
 
     def preflight

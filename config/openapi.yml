@@ -9,50 +9,6 @@ info:
     progress. No authentication required. Feedback goes to
     https://github.com/%{feedback_repository}/issues.
 paths:
-  /api/enrollments:
-    post:
-      operationId: prepareEnrollment
-      summary: Create a voluntary pending enrollment link.
-      responses:
-        "201":
-          description: Pending enrollment link.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PendingEnrollment"
-    options:
-      operationId: preflightEnrollments
-      responses:
-        "204":
-          description: CORS preflight response.
-  /api/enrollments/{code}:
-    parameters:
-      - name: code
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      operationId: getEnrollment
-      summary: Get pending or enrolled handshake status.
-      responses:
-        "200":
-          description: Enrollment status.
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: "#/components/schemas/EnrollmentStatus"
-                  - $ref: "#/components/schemas/EnrolledEnrollment"
-        "404":
-          description: Enrollment not found.
-        "410":
-          description: Enrollment link expired.
-    options:
-      operationId: preflightEnrollment
-      responses:
-        "204":
-          description: CORS preflight response.
   /api/enroll:
     post:
       operationId: enroll
@@ -269,45 +225,6 @@ components:
           schema:
             $ref: "#/components/schemas/Error"
   schemas:
-    PendingEnrollment:
-      type: object
-      required: [code, enrollUrl, status, expiresAt]
-      properties:
-        code:
-          type: string
-        enrollUrl:
-          type: string
-          format: uri
-        status:
-          type: string
-          enum: [pending]
-        expiresAt:
-          type: string
-          format: date-time
-    EnrollmentStatus:
-      type: object
-      required: [status, expiresAt]
-      properties:
-        status:
-          type: string
-          enum: [pending]
-        expiresAt:
-          type: string
-          format: date-time
-    EnrolledEnrollment:
-      type: object
-      required: [status, expiresAt, studentId, progress]
-      properties:
-        status:
-          type: string
-          enum: [enrolled]
-        expiresAt:
-          type: string
-          format: date-time
-        studentId:
-          type: string
-        progress:
-          $ref: "#/components/schemas/Progress"
     Enrollment:
       type: object
       required: [studentId, progress]

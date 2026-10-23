@@ -26,7 +26,7 @@ Branch `feat/phase-11-single-path`, from `main` (`54152bd`). Reference design: g
 - [x] T1 — Prompt model + localized llms.txt + API `next` (template, routes, llms rewrite to the single loop). Route: inline. Commit: `49a37d9`
 - [x] T2 — Site: lesson/home prompt cards built from the template, `?sid=` adoption, remove ID/instructions UI, lab box without prompt, backtick fix. Route: inline. Commit: `15358a2`
 - [x] T3 — Live sync polling (D6). Route: inline. Commit: see L7
-- [ ] T4 — Remove second paths (D3 handshake code/pages/JS/locales/openapi, D4 package). Route: inline. Commit: —
+- [x] T4 — Remove second paths (D3 handshake code/pages/JS/locales/openapi, D4 package). Route: inline. Commit: see L8
 - [ ] T5 — Content: lessons 01–03 and capstone (en/es/es-AR), README, any lesson text about handshake/hand-off/`/school`/"any agent". Route: inline. Commit: —
 - [ ] T6 — Verify: browser loop in es-AR (prompt → agent PUT → live update → next prompt equals API), axe, overflow, `bin/ci`, independent verifier (contract removal). Route: inline + gentle-ai-verify. Commit: —
 
@@ -39,3 +39,4 @@ Branch `feat/phase-11-single-path`, from `main` (`54152bd`). Reference design: g
 - L5 — `fix/lab-prompt` (`6e428f0`, unmerged) is superseded by D7; only its inline-code backtick CSS fix is carried into T2.
 - L6 — T2 browser check (es-AR, /tmp/gss-design/prompt.mjs): anonymous lesson prompt, `?sid=` adopted and stripped from the URL, lesson and home prompts carry the ID (copy button matches), forget restores the anonymous prompt, an invalid `?sid=` is forgotten — 6/6 PASS, no JS errors.
 - L7 — Slice 1 boundary = `49a37d9` + `15358a2` (495 lines). T3 browser checks (/tmp/gss-design/live.mjs, hidden.mjs): an agent-style `curl` PUT appears on the open es-AR lesson page within ~0.2–2s ("Completada ✓", banner with link to the next lesson) and on the home page (summary 1→2 of 29, badge); polling runs while visible, sends 0 requests while hidden, and refreshes at once on return. Text is only rewritten when it changes, so live regions do not re-announce every poll.
+- L8 — T4 test-first (`spec/requests/single_path_spec.rb`): `/api/enrollments`, `/api/enrollments/:code`, `/enroll/:code` (any locale) now 404; `POST /api/enroll` still works (pinned); no `agent/` or `package.json` `pi`. Removed the handshake domain/system/repository/controllers/views/Stimulus controller/locales/OpenAPI paths and the Pi package; README documents the single path. `pending_enrollments` table and its FK stay (no migration; students are never deleted). Full suite 130/0. Own commit: removing consumed API contracts is high-risk item 3.

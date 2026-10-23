@@ -34,21 +34,25 @@ To compare the original course on `main` with the improved course on
 `COURSE=demo make server`. The same local demo lessons make the course behavior
 comparable without affecting either production course.
 
-## Course skill
+## How a student takes the course
 
-The course tutor package is optional. In Gentle Shell, install it and restart
-Gentle Shell:
+There is one path. Each lesson page shows a prompt; the student copies it into
+gentle-shell, and the agent teaches that lesson and hands back the next prompt:
 
-```sh
-gentle-shell install git:github.com/iachettifederico/gentle-shell-school
+```text
+I'm enrolled in Gentle Shell School as <id>. Let's do the "<title>" lesson (<slug>). Fetch https://<host>/es-AR/llms.txt for instructions.
 ```
 
-Plain `pi install` writes to Pi's default home (`~/.pi/agent`), which Gentle
-Shell does not read; use `pi install git:github.com/iachettifederico/gentle-shell-school` only in plain Pi.
+- The site builds the prompt (`LessonPrompt`); once the student enrolls with the
+  site's Enroll button, the browser fills in their anonymous student ID.
+- The language comes from the llms.txt address (`/llms.txt`, `/es/llms.txt`,
+  `/es-AR/llms.txt`); the agent never asks for it.
+- The lessons API returns each lesson's `next` lesson with the same prompt and
+  page URL; a `?sid=<id>` link opens it in the browser with the student's ID.
+- While a student ID is present, the open page polls progress every two seconds
+  (paused when the tab is hidden), so completions the agent records show up live.
 
-Then use `/school` to start or continue the course, or `/school <lesson-slug>`
-to choose a lesson. Remove it when you finish with
-`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (plain Pi: `pi remove git:github.com/iachettifederico/gentle-shell-school`).
+No package or `/school` command is needed.
 
 ## Labs
 
@@ -94,21 +98,19 @@ Lesson body in GitHub-flavored Markdown. Raw HTML is escaped.
 
 | Endpoint | Returns |
 | --- | --- |
-| `GET /llms.txt` | Plain-text overview and operating instructions for agents |
+| `GET /llms.txt`, `/es/llms.txt`, `/es-AR/llms.txt` | Plain-text teaching instructions for agents, in that language |
 | `GET /api/openapi.json` | OpenAPI 3.1 description of the API (`config/openapi.yml`) |
 | `GET /api/lessons` | All lessons, sorted by `order`, including a nullable `lab` slug |
 | `GET /api/labs` | Lab summaries (`slug`, lesson, title) |
 | `GET /api/labs/:slug` | A lab's brief, check, rubric, and starter files |
 | `GET /api/lessons/:slug` | One lesson, or 404 `{"error":"Lesson not found"}` |
-| `POST /api/enrollments` | Create a voluntary pending enrollment link |
-| `GET /api/enrollments/:code` | Check pending or enrolled handshake status |
-| `POST /api/enroll` | Anonymous student ID and empty progress (legacy alternative) |
+| `POST /api/enroll` | Anonymous student ID and empty progress (the site's Enroll button) |
 | `GET /api/progress/:student_id` | A student's progress |
 | `PUT /api/progress/:student_id` | Mark a lesson complete |
 | `DELETE /api/progress/:student_id` | Undo one completion or reset all completions |
 | `GET /api/instructions/:student_id` | Plain-text student-specific agent instructions |
 
-Lessons are serialized as `{order, slug, title, description, agentInstructions, content}`. Progress is serialized as `{completedLessons, createdAt, updatedAt}`; enroll first and retain the returned anonymous `studentId` to read or update it.
+Lessons are serialized as `{order, slug, title, description, module, lab, locale, agentInstructions, content, url, next}`, where `next` is `{slug, title, url, prompt}` or `null`. Progress is serialized as `{completedLessons, createdAt, updatedAt}`; enroll first and retain the returned anonymous `studentId` to read or update it.
 API responses allow any origin (CORS) and need no authentication.
 
 When you add or change an endpoint, update `config/openapi.yml` and

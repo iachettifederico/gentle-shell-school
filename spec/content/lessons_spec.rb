@@ -44,17 +44,6 @@ RSpec.describe "Course content" do
     expect(demo_labs.labs.map(&:slug)).to eq([ "demo-hello" ])
   end
 
-  it "ships a discoverable Pi course skill and prompt" do
-    package = JSON.parse(Rails.root.join("package.json").read)
-    skill_path = Rails.root.join("agent/skills/gentle-shell-school/SKILL.md")
-
-    expect(package.dig("pi", "skills")).to eq([ "./agent/skills" ])
-    expect(package.dig("pi", "prompts")).to eq([ "./agent/prompts/*.md" ])
-    expect(skill_path).to exist
-    expect(skill_path.read).to match(/^---\nname: gentle-shell-school\ndescription: .+\n/m)
-    expect(Rails.root.join("agent/prompts/school.md")).to exist
-  end
-
   it "teaches the gentle-shell tutor install up front and its optional removal at the end, in every language" do
     source = "git:github.com/iachettifederico/gentle-shell-school"
     [ "", "es/", "es-AR/" ].each do |locale|

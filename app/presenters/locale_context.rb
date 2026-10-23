@@ -21,10 +21,6 @@ class LocaleContext
     @routes.lesson_path(slug, locale: route_locale)
   end
 
-  def enroll_path(code)
-    @routes.enroll_path(code, locale: route_locale)
-  end
-
   def switcher_entries
     LANGUAGE_NAMES.map { |locale, label| entry(locale, label) }
   end

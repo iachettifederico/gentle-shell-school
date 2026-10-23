@@ -1,8 +1,4 @@
 {
   "name": "gentle-shell-school",
-  "private": true,
-  "pi": {
-    "skills": ["./agent/skills"],
-    "prompts": ["./agent/prompts/*.md"]
-  }
+  "private": true
 }

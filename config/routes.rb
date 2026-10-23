@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /es|es-AR/ do
     root "home#index"
     resources :lessons, only: :show, param: :slug
-    get "enroll/:code", to: "enrollments#show", as: :enroll
-    post "enroll/:code", to: "enrollments#create"
     get "llms.txt" => "llms#show", format: false, as: :llms
   end
 
@@ -23,9 +21,6 @@ Rails.application.routes.draw do
 
     post "enroll" => "enroll#create"
     match "enroll", to: "enroll#preflight", via: :options
-    resources :enrollments, only: [ :create, :show ], param: :code
-    match "enrollments", to: "enrollments#preflight", via: :options
-    match "enrollments/:code", to: "enrollments#preflight", via: :options
     get "progress/:student_id" => "progress#show"
     put "progress/:student_id" => "progress#update"
     delete "progress/:student_id" => "progress#destroy"

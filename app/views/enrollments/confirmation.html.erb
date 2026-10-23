@@ -1,9 +1,0 @@
-<% content_for :title, t("enrollment.enrolled_title") %>
-<div data-controller="enrollment" data-enrollment-student-id-value="<%= enrollment.claimed_student_id %>">
-<%= render layout: "shared/status_panel", locals: { eyebrow: t("enrollment.enrolled"), heading: t("enrollment.enrolled_title"), body: t("enrollment.enrolled_body"), accent: true } do %>
-  <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-    <%= link_to t("enrollment.home"), locale_context.root_path, class: "btn btn-primary" %>
-    <%= link_to t("enrollment.first_lesson"), locale_context.lesson_path("welcome"), class: "btn btn-secondary" %>
-  </div>
-<% end %>
-</div>
