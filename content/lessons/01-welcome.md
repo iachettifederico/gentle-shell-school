@@ -14,9 +14,11 @@ agent_instructions: |
   `open-gentle-shell` next; they install Gentle Shell and hand the student's
   anonymous student ID to it. If you are gentle-shell, follow the conditional
   instructions in `install-gentle-shell`, which verify that fact and skip both
-  setup lessons; then mention that the packaged course tutor is installed with
-  `pi install git:github.com/iachettifederico/gentle-shell-school` and started
-  with `/school`. Course lessons are listed at {origin}/api/lessons. When
+  setup lessons; then mention that the optional packaged course tutor is
+  installed in Gentle Shell with `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`
+  (plain `pi install` writes to Pi's default home, which Gentle Shell does not
+  read), started with `/school` after a restart, and can be removed when the
+  course ends. Course lessons are listed at {origin}/api/lessons. When
   something in a lesson is wrong, follow the Reporting problems section of
   {origin}/llms.txt.
 ---
@@ -39,12 +41,18 @@ lesson complete. If that first agent is not gentle-shell, the next two lessons
 help you install and open Gentle Shell, then transfer your course progress to
 its agent.
 
-Already using gentle-shell? Install the course tutor package, restart Pi, then
-use `/school` to begin or continue the course:
+Already using gentle-shell? You can optionally install the course tutor
+package. It adds the `/school` command, and the last lesson shows how to remove
+it when you finish. Install it, restart Gentle Shell, then use `/school` to
+begin or continue the course:
 
 ```sh
-pi install git:github.com/iachettifederico/gentle-shell-school
+gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
+
+Use `gentle-shell install`, not `pi install`: plain `pi install` writes to Pi's
+default home (`~/.pi/agent`), which Gentle Shell does not read. In plain Pi,
+use `pi install git:github.com/iachettifederico/gentle-shell-school` instead.
 
 Found a problem? Your agent can report it as a GitHub issue with your consent,
 or use the "Report a problem" link.

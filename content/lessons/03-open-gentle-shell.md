@@ -33,7 +33,8 @@ agent_instructions: |
   student ID with GET {origin}/api/progress/{studentId} and continues with
   lesson 04. Mention that the student may install the course tutor package in
   Gentle Shell (`gentle-shell install git:github.com/iachettifederico/gentle-shell-school`)
-  and use `/school`; it is optional.
+  and use `/school`; it is optional, and the capstone offers its removal when
+  the course ends.
 ---
 
 # Open Gentle Shell
@@ -79,7 +80,9 @@ course instructions into a skill and adds the `/school` command:
 gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
 
-Restart Gentle Shell, then use `/school` with the same hand-off prompt.
+Restart Gentle Shell, then use `/school` with the same hand-off prompt. The
+package is optional; when you finish the course, remove it with
+`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school`.
 
 ## Why the order matters
 

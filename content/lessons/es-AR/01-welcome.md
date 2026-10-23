@@ -23,12 +23,18 @@ real antes de marcar una lección como completada. Si ese primer agente no es
 gentle-shell, las dos lecciones siguientes te ayudan a instalar y abrir Gentle
 Shell, y después transfieren el progreso de tu curso a su agente.
 
-¿Ya usás gentle-shell? Instalá el paquete tutor del curso, reiniciá Pi y luego
-usá `/school` para empezar o continuar el curso:
+¿Ya usás gentle-shell? Si querés, podés instalar el paquete tutor del curso.
+Agrega el comando `/school`, y la última lección muestra cómo sacarlo cuando
+termines. Instalalo, reiniciá Gentle Shell y después usá `/school` para empezar
+o continuar el curso:
 
 ```sh
-pi install git:github.com/iachettifederico/gentle-shell-school
+gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
+
+Usá `gentle-shell install`, no `pi install`: `pi install` escribe en el
+directorio predeterminado de Pi (`~/.pi/agent`), que Gentle Shell no lee. En Pi
+sin Gentle Shell, usá `pi install git:github.com/iachettifederico/gentle-shell-school`.
 
 ¿Encontraste un problema? Tu agente puede reportarlo como un issue de GitHub con
 tu consentimiento, o podés usar el enlace "Reportar un problema".

@@ -151,3 +151,15 @@ modelo configurado más económico, luego inspecciona e integra su evidencia. Po
 pide a tu agente tutor que verifique directamente el documento de funcionalidad, las
 pruebas y los commits en el repositorio temporal. Cuando esos artefactos coincidan,
 habrás practicado todo el sistema, desde la intención hasta una prueba revisable.
+
+## Al terminar: quita el tutor del curso (opcional)
+
+Si instalaste el paquete del tutor del curso, puedes quitarlo ahora. Tu progreso
+sigue guardado en el servidor del curso con tu ID de estudiante.
+
+```sh
+gentle-shell remove git:github.com/iachettifederico/gentle-shell-school
+```
+
+En Pi sin Gentle Shell, usa `pi remove git:github.com/iachettifederico/gentle-shell-school`. Después reinicia; `/school` ya no
+estará disponible.

@@ -35,6 +35,7 @@ Use for `/school`, a course lesson, or Gentle Shell School tutoring. Do not use 
 4. For a lesson lab, fetch `GET /api/labs/:slug`; ask the student to choose a new scratch directory, write only its `files` starter content there, and run `check` from that directory. Use `monitor` while the check runs and coach from its output. Launch a fresh-context, read-only verifier when available; give it only the lab brief, rubric, check output, and file paths. Record its grade with the same evidence shape and `verifiedBy: "independent-verifier"`; otherwise grade yourself with `"self"`.
 5. For study-partner work, have the student name their work-session subject with `orchestrator_session_id`; use `orchestrator_list` and metadata `orchestrator_consult` to follow published progress. Ask for documented model-cost permission before a reasoning consult.
 6. For the capstone, check `gentle-ai review mode status`; use native review only when available and enabled; otherwise offer a Judgment Day final exam and load that skill only when the student explicitly asks for it.
+7. After the capstone is recorded complete, offer optional removal of this package with `ask_user_question` ("Remove the course tutor", "Keep it"). Only on "Remove", run `gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (plain Pi: `pi remove git:github.com/iachettifederico/gentle-shell-school`) or give the command; progress stays on the course server.
 
 ## Output Contract
 

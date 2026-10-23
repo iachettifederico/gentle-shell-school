@@ -149,3 +149,15 @@ económico, luego inspeccioná e integrá su evidencia. Finalmente, pedile a tu 
 tutor que verifique el feature document, tests y commits directamente en el
 repositorio de práctica. Cuando esos artefactos coinciden, practicaste el sistema
 completo desde la intención hasta la prueba revisable.
+
+## Al terminar: sacá el tutor del curso (opcional)
+
+Si instalaste el paquete tutor del curso, podés sacarlo ahora. Tu progreso sigue
+guardado en el servidor del curso con tu ID de estudiante.
+
+```sh
+gentle-shell remove git:github.com/iachettifederico/gentle-shell-school
+```
+
+En Pi sin Gentle Shell, usá `pi remove git:github.com/iachettifederico/gentle-shell-school`. Después reiniciá; `/school` ya no
+va a estar disponible.

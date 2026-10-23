@@ -36,15 +36,19 @@ comparable without affecting either production course.
 
 ## Course skill
 
-Install the Pi package and restart Pi:
+The course tutor package is optional. In Gentle Shell, install it and restart
+Gentle Shell:
 
 ```sh
-pi install git:github.com/iachettifederico/gentle-shell-school
+gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
 
+Plain `pi install` writes to Pi's default home (`~/.pi/agent`), which Gentle
+Shell does not read; use `pi install git:github.com/iachettifederico/gentle-shell-school` only in plain Pi.
+
 Then use `/school` to start or continue the course, or `/school <lesson-slug>`
-to choose a lesson. `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`
-forwards the same Pi install command to the selected Gentle Shell home.
+to choose a lesson. Remove it when you finish with
+`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (plain Pi: `pi remove git:github.com/iachettifederico/gentle-shell-school`).
 
 ## Labs
 

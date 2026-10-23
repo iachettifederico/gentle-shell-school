@@ -8,7 +8,7 @@ At the start, ask the student with ask_user_question which language they want: E
 
 ## Use the course skill
 
-Install the packaged tutor with `pi install git:github.com/iachettifederico/gentle-shell-school`, then restart Pi and run `/school` (or `/school <lesson-slug>`). In Gentle Shell, `gentle-shell install git:github.com/iachettifederico/gentle-shell-school` forwards Pi's install command to the selected agent home.
+The packaged tutor is optional. In Gentle Shell, install it with `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`; plain `pi install` writes to Pi's default home, which Gentle Shell does not read. In plain Pi, use `pi install git:github.com/iachettifederico/gentle-shell-school`. Restart, then run `/school` (or `/school <lesson-slug>`). When the course is finished, offer its optional removal: `gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (plain Pi: `pi remove git:github.com/iachettifederico/gentle-shell-school`); remove it only after the student chooses to.
 
 ## Progress
 

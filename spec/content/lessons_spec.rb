@@ -54,4 +54,17 @@ RSpec.describe "Course content" do
     expect(skill_path.read).to match(/^---\nname: gentle-shell-school\ndescription: .+\n/m)
     expect(Rails.root.join("agent/prompts/school.md")).to exist
   end
+
+  it "teaches the gentle-shell tutor install up front and its optional removal at the end, in every language" do
+    source = "git:github.com/iachettifederico/gentle-shell-school"
+    [ "", "es/", "es-AR/" ].each do |locale|
+      welcome = Rails.root.join("content/lessons/#{locale}01-welcome.md").read
+      capstone = Rails.root.join("content/lessons/#{locale}29-capstone.md").read
+
+      expect(welcome).to include("gentle-shell install #{source}"), "#{locale}01-welcome.md"
+      expect(welcome).to include("pi install #{source}"), "#{locale}01-welcome.md"
+      expect(capstone).to include("gentle-shell remove #{source}"), "#{locale}29-capstone.md"
+      expect(capstone).to include("pi remove #{source}"), "#{locale}29-capstone.md"
+    end
+  end
 end

@@ -50,6 +50,8 @@ gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
 
 Reiniciá Gentle Shell y luego usá `/school` con el mismo prompt de transferencia.
+El paquete es opcional; cuando termines el curso, sacalo con
+`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school`.
 
 ## Por qué importa el orden
 

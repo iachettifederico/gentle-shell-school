@@ -46,7 +46,9 @@ las instrucciones del curso en una skill y añade el comando `/school`:
 gentle-shell install git:github.com/iachettifederico/gentle-shell-school
 ```
 
-Reinicia Gentle Shell y luego usa `/school` con el mismo prompt de entrega.
+Reinicia Gentle Shell y luego usa `/school` con el mismo prompt de entrega. El
+paquete es opcional; cuando termines el curso, quítalo con
+`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school`.
 
 ## Por qué importa el orden
 
