@@ -14,6 +14,11 @@ RSpec.describe "Agent discovery", type: :request do
       expect(body).to include("GET http://www.example.com/api/lessons/{slug}?locale=en")
       expect(body).to include("I'm enrolled in Gentle Shell School as <id>")
       expect(body).to include("`next.prompt`")
+      expect(body).to include(
+        "When `agentInstructions` include quiz questions, ask exactly those with the ask_user_question tool. " \
+        "Never invent quiz questions or answer choices."
+      )
+      expect(body).not_to include("Ask quiz questions with the ask_user_question tool")
       expect(body).to include("`next.url`?sid=<id>")
       expect(body).to include("PUT http://www.example.com/api/progress/{studentId}")
       expect(body).to include("DELETE http://www.example.com/api/progress/{studentId}")

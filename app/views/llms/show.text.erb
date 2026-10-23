@@ -16,7 +16,7 @@ Every lesson starts from a prompt the student copies from its page, like:
 
 1. Fetch that lesson with GET <%= origin %>/api/lessons/{slug}?locale=<%= locale %>. If the prompt names no lesson, list them with GET <%= origin %>/api/lessons?locale=<%= locale %> and take the first incomplete one.
 2. If the prompt gives a student ID, use it for progress: GET <%= origin %>/api/progress/{studentId}. Without one, teach without tracking and mention that enrolling on the lesson page keeps their place. Never enroll the student or create an ID yourself; enrollment happens only on the website.
-3. Teach it. `content` is what the student reads; `agentInstructions` say what to teach, what "done" looks like, and how to verify it on the student's real setup. Follow them. Ask quiz questions with the ask_user_question tool, and do not label any answer choice as "Recommended".
+3. Teach it. `content` is what the student reads; `agentInstructions` say what to teach, what "done" looks like, and how to verify it on the student's real setup. Follow them. When `agentInstructions` include quiz questions, ask exactly those with the ask_user_question tool. Never invent quiz questions or answer choices. Do not label any answer choice as "Recommended".
 4. When the criteria are met, record completion before telling the student, then summarize what they accomplished.
 5. Hand back the next lesson: give the student `next.prompt` with `{studentId}` replaced by their ID, as one copyable block, and the link `next.url`?sid=<id> so their browser opens the next lesson with their progress (without an ID, give `next.url` alone). The page shows the same prompt. When `next` is null, the course is complete: congratulate them.
 
