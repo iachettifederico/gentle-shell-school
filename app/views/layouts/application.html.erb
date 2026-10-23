@@ -28,7 +28,7 @@
         <nav aria-label="<%= t("site.main_navigation") %>" class="order-3 -ml-3 w-full sm:order-2 sm:ml-auto sm:w-auto">
           <ul class="flex items-center gap-1 text-sm font-medium">
             <li><a href="<%= locale_context.root_path %>#lessons" class="rounded-full px-3 py-2 text-fg-muted transition-colors hover:bg-raised hover:text-fg"><%= t("site.nav_lessons") %></a></li>
-            <li><a href="/llms.txt" class="rounded-full px-3 py-2 font-mono text-fg-muted transition-colors hover:bg-raised hover:text-fg">llms.txt</a></li>
+            <li><a href="<%= locale_context.llms_path %>" class="rounded-full px-3 py-2 font-mono text-fg-muted transition-colors hover:bg-raised hover:text-fg">llms.txt</a></li>
           </ul>
         </nav>
         <nav aria-label="<%= t("site.language") %>" class="order-2 sm:order-3">

@@ -68,8 +68,7 @@ export default class extends Controller {
 
   async fetchProgress(studentId) {
     const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`)
-    if (this.staleStudent(response)) return
-    if (response.ok) this.showProgress(await response.json())
+    await this.applyProgress(studentId, response)
   }
 
   async toggleCompletion() {
@@ -78,8 +77,17 @@ export default class extends Controller {
 
     const completed = this.completionButtonTarget.textContent === this.markIncompleteLabelValue
     const response = await fetch(`/api/progress/${encodeURIComponent(studentId)}`, this.progressRequest(completed))
+    await this.applyProgress(studentId, response)
+  }
+
+  // A response is only for the ID that asked: after a forget or an ID change it is stale, so ignore it.
+  async applyProgress(studentId, response) {
+    if (localStorage.getItem("studentId") !== studentId) return
     if (this.staleStudent(response)) return
-    if (response.ok) this.showProgress(await response.json())
+    if (!response.ok) return
+
+    const progress = await response.json()
+    if (localStorage.getItem("studentId") === studentId) this.showProgress(progress)
   }
 
   copy(event) {

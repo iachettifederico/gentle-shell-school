@@ -49,7 +49,7 @@ RSpec.describe "Course content" do
       "/school", "git:github.com/iachettifederico/gentle-shell-school", "api/enrollments", "enrollUrl",
       "student ID is <id>", "hand-off prompt", "any coding agent",
     ]
-    Dir[Rails.root.join("content/lessons/{,es/,es-AR/}*.md")].each do |path|
+    Rails.root.glob("content/lessons/{,es/,es-AR/}*.md").each do |path|
       text = File.read(path)
       retired.each { |phrase| expect(text).not_to include(phrase), "#{path} still mentions #{phrase.inspect}" }
     end

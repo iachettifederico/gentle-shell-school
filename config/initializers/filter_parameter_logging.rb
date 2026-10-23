@@ -4,5 +4,7 @@
 # Use this to limit dissemination of sensitive information.
 # See the ActiveSupport::ParameterFilter documentation for supported notations and behaviors.
 Rails.application.config.filter_parameters += [
-  :passw, :email, :secret, :token, :code, :_key, :crypt, :salt, :certificate, :otp, :ssn, :cvv, :cvc
+  :passw, :email, :secret, :token, :code, :_key, :crypt, :salt, :certificate, :otp, :ssn, :cvv, :cvc,
+  # The anonymous student ID is the key to a student's progress (`?sid=` links, progress routes).
+  /\Asid\z/, /\Astudent_id\z/
 ]

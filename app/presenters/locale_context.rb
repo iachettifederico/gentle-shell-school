@@ -21,6 +21,10 @@ class LocaleContext
     @routes.lesson_path(slug, locale: route_locale)
   end
 
+  def llms_path
+    @routes.llms_path(locale: route_locale)
+  end
+
   def switcher_entries
     LANGUAGE_NAMES.map { |locale, label| entry(locale, label) }
   end

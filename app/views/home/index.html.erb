@@ -9,7 +9,7 @@
       <p class="mt-6 max-w-xl text-lg leading-8 text-pretty text-fg-muted"><%= t("home.intro") %></p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <a href="#start" data-hero-cta class="btn btn-primary"><%= t("home.start") %></a>
-        <a href="/llms.txt" class="btn btn-secondary font-mono">llms.txt</a>
+        <a href="<%= locale_context.llms_path %>" class="btn btn-secondary font-mono">llms.txt</a>
       </div>
     </div>
     <%= render layout: "shared/prompt_card", locals: { id: "start", heading: t("home.start"), prompt: start_prompt, template: start_template, hint: t("home.start_hint"), copy_label: t("home.copy") } do %>
