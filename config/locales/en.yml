@@ -71,3 +71,7 @@ en:
     complete_count: "%{completed} of %{total} lessons complete"
     continue: "Continue with: %{title}"
     module_count: "%{completed}/%{total} done"
+  prompt:
+    enrolled: "I'm enrolled in Gentle Shell School as %{student_id}."
+    lesson: 'Let''s do the "%{title}" lesson (%{slug}).'
+    fetch: "Fetch %{llms_url} for instructions."

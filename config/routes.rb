@@ -6,9 +6,8 @@ Rails.application.routes.draw do
     resources :lessons, only: :show, param: :slug
     get "enroll/:code", to: "enrollments#show", as: :enroll
     post "enroll/:code", to: "enrollments#create"
+    get "llms.txt" => "llms#show", format: false, as: :llms
   end
-
-  get "llms.txt" => "llms#show", format: false
 
   namespace :api do
     get "openapi.json" => "openapi#show", format: false

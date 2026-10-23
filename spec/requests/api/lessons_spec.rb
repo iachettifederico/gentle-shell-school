@@ -33,6 +33,14 @@ RSpec.describe "Lessons API", type: :request do
         "locale"            => "en",
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
         "content"           => "Read http://www.example.com/llms.txt\n",
+        "url"               => "http://www.example.com/lessons/welcome",
+        "next"              => {
+          "slug"   => "odd",
+          "title"  => "Odd",
+          "url"    => "http://www.example.com/lessons/odd",
+          "prompt" => "I'm enrolled in Gentle Shell School as {studentId}. Let's do the \"Odd\" lesson (odd). " \
+                      "Fetch http://www.example.com/llms.txt for instructions.",
+        },
       }
     }
     let(:odd_json) {
@@ -46,6 +54,8 @@ RSpec.describe "Lessons API", type: :request do
         "locale"            => "en",
         "agentInstructions" => "Verify odd at http://www.example.com/lessons/odd.\n\n#{Course::QuizInstructions::TEXT}",
         "content"           => "Explore first.\n",
+        "url"               => "http://www.example.com/lessons/odd",
+        "next"              => nil,
       }
     }
 
@@ -78,7 +88,31 @@ RSpec.describe "Lessons API", type: :request do
         "lab"               => nil,
         "locale"            => "en",
         "agentInstructions" => "Verify welcome at http://www.example.com/lessons/welcome.",
-        "content"           => "Read http://www.example.com/llms.txt\n"
+        "content"           => "Read http://www.example.com/llms.txt\n",
+        "url"               => "http://www.example.com/lessons/welcome",
+        "next"              => {
+          "slug"   => "odd",
+          "title"  => "Odd",
+          "url"    => "http://www.example.com/lessons/odd",
+          "prompt" => "I'm enrolled in Gentle Shell School as {studentId}. Let's do the \"Odd\" lesson (odd). " \
+                      "Fetch http://www.example.com/llms.txt for instructions.",
+        }
+      )
+    end
+
+    it "points the next lesson at the requested language's page and llms.txt" do
+      with_lessons(lessons) do
+        get "/api/lessons/welcome", params: { locale: "es-AR" }
+      end
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["url"]).to eq("http://www.example.com/es-AR/lessons/welcome")
+      expect(response.parsed_body["next"]).to eq(
+        "slug"   => "odd",
+        "title"  => "Odd",
+        "url"    => "http://www.example.com/es-AR/lessons/odd",
+        "prompt" => "Estoy inscripto en Gentle Shell School como {studentId}. Hagamos la lección \"Odd\" (odd). " \
+                    "Leé http://www.example.com/es-AR/llms.txt para ver las instrucciones."
       )
     end
 

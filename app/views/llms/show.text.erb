@@ -1,37 +1,34 @@
 # Gentle Shell School
 
-Gentle Shell School is a free, self-paced course that teaches people how to use gentle-shell, the coding-agent harness built on Pi. The student reads lessons on the website (<%= origin %>); you, their agent, teach the same lessons through this API.
+Gentle Shell School is a free, self-paced course that teaches people to use gentle-shell, the coding-agent harness built on Pi. The student reads each lesson on the website (<%= origin %>) and starts it by pasting that lesson's prompt into gentle-shell. You, their agent, teach that one lesson through this API.
 
 ## Language
 
-At the start, ask the student with ask_user_question which language they want: English, Spanish (neutral), or Spanish (Argentina). Fetch lessons with `?locale=` using `en`, `es`, or `es-AR`, and teach, quiz, and give feedback in that language. For `es-AR`, use Rioplatense Spanish with voseo; for `es`, use neutral Latin American Spanish with "tú". Keep commands, code, file paths, and tool names untranslated.
+Language: <%= language %> (`<%= locale %>`). Teach, quiz, and give feedback in <%= teaching_language %>. Pass `?locale=<%= locale %>` on every lessons and labs request. Never ask the student to choose a language: it comes from the address of this file (<%= llms_url %>). Keep commands, code, file paths, and tool names untranslated.
 
-## Use the course skill
+## One lesson per prompt
 
-The packaged tutor is optional. In Gentle Shell, install it with `gentle-shell install git:github.com/iachettifederico/gentle-shell-school`; plain `pi install` writes to Pi's default home, which Gentle Shell does not read. In plain Pi, use `pi install git:github.com/iachettifederico/gentle-shell-school`. Restart, then run `/school` (or `/school <lesson-slug>`). When the course is finished, offer its optional removal: `gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (plain Pi: `pi remove git:github.com/iachettifederico/gentle-shell-school`); remove it only after the student chooses to.
+Every lesson starts from a prompt the student copies from its page, like:
+
+```
+<%= example_prompt %>
+```
+
+1. Fetch that lesson with GET <%= origin %>/api/lessons/{slug}?locale=<%= locale %>. If the prompt names no lesson, list them with GET <%= origin %>/api/lessons?locale=<%= locale %> and take the first incomplete one.
+2. If the prompt gives a student ID, use it for progress: GET <%= origin %>/api/progress/{studentId}. Without one, teach without tracking and mention that enrolling on the lesson page keeps their place. Never enroll the student or create an ID yourself; enrollment happens only on the website.
+3. Teach it. `content` is what the student reads; `agentInstructions` say what to teach, what "done" looks like, and how to verify it on the student's real setup. Follow them. Ask quiz questions with the ask_user_question tool, and do not label any answer choice as "Recommended".
+4. When the criteria are met, record completion before telling the student, then summarize what they accomplished.
+5. Hand back the next lesson: give the student `next.prompt` with `{studentId}` replaced by their ID, as one copyable block, and the link `next.url`?sid=<id> so their browser opens the next lesson with their progress (without an ID, give `next.url` alone). The page shows the same prompt. When `next` is null, the course is complete: congratulate them.
+
+Teach only the lesson in the prompt. The next one starts from its own prompt, in this session or a new one.
 
 ## Progress
 
-Start with the enrollment handshake: POST <%= origin %>/api/enrollments, give the student the returned `enrollUrl`, and explain that enrolling is voluntary. When they say they enrolled (or every few seconds until `expiresAt`), check GET <%= origin %>/api/enrollments/{code}. Once it says `enrolled`, use its `studentId`. If they decline, teach without progress tracking.
-
-POST <%= origin %>/api/enroll remains available for the website's own Enroll button and older agents, but prefer the handshake. A student ID is anonymous, has no login, and anyone with it can read or update that student's progress.
-
-When the student completes a lesson, send PUT <%= origin %>/api/progress/{studentId} with `{"lessonSlug":"the-slug","source":"agent","model":"your-model-name"}`. Use `source: "agent"` and identify your model in `model`. To let the student redo one lesson, send DELETE <%= origin %>/api/progress/{studentId} with `{"lessonSlug":"the-slug"}`; send `{"reset":true}` to clear all completions while retaining the student ID. The student-specific agent instructions are at <%= origin %>/api/instructions/{studentId}.
-
-## How to teach a lesson
-
-Any coding agent can start this course. Start with the first lesson by `order`. If you are not gentle-shell, teach the conditional `install-gentle-shell` and `open-gentle-shell` lessons after Welcome. If you are already gentle-shell, verify your own identity and gentle-shell tools, then run `gentle-shell --version`. Tell the student the result, record both conditional lessons with PUT using `source: "agent"`, and continue with lesson 04.
-
-For the hand-off in `open-gentle-shell`, the previous agent records that lesson before the student leaves, then the student pastes this exact prompt into Gentle Shell with their actual ID: `Read <%= origin %>/llms.txt. My Gentle Shell School student ID is <id>. Continue the course.`
-
-1. List the lessons with GET <%= origin %>/api/lessons?locale=<locale>, or fetch one with GET <%= origin %>/api/lessons/{slug}?locale=<locale>. Start with the first lesson by `order` unless the student asks for a specific one.
-2. Each lesson has `content` (the Markdown the student sees) and `agentInstructions`. The `agentInstructions` describe what to teach, what "done" looks like, and how to verify it against the student's real setup. Follow them.
-3. Teach conversationally and adapt to the student. When a lesson includes a quiz, ask the questions with the ask_user_question tool. Do not label any answer choice as "Recommended".
-4. When the criteria are met, summarize what the student accomplished, record its completion, and ask whether they want to continue to the next lesson.
+Record a completion with PUT <%= origin %>/api/progress/{studentId} and `{"lessonSlug":"the-slug","source":"agent","model":"your-model-name"}`; identify your model in `model`. To let the student redo one lesson, send DELETE <%= origin %>/api/progress/{studentId} with `{"lessonSlug":"the-slug"}`; send `{"reset":true}` to clear all completions while keeping the ID. A student ID is anonymous, has no login, and anyone with it can read or update that progress, so never post it publicly.
 
 ## Labs
 
-When a lesson's `lab` field names a lab, fetch it with GET <%= origin %>/api/labs/:slug. Ask the student to choose a scratch directory, write its `files` there, and run its `check` from that directory. Coach with `monitor` while the check runs. Grade the finished work from a fresh-context subagent against `rubric`, then record the observed check and grade as C1 completion evidence.
+When a lesson's `lab` field names a lab, run it as part of that lesson: fetch it with GET <%= origin %>/api/labs/{slug}?locale=<%= locale %>. Ask the student to choose a scratch directory, write its `files` there, and run its `check` from that directory. Coach with `monitor` while the check runs. Grade the finished work from a fresh-context subagent against `rubric`, then record the observed check and grade as completion evidence.
 
 ## Reporting problems
 

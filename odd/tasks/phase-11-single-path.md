@@ -1,0 +1,39 @@
+# Phase 11 — One way to take the course
+
+Replace the five overlapping entry paths with one loop driven by the site: the lesson page builds the prompt (student ID + lesson + localized llms.txt), the agent teaches that lesson and hands back the next prompt, and the browser follows progress live by polling.
+Branch `feat/phase-11-single-path`, from `main` (`54152bd`). Reference design: github.com/agentschools/opencode.school.
+
+## Specs
+
+- S1 — "I'm finding the course confusing in how it works. The way I think it should is: I enter the prompt from the site, the agent reads LLMs.txt and shows the lesson (in the angent and in the browser, meaning that we need to use websockets or webhooks to update what we see in the browser according to where we are in the course for the user) and then we read and do whatever the lesson says and at the end the site (and agent) says: "read llms.txt and teach me <next lesson>". I copythat, paste it into the agent and rince and repeat."
+- S2 — "Something that's not happening is that the language is not consistent. I was asked to choose the language twice, both times I chose spanish arg and then in the next lesson I was reading it in English."
+- S3 — "I think (and correct me if I'm wrong) that we have multiple ways to run the course and they collide with each other. In that sense the opencode-school course was simpler. We need simpler"
+- S4 — Approved proposal (L4): one path, the site builds the prompt with ID + localized llms.txt, the agent hands you the next prompt, /school, the handshake and the hand-off go away.
+- S5 — Live browser sync in this feature (L4): "Yes, in this feature" — polling, no websockets.
+
+### Parent decisions
+
+- D1 — Prompt (one template, server-owned; JS only fills the student ID): enrolled → `I'm enrolled in Gentle Shell School as <id>. Let's do the "<title>" lesson (<slug>). Fetch <origin>/<locale-prefix>llms.txt for instructions.`; not enrolled → same without the first sentence (teach without tracking). Localized in en/es/es-AR. The API returns the same template for the next lesson (`{studentId}` placeholder) so site and agent never drift.
+- D2 — Language lives in the llms.txt URL: `/llms.txt` (en), `/es/llms.txt`, `/es-AR/llms.txt`. Each fixes the locale, tells the agent to pass `?locale=` on every call, and never to ask for a language.
+- D3 — Enrollment only on the site (`POST /api/enroll`). A `?sid=<id>` link adopts an ID into the browser (agent → browser). The agent handshake (`/api/enrollments`, `/enroll/:code` pages) is removed. The `pending_enrollments` table stays (no migration; dropping it is deferred, high-risk data change).
+- D4 — No package: remove `/school`, `agent/` skill+prompt, `package.json` `pi` key, and the capstone/README removal steps.
+- D5 — Lessons keep their slugs and order (29). `install-gentle-shell` and `open-gentle-shell` become read-on-the-site setup: install, open gentle-shell, paste the lesson prompt. No hand-off between agents.
+- D6 — Live sync: when a student ID is present and the tab is visible, poll `GET /api/progress/:id` every 2s; update completion marks, home summary, and on a lesson page show "completed" + the next lesson card. Stop when hidden; no websockets.
+- D7 — Labs run inside their lesson (the lesson prompt covers them); the lab box drops its own prompt.
+
+## Tasks
+
+- [ ] T1 — Prompt model + localized llms.txt + API `next` (template, routes, llms rewrite to the single loop). Route: inline. Commit: —
+- [ ] T2 — Site: lesson/home prompt cards built from the template, `?sid=` adoption, remove ID/instructions UI, lab box without prompt, backtick fix. Route: inline. Commit: —
+- [ ] T3 — Live sync polling (D6). Route: inline. Commit: —
+- [ ] T4 — Remove second paths (D3 handshake code/pages/JS/locales/openapi, D4 package). Route: inline. Commit: —
+- [ ] T5 — Content: lessons 01–03 and capstone (en/es/es-AR), README, any lesson text about handshake/hand-off/`/school`/"any agent". Route: inline. Commit: —
+- [ ] T6 — Verify: browser loop in es-AR (prompt → agent PUT → live update → next prompt equals API), axe, overflow, `bin/ci`, independent verifier (contract removal). Route: inline + gentle-ai-verify. Commit: —
+
+## Log
+
+- L1 — User: "I'm finding the course confusing in how it works. The way I think it should is: I enter the prompt from the site, the agent reads LLMs.txt and shows the lesson (in the angent and in the browser, meaning that we need to use websockets or webhooks to update what we see in the browser according to where we are in the course for the user) and then we read and do whatever the lesson says and at the end the site (and agent) says: "read llms.txt and teach me <next lesson>". I copythat, paste it into the agent and rince and repeat. Something that's not happening is that the language is not consistent. I was asked to choose the language twice, both times I chose spanish arg and then in the next lesson I was reading it in English. I think (and correct me if I'm wrong) that we have multiple ways to run the course and they collide with each other. In that sense the opencode-school course was simpler. We need simpler"
+- L2 — Parent diagnosis: five entry paths (site prompt, /school, hand-off, teach-me, lab/`/school … lab`) + two enrollments; language only in agent conversation, API defaults to `en` without `?locale=` (`api/base_controller.rb:43`), every new path asks again.
+- L3 — User: read opencode.school first. Findings: site-only enrollment, browser-built prompt with ID, 1s progress polling (`Base.astro:891`), `?sid=` adoption, install read in browser, no package; English only.
+- L4 — User approved: "Yes, plan it" (refined proposal) and live sync "Yes, in this feature".
+- L5 — `fix/lab-prompt` (`6e428f0`, unmerged) is superseded by D7; only its inline-code backtick CSS fix is carried into T2.

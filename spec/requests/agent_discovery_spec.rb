@@ -2,42 +2,50 @@ require "rails_helper"
 
 RSpec.describe "Agent discovery", type: :request do
   describe "GET /llms.txt" do
-    it "explains the school and API using the request origin" do
+    it "teaches one lesson at a time in English and hands back the next prompt" do
       get "/llms.txt"
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/plain")
-      expect(response.body).to start_with("# Gentle Shell School\n")
-      expect(response.body).to include("http://www.example.com/api/lessons")
-      expect(response.body).to include("http://www.example.com/api/openapi.json")
-      expect(response.body).to include("agentInstructions")
-      expect(response.body).to include("Any coding agent can start this course.")
-      expect(response.body).to include(
-        "If you are already gentle-shell, verify your own identity and gentle-shell tools, " \
-        "then run `gentle-shell --version`."
-      )
-      expect(response.body).to include(
-        "Read http://www.example.com/llms.txt. My Gentle Shell School student ID is <id>. " \
-        "Continue the course."
-      )
-      expect(response.body).to include("POST http://www.example.com/api/enroll")
-      expect(response.body).to include("source: \"agent\"")
-      expect(response.body).to include("DELETE http://www.example.com/api/progress/{studentId}")
-      expect(response.body).to include("http://www.example.com/api/instructions/{studentId}")
-      expect(response.body).to include('"Report it and continue", "Continue without reporting", "Stop here"')
-      expect(response.body).to include("[Course feedback] <lesson-slug>: <short summary>")
-      expect(response.body).to include("gh issue create --repo iachettifederico/gentle-shell-school")
-      expect(response.body).to include("issues/new?template=course-feedback.yml")
-      expect(response.body).to include('"Log in with gh now", "Open a prefilled link in my browser", "Skip reporting"')
-      expect(response.body).to include("gentle-shell install git:github.com/iachettifederico/gentle-shell-school")
-      expect(response.body).to include("gentle-shell remove git:github.com/iachettifederico/gentle-shell-school")
-      expect(response.body).to include("pi install git:github.com/iachettifederico/gentle-shell-school")
-      expect(response.body).to include("pi remove git:github.com/iachettifederico/gentle-shell-school")
-      expect(response.body).to include("/school")
-      expect(response.body).to include("GET http://www.example.com/api/labs/:slug")
-      expect(response.body).to include("Coach with `monitor` while the check runs")
-      expect(response.body).not_to include("Progress tracking is not available yet")
-      expect(response.body).not_to include("{origin}")
+      body = response.body
+      expect(body).to start_with("# Gentle Shell School\n")
+      expect(body).to include("Language: English (`en`).")
+      expect(body).to include("Never ask the student to choose a language")
+      expect(body).to include("GET http://www.example.com/api/lessons/{slug}?locale=en")
+      expect(body).to include("I'm enrolled in Gentle Shell School as <id>")
+      expect(body).to include("`next.prompt`")
+      expect(body).to include("`next.url`?sid=<id>")
+      expect(body).to include("PUT http://www.example.com/api/progress/{studentId}")
+      expect(body).to include("DELETE http://www.example.com/api/progress/{studentId}")
+      expect(body).to include("http://www.example.com/api/openapi.json")
+      expect(body).to include("GET http://www.example.com/api/labs/{slug}?locale=en")
+      expect(body).to include("Coach with `monitor` while the check runs")
+      expect(body).to include('"Report it and continue", "Continue without reporting", "Stop here"')
+      expect(body).to include("[Course feedback] <lesson-slug>: <short summary>")
+      expect(body).to include("gh issue create --repo iachettifederico/gentle-shell-school")
+      expect(body).to include("issues/new?template=course-feedback.yml")
+      expect(body).to include('"Log in with gh now", "Open a prefilled link in my browser", "Skip reporting"')
+      expect(body).not_to include("/school")
+      expect(body).not_to include("/api/enrollments")
+      expect(body).not_to include("Any coding agent")
+      expect(body).not_to include("which language")
+      expect(body).not_to include("{origin}")
+    end
+
+    it "fixes the language from the localized llms.txt URL" do
+      get "/es-AR/llms.txt"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq("text/plain")
+      expect(response.body).to include("Language: Spanish (Argentina) (`es-AR`).")
+      expect(response.body).to include("Rioplatense Spanish with voseo")
+      expect(response.body).to include("GET http://www.example.com/api/lessons/{slug}?locale=es-AR")
+      expect(response.body).to include("Never ask the student to choose a language")
+
+      get "/es/llms.txt"
+
+      expect(response.body).to include("Language: Spanish (`es`).")
+      expect(response.body).to include("GET http://www.example.com/api/lessons/{slug}?locale=es")
     end
   end
 
@@ -57,7 +65,7 @@ RSpec.describe "Agent discovery", type: :request do
         "/api/labs", "/api/labs/{slug}", "/api/lessons", "/api/lessons/{slug}"
       )
       expect(document.dig("components", "schemas", "Lesson", "required"))
-        .to eq(%w[order slug title description agentInstructions content lab locale])
+        .to eq(%w[order slug title description agentInstructions content lab locale url next])
       expect(document.dig("components", "schemas", "Lab", "allOf", 1, "required"))
         .to eq(%w[brief check rubric files])
       expect(document.dig("components", "schemas", "Enrollment", "required")).to eq(%w[studentId progress])

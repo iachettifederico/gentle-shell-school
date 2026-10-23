@@ -441,7 +441,7 @@ components:
                     type: string
     Lesson:
       type: object
-      required: [order, slug, title, description, agentInstructions, content, lab, locale]
+      required: [order, slug, title, description, agentInstructions, content, lab, locale, url, next]
       properties:
         order:
           type: integer
@@ -471,6 +471,29 @@ components:
         content:
           type: string
           description: Lesson body as Markdown.
+        url:
+          type: string
+          format: uri
+          description: The lesson page in the requested language.
+        next:
+          description: >-
+            The following lesson, or null after the last one. Give the student
+            `prompt` (with {studentId} replaced) and `url` with `?sid=<id>`.
+          oneOf:
+            - type: "null"
+            - type: object
+              required: [slug, title, url, prompt]
+              properties:
+                slug:
+                  type: string
+                title:
+                  type: string
+                url:
+                  type: string
+                  format: uri
+                prompt:
+                  type: string
+                  description: The copyable prompt for the next lesson, containing the {studentId} placeholder.
     Error:
       type: object
       required: [error]
