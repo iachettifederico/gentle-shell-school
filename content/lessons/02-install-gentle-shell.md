@@ -4,39 +4,23 @@ slug: install-gentle-shell
 description: "Install Gentle Shell with the documented path for your operating system."
 order: 2
 module: "Getting started"
-quiz: true
+quiz: false
 agent_instructions: |
-  First determine whether you are already teaching from gentle-shell. State your
-  own identity and the gentle-shell tools available to you, then run
-  `gentle-shell --version`. If those together confirm you are gentle-shell,
-  tell the student that their tutor is already running in gentle-shell. Record
-  completion of both `install-gentle-shell` and `open-gentle-shell` with PUT
-  {origin}/api/progress/{studentId}, using `source: "agent"`, after telling the
-  student. Include a short summary of the identity, tools, and version check,
-  then continue with lesson 04, The Layers of Gentle Shell. Do not teach or
-  quiz either conditional lesson in that case.
-
-  Otherwise, teach this lesson. Identify the student's operating system before
-  presenting a path, and teach only the documented path for that system. Ask
-  these questions with ask_user_question, including the correct answer:
-  1. What command confirms that the gentle-shell command is installed?
-     Correct answer: `gentle-shell --version`.
-  2. What must the download installer show before it changes the computer?
-     Correct answer: A plan that the student confirms.
-  3. Where should installers be downloaded from?
-     Correct answer: The Gentle Shell repository's Releases page.
-
-  Have the student run `gentle-shell --version` after installation. The lesson
-  is done when it prints version information. Tell the student that the next
-  lesson opens gentle-shell and hands their anonymous student ID to it.
+  The student read this lesson on the website to install gentle-shell, and is
+  now talking to you through it. Confirm it: run `gentle-shell --version` and
+  tell them what it printed. If it prints version information, record
+  completion (and `welcome`, if it is not complete yet) with PUT
+  {origin}/api/progress/{studentId} using `source: "agent"`, then hand back
+  the next lesson's prompt. If it fails, help them through the documented
+  installer path for their operating system in this lesson's content instead of
+  guessing at PATH changes or package commands.
 ---
 
 # Install Gentle Shell
 
-This course can begin with any coding agent. That agent can help you install
-Gentle Shell, but it is not a substitute for Gentle Shell itself. The goal of
-this lesson is narrow and observable: make the `gentle-shell` command available,
-then confirm it with `gentle-shell --version`.
+Read this lesson here, on the website: until Gentle Shell is installed there is
+no agent to paste a prompt into. The goal is narrow and observable: make the
+`gentle-shell` command available, then confirm it with `gentle-shell --version`.
 
 Start by identifying your operating system. The documented download installer is
 the simplest path and needs no terminal. It installs the pieces Gentle Shell
@@ -97,6 +81,7 @@ you deliberately need one of those alternatives.
 
 ## Try it
 
-Tell your tutor which operating system you use, complete its documented
-installer path, and run `gentle-shell --version`. Keep the terminal open: in the
-next lesson you will start Gentle Shell and transfer your course progress to it.
+Follow the installer path for your operating system and run
+`gentle-shell --version`. When it prints version information, continue with
+**Open Gentle Shell**: it starts Gentle Shell and shows you where to paste your
+first prompt.

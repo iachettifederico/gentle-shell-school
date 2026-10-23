@@ -42,13 +42,6 @@ agent_instructions: |
   for it. Done means these artifacts are present, the student
   can explain each ODD decision, and review/verification evidence is recorded; do
   not mark the capstone done merely because code was written.
-
-  After you record capstone completion, if the course tutor package is
-  installed, offer its optional removal with ask_user_question: "Remove the
-  course tutor" or "Keep it". Only after the student chooses removal, run
-  `gentle-shell remove git:github.com/iachettifederico/gentle-shell-school` (or `pi remove git:github.com/iachettifederico/gentle-shell-school` in plain Pi) or give them
-  the command; never remove it without that choice. Removal does not delete
-  course progress, which stays on the course server under their student ID.
 ---
 
 # Capstone: a small feature end to end
@@ -194,14 +187,3 @@ model, then inspect and integrate its evidence. Finally, ask your tutoring
 agent to verify the feature document, tests, and commits directly in the
 scratch repository. When those artifacts agree, you have practiced the whole
 system from intent to reviewable proof.
-
-## When you finish: remove the course tutor (optional)
-
-If you installed the course tutor package, you can remove it now. Your course
-progress stays on the course server under your student ID.
-
-```sh
-gentle-shell remove git:github.com/iachettifederico/gentle-shell-school
-```
-
-In plain Pi, use `pi remove git:github.com/iachettifederico/gentle-shell-school`. Restart afterwards; `/school` is gone.

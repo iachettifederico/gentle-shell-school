@@ -44,16 +44,19 @@ RSpec.describe "Course content" do
     expect(demo_labs.labs.map(&:slug)).to eq([ "demo-hello" ])
   end
 
-  it "teaches the gentle-shell tutor install up front and its optional removal at the end, in every language" do
-    source = "git:github.com/iachettifederico/gentle-shell-school"
-    [ "", "es/", "es-AR/" ].each do |locale|
-      welcome = Rails.root.join("content/lessons/#{locale}01-welcome.md").read
-      capstone = Rails.root.join("content/lessons/#{locale}29-capstone.md").read
-
-      expect(welcome).to include("gentle-shell install #{source}"), "#{locale}01-welcome.md"
-      expect(welcome).to include("pi install #{source}"), "#{locale}01-welcome.md"
-      expect(capstone).to include("gentle-shell remove #{source}"), "#{locale}29-capstone.md"
-      expect(capstone).to include("pi remove #{source}"), "#{locale}29-capstone.md"
+  it "teaches a single course path in every language" do
+    retired = [
+      "/school", "git:github.com/iachettifederico/gentle-shell-school", "api/enrollments", "enrollUrl",
+      "student ID is <id>", "hand-off prompt", "any coding agent",
+    ]
+    Dir[Rails.root.join("content/lessons/{,es/,es-AR/}*.md")].each do |path|
+      text = File.read(path)
+      retired.each { |phrase| expect(text).not_to include(phrase), "#{path} still mentions #{phrase.inspect}" }
     end
+
+    open_lesson = Rails.root.join("content/lessons/03-open-gentle-shell.md").read
+    expect(open_lesson).to include("record `welcome`, `install-gentle-shell`, and `open-gentle-shell`")
+    welcome = Rails.root.join("content/lessons/01-welcome.md").read
+    expect(welcome).to include("`next.prompt` of `open-gentle-shell`")
   end
 end

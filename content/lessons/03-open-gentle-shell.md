@@ -1,49 +1,27 @@
 ---
 title: "Open Gentle Shell"
 slug: open-gentle-shell
-description: "Start Gentle Shell and hand your course progress to its tutoring agent."
+description: "Start Gentle Shell and paste your first lesson prompt."
 order: 3
 module: "Getting started"
-quiz: true
+quiz: false
 agent_instructions: |
-  If you already established in lesson `install-gentle-shell` that you are
-  gentle-shell, do not teach this lesson: that lesson records both conditional
-  lessons and continues with lesson 04.
-
-  Otherwise, teach the student to start Gentle Shell with `gentle-shell` and
-  to give its agent the prepared hand-off prompt below. Before the student
-  leaves this conversation, record completion of `open-gentle-shell` with PUT
-  {origin}/api/progress/{studentId}, using `source: "agent"`, and tell them
-  that you recorded it. The anonymous student ID is what lets the new agent
-  continue their progress.
-
-  Ask these questions with ask_user_question, including the correct answer:
-  1. Which command opens Gentle Shell after it is installed?
-     Correct answer: `gentle-shell`.
-  2. What must the hand-off prompt include so progress follows the student?
-     Correct answer: The Gentle Shell School student ID.
-  3. Which agent records this lesson before the hand-off?
-     Correct answer: The agent teaching this lesson now.
-
-  The real-setup check, which you can observe here, is that `gentle-shell
-  --version` prints a version and the student has the exact prepared hand-off
-  prompt with their own student ID ready to paste. The lesson is done when you
-  have recorded completion and given the student that prompt. You cannot see the
-  new session: the gentle-shell agent that receives the prompt confirms the
-  student ID with GET {origin}/api/progress/{studentId} and continues with
-  lesson 04. Mention that the student may install the course tutor package in
-  Gentle Shell (`gentle-shell install git:github.com/iachettifederico/gentle-shell-school`)
-  and use `/school`; it is optional, and the capstone offers its removal when
-  the course ends.
+  The student opened gentle-shell and pasted this lesson's prompt, which is the
+  lesson itself. Run `gentle-shell --version` and tell them what it printed.
+  Explain the loop in two or three sentences: each lesson page has a prompt,
+  you teach that lesson, record it, and hand back the next prompt, and their
+  open lesson page updates by itself. Lessons 01 and 02 were read on the
+  website, so record `welcome`, `install-gentle-shell`, and `open-gentle-shell`
+  with PUT {origin}/api/progress/{studentId} using `source: "agent"` (when
+  there is an ID; without one, mention the Enroll button on the home page),
+  then hand back the next lesson's prompt.
 ---
 
 # Open Gentle Shell
 
-You have confirmed that the `gentle-shell` launcher is available. Now open it
-and give its agent the one piece of information that carries your course forward:
-your anonymous Gentle Shell School student ID. The ID is not an account or a
-login. It is the course's progress key, so the new tutoring agent can read what
-you have already completed.
+You have confirmed that the `gentle-shell` launcher is available. Now start it
+and paste your first lesson prompt. From here on, every lesson works the same
+way.
 
 ## Start the workspace
 
@@ -55,50 +33,24 @@ gentle-shell
 
 That opens Pi with the Gentle Shell package loaded. The launcher normally uses
 its own isolated agent home, so it can set up its workspace without editing an
-existing Pi agent. Wait until the interactive session is ready before pasting
-the hand-off prompt.
+existing Pi agent. Wait until the interactive session is ready.
 
-## Carry your progress forward
+## Paste your first prompt
 
-Your current tutor should already know your student ID from enrolling you. Ask
-it to show you the ID if you do not have it. Before you leave this conversation,
-it records this lesson as complete. Then paste this prompt into the new Gentle
-Shell session, replacing `<id>` with your actual student ID:
+Want to keep your place? Enroll first with the button on the home page, then
+come back here: the prompt at the top of this page then includes your anonymous
+student ID.
 
-```text
-Read {origin}/llms.txt. My Gentle Shell School student ID is <id>. Continue the course.
-```
+Copy the prompt at the top of this page and paste it into Gentle Shell. Your
+agent reads the course instructions in your language, confirms that Gentle Shell
+works, records the first three lessons, and gives you the prompt for **The Layers
+of Gentle Shell**.
 
-The prompt gives the new agent both the course instructions and your progress
-key. It should read the course instructions, use that ID when it requests your
-student-specific instructions, and continue at the next incomplete lesson.
+## The loop from here
 
-Optionally, install the course tutor package in Gentle Shell first. It turns the
-course instructions into a skill and adds the `/school` command:
-
-```sh
-gentle-shell install git:github.com/iachettifederico/gentle-shell-school
-```
-
-Restart Gentle Shell, then use `/school` with the same hand-off prompt. The
-package is optional; when you finish the course, remove it with
-`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school`.
-
-## Why the order matters
-
-Do not rely on the new agent to guess what happened in this conversation. The
-previous agent records this lesson *before* the hand-off, using the course API
-with `source: "agent"`. That makes the progress record independent of either
-agent's chat history. If you close a terminal, switch models, or resume later,
-the same ID still identifies the same course progress.
+Each lesson page has its prompt at the top. Paste it, learn with your agent, and
+at the end it hands you the next prompt. Keep this page open: when your agent
+records a lesson, the page shows it without a reload and links to the next one.
 
 If the command does not start Gentle Shell, return to **Install Gentle Shell**
-and re-run its version check. If Gentle Shell opens but the new agent does not
-continue correctly, paste the hand-off prompt again with the same ID rather than
-creating a new enrollment.
-
-## Try it
-
-Have your current agent confirm that it recorded this lesson. Open
-`gentle-shell`, paste the prepared prompt with your ID, and let the new agent
-continue with **The Layers of Gentle Shell**.
+and re-run its version check.

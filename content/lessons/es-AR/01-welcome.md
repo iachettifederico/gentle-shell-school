@@ -1,6 +1,6 @@
 ---
 title: "Bienvenida"
-description: "Conocé Gentle Shell School y cómo cualquier agente de programación puede iniciar tu curso."
+description: "Conocé Gentle Shell School y cómo cada lección empieza con un prompt que pegás en gentle-shell."
 module: "Primeros pasos"
 ---
 
@@ -10,39 +10,38 @@ construido sobre Pi.
 
 ## Cómo funciona este curso
 
-Cada lección tiene dos audiencias:
+Todas las lecciones funcionan de la misma manera:
 
-- **Vos** leés la lección acá, en el sitio web.
-- **Tu agente** lee la misma lección mediante la API del curso. Cada lección
-  incluye instrucciones que le indican al agente cómo se ve el resultado
-  "terminado" y cómo comprobarlo.
+1. **Leé la lección acá**, en el sitio web.
+2. **Copiá el prompt** que está arriba de la página de la lección y pegalo en
+   gentle-shell.
+3. **Tu agente te enseña esa lección.** Explica el tema, hace preguntas de
+   cuestionario cuando corresponde y comprueba tu configuración real antes de
+   registrar la lección como completada.
+4. **Te entrega el siguiente prompt.** Pegalo para continuar, acá o en una
+   sesión nueva. Tu página de lección muestra el mismo prompt.
 
-Cualquier agente de programación puede iniciar el curso. Te explica cada tema,
-hace preguntas de cuestionario cuando corresponde y verifica tu configuración
-real antes de marcar una lección como completada. Si ese primer agente no es
-gentle-shell, las dos lecciones siguientes te ayudan a instalar y abrir Gentle
-Shell, y después transfieren el progreso de tu curso a su agente.
+El prompt lleva todo lo que el agente necesita: qué lección enseñar, dónde están
+las instrucciones del curso y, una vez que te inscribís, tu ID anónimo de estudiante.
 
-¿Ya usás gentle-shell? Si querés, podés instalar el paquete tutor del curso.
-Agrega el comando `/school`, y la última lección muestra cómo sacarlo cuando
-termines. Instalalo, reiniciá Gentle Shell y después usá `/school` para empezar
-o continuar el curso:
+## Conservá tu lugar
 
-```sh
-gentle-shell install git:github.com/iachettifederico/gentle-shell-school
-```
+Inscribite con el botón de la página de inicio. Vas a tener un ID anónimo de
+estudiante: sin cuenta ni inicio de sesión. Desde entonces, cada prompt de lección lo
+incluye, tu agente registra con él las lecciones completadas y este sitio muestra tu
+progreso, actualizándose solo mientras la página está abierta.
 
-Usá `gentle-shell install`, no `pi install`: `pi install` escribe en el
-directorio predeterminado de Pi (`~/.pi/agent`), que Gentle Shell no lee. En Pi
-sin Gentle Shell, usá `pi install git:github.com/iachettifederico/gentle-shell-school`.
+## Tu idioma
 
-¿Encontraste un problema? Tu agente puede reportarlo como un issue de GitHub con
-tu consentimiento, o podés usar el enlace "Reportar un problema".
+El curso sigue el idioma que estás leyendo. Usá el selector de idioma en la parte
+superior del sitio: los prompts hacen que tu agente consulte las instrucciones para ese
+idioma, así que te enseña en él sin preguntar.
 
-## Empezá el curso
+## ¿Todavía no usás gentle-shell?
 
-Pedile a cualquier agente de programación:
+Leé primero acá las dos lecciones siguientes. **Instalá Gentle Shell** hace que el
+comando `gentle-shell` funcione, y **Abrí Gentle Shell** lo inicia y te muestra dónde
+pegar tu primer prompt.
 
-```text
-Read {origin}/llms.txt and start the course.
-```
+¿Encontraste un problema? Tu agente puede reportarlo como un issue de GitHub con tu
+consentimiento, o podés usar el enlace "Reportar un problema".

@@ -1,16 +1,14 @@
 ---
 title: "Abrí Gentle Shell"
-description: "Iniciá Gentle Shell y entregale el progreso de tu curso a su agente tutor."
+description: "Iniciá Gentle Shell y pegá tu primer prompt de lección."
 module: "Primeros pasos"
 ---
 
 # Abrí Gentle Shell
 
-Ya confirmaste que el lanzador `gentle-shell` está disponible. Ahora abrilo y
-dale a su agente la única información que lleva tu curso hacia adelante: tu ID
-anónimo de estudiante de Gentle Shell School. El ID no es una cuenta ni un
-inicio de sesión. Es la clave de progreso del curso, para que el nuevo agente
-tutor pueda leer lo que ya completaste.
+Ya confirmaste que el lanzador `gentle-shell` está disponible. Ahora abrilo y pegá tu
+primer prompt de lección. De acá en adelante, todas las lecciones funcionan de la misma
+manera.
 
 ## Iniciá el espacio de trabajo
 
@@ -23,52 +21,23 @@ gentle-shell
 Eso abre Pi con el paquete Gentle Shell cargado. El lanzador normalmente usa su
 propio home de agente aislado, así que puede configurar su espacio de trabajo
 sin editar un agente Pi existente. Esperá hasta que la sesión interactiva esté
-lista antes de pegar el prompt de transferencia.
+lista.
 
-## Llevá tu progreso adelante
+## Pegá tu primer prompt
 
-Tu tutor actual ya debería conocer tu ID de estudiante porque te inscribió.
-Pedile que te muestre el ID si no lo tenés. Antes de salir de esta conversación,
-registra esta lección como completada. Después pegá este prompt en la nueva
-sesión de Gentle Shell, reemplazando `<id>` con tu ID real de estudiante:
+¿Querés conservar tu lugar? Inscribite primero con el botón de la página de inicio y
+volvé acá: el prompt que está arriba de esta página va a incluir entonces tu ID anónimo
+de estudiante.
 
-```text
-Read {origin}/llms.txt. My Gentle Shell School student ID is <id>. Continue the course.
-```
+Copiá el prompt que está arriba de esta página y pegalo en Gentle Shell. Tu agente lee
+las instrucciones del curso en tu idioma, confirma que Gentle Shell funciona, registra
+las primeras tres lecciones y te da el prompt para **Las capas de Gentle Shell**.
 
-El prompt le da al nuevo agente tanto las instrucciones del curso como tu clave
-de progreso. Debe leer las instrucciones del curso, usar ese ID al solicitar tus
-instrucciones específicas como estudiante y continuar en la siguiente lección
-incompleta.
+## El ciclo de acá en adelante
 
-Opcionalmente, instalá primero el paquete tutor del curso en Gentle Shell.
-Convierte las instrucciones del curso en una skill y agrega el comando
-`/school`:
+Cada página de lección tiene su prompt arriba. Pegalo, aprendé con tu agente y, al
+final, te entrega el siguiente prompt. Mantené esta página abierta: cuando tu agente
+registra una lección, la página la muestra sin recargar y enlaza a la siguiente.
 
-```sh
-gentle-shell install git:github.com/iachettifederico/gentle-shell-school
-```
-
-Reiniciá Gentle Shell y luego usá `/school` con el mismo prompt de transferencia.
-El paquete es opcional; cuando termines el curso, sacalo con
-`gentle-shell remove git:github.com/iachettifederico/gentle-shell-school`.
-
-## Por qué importa el orden
-
-No confíes en que el nuevo agente adivine qué pasó en esta conversación. El
-agente anterior registra esta lección *antes* de la transferencia, usando la API
-del curso con `source: "agent"`. Eso hace que el registro de progreso sea
-independiente del historial de chat de cualquiera de los agentes. Si cerrás una
-terminal, cambiás de modelo o retomás más tarde, el mismo ID sigue identificando
-el mismo progreso del curso.
-
-Si el comando no inicia Gentle Shell, volvé a **Instalá Gentle Shell** y repetí
-su comprobación de versión. Si Gentle Shell se abre pero el nuevo agente no
-continúa correctamente, pegá otra vez el prompt de transferencia con el mismo
-ID en lugar de crear una inscripción nueva.
-
-## Probalo
-
-Pedile a tu agente actual que confirme que registró esta lección. Abrí
-`gentle-shell`, pegá el prompt preparado con tu ID y dejá que el nuevo agente
-continúe con **Las capas de Gentle Shell**.
+Si el comando no inicia Gentle Shell, volvé a **Instalá Gentle Shell** y repetí su
+comprobación de versión.

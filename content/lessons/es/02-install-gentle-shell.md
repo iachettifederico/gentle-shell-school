@@ -6,10 +6,10 @@ module: "Primeros pasos"
 
 # Instala Gentle Shell
 
-Este curso puede comenzar con cualquier agente de programación. Ese agente puede
-ayudarte a instalar Gentle Shell, pero no sustituye a Gentle Shell. El objetivo de
-esta lección es limitado y observable: hacer que el comando `gentle-shell` esté
-disponible y luego confirmarlo con `gentle-shell --version`.
+Lee esta lección aquí, en el sitio web: hasta que Gentle Shell esté instalado no hay
+un agente en el que pegar un prompt. El objetivo es limitado y observable: hacer que
+el comando `gentle-shell` esté disponible y luego confirmarlo con
+`gentle-shell --version`.
 
 Comienza por identificar tu sistema operativo. El instalador de descarga documentado
 es la ruta más sencilla y no necesita terminal. Instala los componentes que Gentle
@@ -70,6 +70,6 @@ deliberadamente necesitas una de esas alternativas.
 
 ## Pruébalo
 
-Dile a tu tutor qué sistema operativo usas, completa la ruta de instalación
-documentada y ejecuta `gentle-shell --version`. Mantén la terminal abierta: en la
-próxima lección iniciarás Gentle Shell y transferirás el progreso de tu curso.
+Sigue la ruta del instalador para tu sistema operativo y ejecuta
+`gentle-shell --version`. Cuando muestre información de versión, continúa con
+**Abre Gentle Shell**: inicia Gentle Shell y te muestra dónde pegar tu primer prompt.
