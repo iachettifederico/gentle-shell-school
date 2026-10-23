@@ -26,6 +26,9 @@ en:
     lesson_count: "%{count} lessons"
     module_zero: "0/%{count} done"
   lesson:
+    completed_banner: "Lesson complete."
+    go_next: "Next: %{title}"
+    course_complete: "You finished the course. Congratulations!"
     start_prompt: "Start this lesson in gentle-shell"
     start_hint: "Paste it into gentle-shell. Your agent teaches this lesson and gives you the next prompt."
     lab_note: "Your agent runs this lab as part of the lesson."

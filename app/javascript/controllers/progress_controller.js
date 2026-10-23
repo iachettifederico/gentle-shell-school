@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["enrollButton", "student", "studentId", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton"]
+  static targets = ["enrollButton", "student", "studentId", "forgetButton", "lesson", "completion", "summary", "continue", "enrollmentPrompt", "lessonProgress", "status", "completionButton", "completedBanner"]
   static values = { lessonSlug: String, completedLabel: String, copyLabel: String, copiedLabel: String, notCompletedLabel: String, markIncompleteLabel: String, markCompleteLabel: String, verifiedLabel: String, independentlyVerifiedLabel: String, allCompleteLabel: String, completeCountLabel: String, continueLabel: String, moduleCountLabel: String }
 
   connect() {
@@ -10,7 +10,36 @@ export default class extends Controller {
     if (studentId) {
       this.showStudent(studentId)
       this.fetchProgress(studentId)
+      this.startPolling()
     }
+  }
+
+  disconnect() {
+    this.stopPolling()
+  }
+
+  // The agent records completions through the API; follow them while the tab is visible.
+  startPolling() {
+    if (this.pollTimer) return
+
+    this.pollTimer = setInterval(() => this.poll(), 2000)
+    this.onVisible = () => { if (document.visibilityState === "visible") this.poll() }
+    document.addEventListener("visibilitychange", this.onVisible)
+  }
+
+  stopPolling() {
+    clearInterval(this.pollTimer)
+    this.pollTimer = null
+    if (this.onVisible) document.removeEventListener("visibilitychange", this.onVisible)
+  }
+
+  async poll() {
+    const studentId = localStorage.getItem("studentId")
+    if (!studentId) return this.stopPolling()
+    if (document.visibilityState !== "visible" || this.polling) return
+
+    this.polling = true
+    try { await this.fetchProgress(studentId) } finally { this.polling = false }
   }
 
   async enroll() {
@@ -21,10 +50,13 @@ export default class extends Controller {
     localStorage.setItem("studentId", enrollment.studentId)
     this.showStudent(enrollment.studentId)
     this.showProgress(enrollment.progress)
+    this.startPolling()
   }
 
   forget() {
     localStorage.removeItem("studentId")
+    this.stopPolling()
+    if (this.hasCompletedBannerTarget) this.completedBannerTarget.hidden = true
     if (this.hasEnrollButtonTarget) this.enrollButtonTarget.hidden = false
     if (this.hasStudentTarget) this.studentTarget.hidden = true
     if (this.hasEnrollmentPromptTarget) this.enrollmentPromptTarget.hidden = false
@@ -127,8 +159,14 @@ export default class extends Controller {
     const completion = completions.find((item) => item.slug === this.lessonSlugValue)
     this.enrollmentPromptTarget.hidden = true
     this.lessonProgressTarget.hidden = false
-    this.statusTarget.textContent = completion ? this.statusLabel(completion) : this.notCompletedLabelValue
-    this.completionButtonTarget.textContent = completion ? this.markIncompleteLabelValue : this.markCompleteLabelValue
+    this.setText(this.statusTarget, completion ? this.statusLabel(completion) : this.notCompletedLabelValue)
+    this.setText(this.completionButtonTarget, completion ? this.markIncompleteLabelValue : this.markCompleteLabelValue)
+    if (this.hasCompletedBannerTarget) this.completedBannerTarget.hidden = !completion
+  }
+
+  // Polling repeats every render; only touch text that changed so live regions do not re-announce it.
+  setText(element, text) {
+    if (element.textContent !== text) element.textContent = text
   }
 
   setCompletionLabel(element, completion) {
@@ -153,7 +191,7 @@ export default class extends Controller {
     if (!this.hasSummaryTarget) return
 
     const total = this.lessonTargets.length
-    this.summaryTarget.textContent = completedSlugs.length === total ? this.allCompleteLabelValue : this.completeCountLabelValue.replace("%{completed}", completedSlugs.length).replace("%{total}", total)
+    this.setText(this.summaryTarget, completedSlugs.length === total ? this.allCompleteLabelValue : this.completeCountLabelValue.replace("%{completed}", completedSlugs.length).replace("%{total}", total))
     this.showContinueLink(completedSlugs)
     this.showModuleCounts(completedSlugs)
   }

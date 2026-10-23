@@ -144,6 +144,24 @@ RSpec.describe "Lesson pages", type: :request do
       expect(page.at_css('[data-lesson-prompt] button[data-action="progress#copy"]')["data-prompt"]).to eq(anonymous)
     end
 
+    it "keeps a hidden completion banner that leads to the next lesson, or closes the course" do
+      with_lessons(lessons) do
+        get "/es-AR/lessons/odd"
+        odd_page = response.parsed_body
+        get "/lessons/unsafe"
+        last_page = response.parsed_body
+
+        banner = odd_page.at_css('[data-progress-target="completedBanner"]')
+        expect(banner["hidden"]).not_to be_nil
+        expect(banner.text.squish).to include("Lección completada.")
+        expect(banner.at_css('a[href="/es-AR/lessons/unsafe"]').text.squish).to eq("Siguiente: Unsafe")
+        last_banner = last_page.at_css('[data-progress-target="completedBanner"]')
+        expect(last_banner["hidden"]).not_to be_nil
+        expect(last_banner.text.squish).to eq("✓ You finished the course. Congratulations!")
+        expect(last_banner.at_css("a")).to be_nil
+      end
+    end
+
     it "renders the linked lab brief as part of the lesson" do
       lab = {
         "feature-document" => {

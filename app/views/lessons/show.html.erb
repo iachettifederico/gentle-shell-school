@@ -21,6 +21,15 @@
     </div>
   </section>
 
+  <div data-progress-target="completedBanner" hidden class="mt-4 flex flex-col gap-4 rounded-2xl bg-success-950/60 p-5 ring-1 ring-success-400/30 sm:flex-row sm:items-center sm:justify-between">
+    <% if next_lesson %>
+      <p class="text-sm font-semibold text-success-300"><span aria-hidden="true">✓</span> <%= t("lesson.completed_banner") %></p>
+      <%= link_to t("lesson.go_next", title: next_lesson.title), locale_context.lesson_path(next_lesson.slug), class: "btn btn-primary btn-sm shrink-0 self-start sm:self-auto" %>
+    <% else %>
+      <p class="text-sm font-semibold text-success-300"><span aria-hidden="true">✓</span> <%= t("lesson.course_complete") %></p>
+    <% end %>
+  </div>
+
   <div data-lesson-prompt class="mt-8">
     <%= render layout: "shared/prompt_card", locals: { heading: t("lesson.start_prompt"), prompt: prompt, template: template, hint: t("lesson.start_hint"), copy_label: t("home.copy") } do %>
       <a href="<%= locale_context.lesson_path("install-gentle-shell") %>" class="link text-sm"><%= t("home.need_install") %></a>
