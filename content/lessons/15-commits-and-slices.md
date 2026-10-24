@@ -37,9 +37,11 @@ that a reviewer can understand, verify, and roll back without disentangling
 unrelated changes. Work-unit commits provide the foundation for reviewable PR
 slices when a feature grows.
 
-This lesson is about structure, not automatic delivery. A commit or a chosen PR
-shape does not authorize pushing, opening a pull request, merging, or changing
-review mode. Those remain separate human and repository-policy decisions.
+This lesson is about structure, not automatic delivery. In authorized large ODD
+work, work-unit commits on the feature branch are part of that authorization:
+the agent makes them as it goes. A commit or a chosen PR shape does not
+authorize pushing, opening a pull request, merging, or changing review mode.
+Those remain separate human and repository-policy decisions.
 
 ## Commit by outcome, not file type
 

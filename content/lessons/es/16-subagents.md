@@ -65,6 +65,18 @@ secuencia. Cuando un elemento independiente de alto riesgo requiere verificació
 verificador aporta una vista externa adicional después de las propias verificaciones del trabajador,
 no un sustituto de ellas.
 
+### Señales de orquestación del tiempo de ejecución
+
+Gentle Shell también impone algunas reglas de orquestación. El respaldo de contexto
+padre es `min(150k tokens, 0.15 × context window)`; cuando el contexto medido lo
+alcanza, un único aviso indica al padre que delegue la siguiente unidad delimitada
+de varios pasos. Las ediciones pequeñas y únicas siguen en línea, y los subagentes
+nunca reciben este aviso. Los lanzamientos de verificadores pasan una comprobación
+de admisión: el verificador se ejecuta para un elemento de alto riesgo nombrado, una
+tarea de un documento de funcionalidad o una sesión padre que alcanzó el respaldo; si no,
+la sesión padre verifica en línea. El progreso de TODO se obtiene de los conteos de tareas, cada
+subagente recibe su propio `TMPDIR` y una protección analiza las pruebas entregadas.
+
 ## Haz que la entrega sea ejecutable
 
 Una entrega útil es un contrato compacto, no un ensayo. Para trabajo con seguimiento, indica al

@@ -16,14 +16,20 @@ agent_instructions: |
   website's home page keeps their place, and that the lesson prompts then
   include the ID. Never enroll them yourself.
 
-  Then run `gentle-shell --version`. If it prints version information, you are
-  already running in gentle-shell, so the two setup lessons are done: record
+  Then check that this session runs inside Gentle Shell.
+  `gentle-shell --version` only proves the launcher is installed, not that you
+  are running in it, and tools such as subagent_run or /gentle:status come from
+  the gentle-pi package, which plain Pi can load too. The launcher sets
+  `GENTLE_SHELL_USER_PI_HOME` for every Pi it starts, so run
+  `printenv GENTLE_SHELL_USER_PI_HOME` in this session. If it prints a path, the student has
+  installed and opened Gentle Shell, so the two setup lessons are done: record
   `welcome`, `install-gentle-shell`, and `open-gentle-shell` with PUT
   {origin}/api/progress/{studentId} using `source: "agent"` (when there is an
   ID), and hand back the `next.prompt` of `open-gentle-shell` (GET
   {origin}/api/lessons/open-gentle-shell?locale=<locale>), which starts lesson 04.
-  If it fails, record only `welcome` and send them to the Install Gentle Shell
-  lesson page on the website. When something in a lesson is wrong, follow the
+  Otherwise record only `welcome`. If `gentle-shell --version` works, send them
+  to the Open Gentle Shell lesson page to start it and paste the prompt there;
+  if it fails, send them to the Install Gentle Shell lesson page. When something in a lesson is wrong, follow the
   Reporting problems section of llms.txt.
 ---
 

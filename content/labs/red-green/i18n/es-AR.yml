@@ -4,4 +4,5 @@ brief: |
 
   Ejecutá `node --test`, implementá `double` en `src/double.js` y hacé que la prueba provista
   pase. Después agregá una prueba de comportamiento propia. La comprobación del conteo de pruebas
-  hace observable el ejemplo adicional.
+  hace observable el ejemplo adicional. `node --test` solo comprueba lo que un script puede observar en el código y los tests; la calificación con rúbrica en contexto nuevo demuestra el resultado de
+  trabajar con pruebas primero.

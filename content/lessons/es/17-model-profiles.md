@@ -27,6 +27,15 @@ configuración de otra persona. Los modelos que realmente puedes seleccionar dep
 proveedores y credenciales disponibles en tu instalación. No infieras que un modelo nombrado en un
 ejemplo de configuración esté disponible para ti.
 
+## Límite de tiempo de ejecución consciente del contexto
+
+El tiempo de ejecución dimensiona el respaldo de contexto de la sesión padre a
+partir de su modelo resuelto: `min(150k tokens, 0.15 × context window)`. Puedes
+configurarlo con `GENTLE_PI_CONTEXT_BACKSTOP_TOKENS` y
+`GENTLE_PI_CONTEXT_BACKSTOP_FRACTION`. Así, la capacidad de contexto del modelo
+es una entrada operativa para el enrutamiento, en vez de una razón para adivinar
+cuándo una sesión larga debe delegar su siguiente unidad delimitada.
+
 ## Dos controles de enrutamiento relacionados
 
 Gentle Shell describe los perfiles con nombre como una forma de enrutar atómicamente al

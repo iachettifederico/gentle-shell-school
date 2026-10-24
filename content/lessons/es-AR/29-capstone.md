@@ -78,6 +78,12 @@ alternativo que proteja el contrato. Refactorizá solo después de que las compr
 enfocadas sigan en verde. Los tests son evidencia, no decoración: el feature document
 debe indicar qué se ejecutó y qué observó.
 
+Para cada comando u opción existente que comparta código cambiado, ejecutá también
+la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
+un directorio temporal `mktemp -d`. Compará stdout, stderr y el código de salida;
+corregí y fijá toda diferencia no solicitada. Agregá un test por cada comportamiento
+existente tocado y nunca hagas que los tests confirmados lean el historial de Git.
+
 ## 5. Delegá para ahorrar sin ceder el liderazgo
 
 Ahora tomá una decisión de delegación acotada de **Model profiles**. Elegí el modelo
@@ -104,8 +110,13 @@ encadenada en vez de ocultar complejidad detrás de un mensaje de commit tranqui
 
 Antes de la siguiente fase, inspeccioná el estado, diff e historial de commits del
 repositorio de práctica usando sus herramientas de control de versiones disponibles.
-El tutor del capstone verificará estos artefactos directamente; una descripción narrada
-no prueba que exista un commit.
+Después de un commit en la rama de funcionalidad, esperá la línea de corte de commit
+del tiempo de ejecución: informa las líneas modificadas creadas desde la base de
+fusión y, pasadas unas 400, indica aplicar la estrategia de entrega de la funcionalidad
+antes del próximo commit. Tratala, junto con el aviso de respaldo de contexto para
+delegar la próxima unidad acotada de varios pasos, como señales del tiempo de
+ejecución, no como consejo opcional. El tutor del capstone verificará estos artefactos
+directamente; una descripción narrada no prueba que exista un commit.
 
 ## 7. Revisá lo que realmente está ahí
 
@@ -114,7 +125,10 @@ alcance, pero no borra restricciones explícitas ni elecciones humanas important
 Usá **Native review** cuando apliquen sus criterios de riesgo y flujo de trabajo. Su
 propósito es revisar un candidato congelado con evidencia, no aprobar automáticamente
 el árbol de trabajo más nuevo. Usá **Judgment day** solo cuando el cambio requiera su
-disciplina de revisión ciega y adversarial.
+disciplina de revisión ciega y adversarial. La evaluación de revisión nativa se aplica
+por commit de unidad de trabajo (o corte de PR), nunca a la rama de funcionalidad
+acumulada, y corre solo cuando está habilitado el interruptor RDD que pertenece a la
+persona usuaria; está desactivado de forma predeterminada.
 
 Sin importar la ruta de revisión, inspeccioná si el test demuestra el comportamiento
 declarado, si el feature document coincide con el alcance final y si los commits

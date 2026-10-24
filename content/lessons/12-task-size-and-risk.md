@@ -81,11 +81,13 @@ A change is high risk when a mistake would be difficult to find, difficult to
 reverse, or reach beyond the local change. ODD names six categories:
 
 1. **Data or irreversible effects:** migrations, deleting or rewriting stored
-   data, format changes, or writing data without validation.
+   data, format changes, or writing data without validation. Saving new
+   records is not on this list.
 2. **Security:** authentication, permissions, credentials, secrets, guards, or
    sandbox boundaries.
 3. **Existing contracts:** changing or removing a public API, CLI flag,
    configuration format, export, or mirrored prompt that others already use.
+   Adding a flag, a command, or an optional field is not on this list.
 4. **Concurrency.**
 5. **Delivery or environment:** installers, releases, CI, deployment, or
    dependencies.

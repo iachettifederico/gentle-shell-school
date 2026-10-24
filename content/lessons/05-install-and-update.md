@@ -9,7 +9,10 @@ agent_instructions: |
   Installation is taught in the earlier Install Gentle Shell lesson. Teach this
   lesson as maintenance: checking a running workspace, updating along a
   channel, and previewing removal. Explain the difference between `update` and
-  `upgrade` without treating them as synonyms.
+  `upgrade` without treating them as synonyms: bare `gentle-shell update`
+  refreshes the Pi the launcher runs through its verified package owner, while
+  `update <target>` and `--extensions-only` stay Pi package routes. Also teach
+  `gentle-shell home import-pi` for reusing Pi sign-ins in the isolated home.
 
   Ask these questions with ask_user_question, including the correct answer:
   1. Which workspace commands are the documented starting point for checking
@@ -78,12 +81,36 @@ version that can be selected with:
 gentle-shell upgrade --rollback
 ```
 
-Do not confuse `upgrade` with `gentle-shell update [target]`. The latter forwards
-Pi's package-update command for the selected home. In a bundled installation,
-Pi is pinned with Gentle Shell, so an update of Pi itself runs `gentle-shell
-upgrade` instead. Older launchers that do not support `upgrade` should use the
+Do not confuse `upgrade` with `gentle-shell update`. Bare `gentle-shell update`
+updates the Pi this launcher runs: it verifies which npm or pnpm global package
+supplies that Pi, reinstalls exactly that package, and reports whether the Pi
+version changed. When the owner is unknown or ambiguous it refuses without
+changing anything; update such setups with the package manager that supplies
+them. With a target, or with `--extensions-only`, `update` forwards Pi's own
+package-update command for the selected home. A prefix-bundled installation
+pins Pi with Gentle Shell, so there Pi still updates with `gentle-shell
+upgrade`. Older launchers that do not support `upgrade` should use the
 latest installer described in **Install Gentle Shell** rather than treating
 `upgrade` as a chat prompt.
+
+## Reuse your Pi sign-ins
+
+By default Gentle Shell runs in its own isolated home, `~/.gentle-shell/agent`,
+so it does not see the sign-ins you made in plain Pi. Instead of sharing Pi's
+home with `--link`, you can copy them once:
+
+```bash
+gentle-shell home import-pi --dry-run
+gentle-shell home import-pi
+```
+
+`--dry-run` prints the plan and writes nothing. The import copies only
+`auth.json`, `mcp.json`, and your default provider, model, and thinking level,
+and only where the target does not have them yet. It never overwrites, never
+copies packages, extensions, or sessions, and never writes to your Pi home, so
+running it again is safe. The tradeoff: each home now holds its own copy of the
+credentials, and a provider that rotates refresh tokens may sign out whichever
+copy refreshes second. If that happens, run `/login` again in that home.
 
 ## Remove only what you intend
 

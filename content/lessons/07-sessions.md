@@ -10,6 +10,7 @@ agent_instructions: |
   context. Contrast resume, tree navigation, fork, and clone. Explain that
   compaction summarizes history for future requests while retaining original
   entries, and that it can be retried when a provider problem is fixed.
+  Mention the per-session scratch directory and /gentle:scratch list|clean.
 
   Ask these questions with ask_user_question, including the correct answer:
   1. Which part of a session is sent as conversation history for the next
@@ -38,8 +39,11 @@ approach without destroying the work you left behind.
 
 ## What Pi persists
 
-Persistent sessions are JSONL files: one JSON object per line. By default, Pi
-stores them under `~/.pi/agent/sessions/`, grouped by working directory. The
+Persistent sessions are JSONL files: one JSON object per line. Plain Pi stores
+them under `~/.pi/agent/sessions/` by default, grouped by working directory.
+Gentle Shell runs in its own isolated home by default, so its sessions live
+under `~/.gentle-shell/agent/sessions/`; started with `--link`, it shares Pi's
+home and Pi's sessions. The
 file begins with metadata, and its later entries use IDs and `parentId` links to
 form a tree. Session entries can record messages, model changes, thinking-level
 changes, compaction summaries, branch summaries, usage, labels, and extension
@@ -144,6 +148,36 @@ A `context_edit` can additionally omit or replace an earlier entry for future
 model context without changing raw history, UI, exports, or session accounting.
 That is an advanced session-format detail, but it reinforces the same principle:
 Pi can revise future context while preserving the underlying record.
+
+## Session scratch
+
+Since v4.3.0, every primary Gentle Shell session gets its own scratch
+directory (named `gpXXXXXX`) and runs with `TMPDIR` pointing at it, so every
+`mktemp` the agent runs lands there. Each subagent gets its own `gaXXXXXX`
+directory under it. If the scratch cannot be created, the session keeps the
+inherited `TMPDIR`. A ledger in the config home records the scratch and each
+clone or worktree that a successful foreground `git clone` or `git worktree add`
+creates in the session.
+
+Cleanup is automatic for scratch only: shutdown removes the session's scratch,
+except the `TMPDIR` of a live or quarantined subagent (still running, or its exit
+not yet confirmed), which stays with the scratch around it. A later session start
+sweeps scratch left by sessions that ended more than an hour ago. Recorded clones
+and worktrees stay until you clean them:
+
+```text
+/gentle:scratch list
+/gentle:scratch clean
+```
+
+`list` shows the scratch with its size and the recorded clones and worktrees.
+`clean` empties the current session's scratch without asking, keeping only
+subagent scratch, recorded clones and worktrees, and entries changed in the last
+minute, and removes the scratch that ended sessions left. Then it asks once
+before removing recorded clones and worktrees that have no uncommitted or
+unpushed work. Without a UI it removes scratch only. Another live session's
+scratch is never removed, but your own is: save any file you still need from
+`TMPDIR` before you run it.
 
 ## Common mistakes
 

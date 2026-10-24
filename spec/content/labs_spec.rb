@@ -27,6 +27,29 @@ RSpec.describe "Lab content" do
     end
   end
 
+  it "rejects a write-a-skill description without the literal Trigger: marker every brief requires" do
+    Dir.mktmpdir do |scratch|
+      copy_starter("content/labs", "write-a-skill", scratch)
+      overlay_solution("write-a-skill", scratch)
+      replace_description(scratch, 'description: "Use this trigger when drafting a release note."')
+      expect(check(lab_check("content/labs", "write-a-skill"), scratch).last).not_to be_success
+    end
+    briefs = write_a_skill_briefs
+    expect(briefs).to all(match(/`Trigger:`/))
+    expect(briefs.first).to include("with the literal word `Trigger:`")
+  end
+
+  def replace_description(scratch, description)
+    skill = Dir.glob(File.join(scratch, "skills/*/SKILL.md")).first
+    File.write(skill, File.read(skill).sub(/^description: .*$/, description))
+  end
+
+  def write_a_skill_briefs
+    directory = Rails.root.join("content/labs/write-a-skill")
+    files = [directory.join("lab.yml")] + %w[es es-AR].map { |locale| directory.join("i18n/#{locale}.yml") }
+    files.map { |file| YAML.safe_load_file(file).fetch("brief") }
+  end
+
   def copy_starter(directory, slug, scratch)
     copy_contents(Rails.root.join(directory, slug, "starter"), scratch)
   end

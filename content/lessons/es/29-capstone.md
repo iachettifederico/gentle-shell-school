@@ -78,6 +78,13 @@ de límite o alternativo que proteja el contrato. Refactoriza solo después de q
 verificaciones enfocadas sigan en verde. Las pruebas son evidencia, no decoración: el
 documento de funcionalidad debe indicar qué se ejecutó y qué observó.
 
+Para cada comando u opción existente que comparta código cambiado, ejecuta también
+la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
+un directorio temporal `mktemp -d`. Compara stdout, stderr y el código de salida;
+corrige y fija toda diferencia no solicitada. Agrega una prueba por cada
+comportamiento existente tocado y nunca hagas que las pruebas confirmadas lean el
+historial de Git.
+
 ## 5. Delega para ahorrar sin ceder el liderazgo
 
 Ahora toma una decisión de delegación acotada de **Model profiles**. Elige el modelo
@@ -103,9 +110,14 @@ alcance de revisión se vuelve demasiado grande, usa la disciplina de revisión 
 en lugar de ocultar la complejidad tras un mensaje de commit tranquilizador.
 
 Antes de la siguiente fase, inspecciona el estado, el diff y el historial de commits del
-repositorio temporal con sus herramientas de control de versiones disponibles. El tutor
-del proyecto final verificará estos artefactos directamente; una descripción narrada no
-prueba que exista un commit.
+repositorio temporal con sus herramientas de control de versiones disponibles. Tras un
+commit en la rama de funcionalidad, espera la línea de porción de commit del tiempo de
+ejecución: informa las líneas modificadas creadas desde la base de fusión y, después de
+unas 400, indica aplicar la estrategia de entrega de la funcionalidad antes del siguiente
+commit. Trátala, junto con el aviso de respaldo de contexto para delegar la siguiente
+unidad delimitada de varios pasos, como señales del tiempo de ejecución, no como consejo
+opcional. El tutor del proyecto final verificará estos artefactos directamente; una
+descripción narrada no prueba que exista un commit.
 
 ## 7. Revisa lo que realmente existe
 
@@ -114,7 +126,10 @@ dentro de su alcance, pero no elimina restricciones explícitas ni elecciones hu
 importantes. Usa **Native review** cuando se apliquen sus criterios de riesgo y flujo de
 trabajo. Su propósito es revisar un candidato congelado con evidencia, no aprobar
 formalmente el árbol de trabajo más reciente. Usa **Judgment day** solo cuando el cambio
-requiera su disciplina de revisión ciega y adversarial.
+requiera su disciplina de revisión ciega y adversarial. La evaluación de revisión nativa
+se aplica por commit de unidad de trabajo (o porción de PR), nunca a la rama de
+funcionalidad acumulada, y se ejecuta solo cuando está habilitado el interruptor RDD
+propiedad del usuario; está desactivado de forma predeterminada.
 
 Sin importar la ruta de revisión, inspecciona si la prueba demuestra el comportamiento
 indicado, si el documento de funcionalidad coincide con el alcance final y si los commits

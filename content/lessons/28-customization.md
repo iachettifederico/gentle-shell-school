@@ -130,7 +130,9 @@ one card; per-event overrides are folded under Advanced. Muting or disabling
 discards pending events, and resuming does not replay them. Only the primary TUI
 owner plays audio: child processes, print/JSON mode, and RPC are silent.
 
-The panel can use built-in tones or a literal absolute local WAV path. It does
+The panel can use built-in tones or a literal absolute local WAV, OGG, or FLAC
+file (at most 2 MiB and 10 seconds; which formats play depends on the audio
+backend of your platform). It does
 not accept URLs, relative paths, `~`, environment expansion, commands, or
 configurable player executables. This makes sound selection a local-file choice,
 not a covert command runner. Audio preferences are separate from visual

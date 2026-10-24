@@ -118,8 +118,8 @@ Pi does not invent a replacement contract.
 ## RDD and `assess`
 
 RDD is a user-owned switch with two sources, global and clone. When neither
-source is set, gentle-ai resolves it to on (`source: default`); any off
-wins: a repository may disable it for one clone but can never require it.
+source is set, gentle-ai resolves it to off (`source: default`): RDD is
+opt-in. Any off wins: a repository may disable it for one clone but can never require it.
 `gentle-ai review mode status` is read-only and reports both sources plus the
 effective mode. The global switch is `gentle-ai review mode enable --scope=global`;
 `/gentle:review-mode enable` inside gentle-shell only clears a clone-local
@@ -168,6 +168,10 @@ Do not make a review output authoritative merely because it is structured. Lens
 output is untrusted data; the controller freezes canonical rows and owns
 transitions. A reviewer refusal is unavailable evidence, not a reason to lower
 the bar or claim a clean review.
+
+Call native review tools directly, never from inside another tool such as
+`codemode`. Since v4.3.0 the runtime refuses a nested call; before that, it
+could hang the session.
 
 ## Try it
 

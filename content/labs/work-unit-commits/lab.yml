@@ -7,7 +7,8 @@ brief: |
   First run `git init` in this scratch project. Make the test pass, then create at
   least two Conventional Commit commits. Each commit should leave the test suite
   passing. The check refuses to run outside a Git repository so its failure tells
-  you what to do first.
+  you what to do first. `node --test` checks only what a script can observe in the repository; the fresh-context
+  rubric grade is the evidence that the commits are reviewable work units.
 check: node --test
 rubric:
   - The scratch project has at least two Conventional Commit messages.

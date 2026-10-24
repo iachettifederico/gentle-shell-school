@@ -6,14 +6,15 @@ order: 19
 module: "Memory and skills"
 quiz: true
 agent_instructions: |
-  Teach that Engram is an optional companion package rather than gentle-pi
-  itself, and distinguish durable project progress from an agent's current
+  Teach that Engram is not part of gentle-pi itself: bundled Gentle Shell
+  installs include it, and plain Pi gets it from the optional companion, and distinguish durable project progress from an agent's current
   conversation context. Explain the save, search, context, and session-summary
   workflow only when the tools are active.
 
   Ask these questions with ask_user_question, one at a time:
   1. Does installing gentle-pi alone provide persistent memory? Correct answer:
-     no; persistent memory comes from the optional gentle-engram companion.
+     no; bundled Gentle Shell installs include Engram, and in plain Pi it comes
+     from the optional gentle-engram companion.
   2. For a large ODD feature, what are the two progress copies to reconcile?
      Correct answer: the local odd/tasks feature document and its project-scoped
      Engram mirror.
@@ -28,8 +29,11 @@ agent_instructions: |
   Perform this concrete setup check: ask the student to inspect the available
   tools in their running session and identify whether mem_context, mem_search,
   and mem_save are present. Do not ask them to expose memory contents. If they
-  are absent, explain that the memory workflow is unavailable until the optional
-  companion is installed. Done means the student can explain when durable memory
+  are absent, diagnose before prescribing: check which home the session uses and
+  whether startup or /gentle:status shows a memory notice. Shell disables memory
+  with a notice when it cannot verify a running Engram server or store, for
+  example an older global server that must be updated and restarted. Suggest
+  installing the companion only for a plain gentle-pi install in Pi. Done means the student can explain when durable memory
   helps, name the local source of truth, and safely describe the recovery order.
 ---
 
@@ -42,12 +46,19 @@ memory addresses that continuity problem: it gives an agent a place to retain
 small, reusable, verified facts and recoverable progress across Pi sessions.
 
 First, keep the boundary clear. **gentle-pi does not provide persistent memory
-by itself.** Engram is supplied by the optional `gentle-engram` companion
-package. The package can be installed in a Pi home with:
+by itself.** A bundled Gentle Shell installation already includes Engram. In
+plain Pi, Engram comes from the optional `gentle-engram` companion package,
+installed in a Pi home with:
 
 ```bash
 pi install npm:gentle-engram
 ```
+
+If the memory tools are missing, find out why before installing anything.
+Gentle Shell disables memory, with a notice, when it cannot verify that a
+running Engram server or its store is compatible; an older global Engram server
+then has to be updated and restarted. Check which home the session uses and
+read that notice first.
 
 The presence of that command is not proof that memory is active in a particular
 session. Look at the session's available tools before relying on it. When the

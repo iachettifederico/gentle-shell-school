@@ -21,8 +21,10 @@ agent_instructions: |
      Correct answer: Preserve local progress and explicitly record the mirror as
      pending; do not claim it succeeded or block unrelated safe work.
 
-  Have the student open a real `odd/tasks/*.md` file and identify its header,
-  Specs, Tasks, and Log. Have them name one task ID and its linked requirement.
+  Have the student open a feature document and identify its header, Specs,
+  Tasks, and Log: a real `odd/tasks/*.md` file if they have one, otherwise this
+  course's own public sample at
+  https://github.com/iachettifederico/gentle-shell-school/blob/main/odd/tasks/phase-11-single-path.md. Have them name one task ID and its linked requirement.
   The lesson is done when they can explain how they would resume the feature by
   reconciling the task file, memory record, code, and verification evidence.
 ---
@@ -145,7 +147,10 @@ outgrown.
 
 ## Try it
 
-Open a feature document in `odd/tasks/`. Locate `S1`, one task linked to an
+Open a feature document in `odd/tasks/`. If you do not have one yet, use this
+course's own
+[Phase 11 feature document](https://github.com/iachettifederico/gentle-shell-school/blob/main/odd/tasks/phase-11-single-path.md).
+Locate `S1`, one task linked to an
 `S#`, and a Log entry with evidence. Imagine the local file and memory copy
 conflict after an interruption. List what you would compare—requirements, code,
 and observed checks—before deciding the next step. That is the recovery habit

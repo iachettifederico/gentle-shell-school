@@ -60,12 +60,14 @@ Un cambio es de alto riesgo cuando un error sería difícil de encontrar, difíc
 de revertir o llegaría más allá del cambio local. ODD nombra seis categorías:
 
 1. **Datos o efectos irreversibles:** migraciones, borrar o reescribir datos
-   almacenados, cambios de formato o escribir datos sin validación.
+   almacenados, cambios de formato o escribir datos sin validación. Guardar
+   registros nuevos no está en esta lista.
 2. **Seguridad:** autenticación, permisos, credenciales, secretos, guardas o
    límites de sandbox.
 3. **Contratos existentes:** cambiar o quitar una API pública, flag de CLI,
    formato de configuración, exportación o prompt reflejado que otras personas
-   ya usan.
+   ya usan. Agregar un flag, un comando o un campo opcional no está en esta
+   lista.
 4. **Concurrencia.**
 5. **Entrega o entorno:** instaladores, lanzamientos, CI, despliegue o
    dependencias.

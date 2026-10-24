@@ -117,6 +117,12 @@ alternate case that protects the contract. Only refactor after the focused
 checks remain green. Tests are evidence, not decoration: the feature document
 should say what ran and what it observed.
 
+For each existing command or option that shares changed code, also run the new
+or changed input against the change and against a base-commit copy in a
+`mktemp -d` scratch directory. Compare stdout, stderr, and exit code; fix and
+pin any unrequested difference. Add one test for each touched existing behavior,
+and never make committed tests read Git history.
+
 ## 5. Delegate for savings without giving away leadership
 
 Now make one bounded delegation decision from **Model profiles**. Pick the
@@ -141,9 +147,13 @@ review scope becomes too large, use the chained-review discipline rather than
 hiding complexity behind one reassuring commit message.
 
 Before the next phase, inspect the scratch repository's status, the diff, and
-commit history using its available version-control tools. The capstone's tutor
-will verify these artifacts directly; a narrated description does not prove a
-commit exists.
+commit history using its available version-control tools. After a feature-branch
+commit, expect the runtime's commit-slice line: it reports authored changed
+lines since the merge base and, past about 400, tells you to apply the feature's
+delivery strategy before the next commit. Treat it, and a context-backstop notice
+to delegate the next bounded multi-step unit, as runtime signals—not optional
+advice. The capstone's tutor will verify these artifacts directly; a narrated
+description does not prove a commit exists.
 
 ## 7. Review what is actually there
 
@@ -152,7 +162,9 @@ scope but does not erase explicit restrictions or consequential human choices.
 Use **Native review** when its risk criteria and workflow apply. Its purpose is
 to review a frozen candidate with evidence, not to rubber-stamp the newest
 working tree. Use **Judgment day** only when the change calls for its blind,
-adversarial review discipline.
+adversarial review discipline. Native review assessment is per work-unit commit
+(or PR slice), never the accumulated feature branch, and runs only when the
+user-owned RDD switch is enabled; it is off by default.
 
 Regardless of review route, inspect whether the test demonstrates the stated
 behavior, whether the feature document matches the final scope, and whether

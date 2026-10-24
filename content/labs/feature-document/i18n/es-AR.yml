@@ -6,3 +6,5 @@ brief: |
   Creá `odd/tasks/lesson-search.md` con `## Specs`, `## Tasks` y `## Log`.
   Citá el pedido **textualmente** en Specs, planificá el trabajo en Tasks y registrá el
   pedido en Log. Esto le da a una sesión posterior una fuente de verdad duradera.
+  `node --test` solo comprueba lo que un script puede observar en el documento; la calificación con rúbrica en
+  contexto nuevo demuestra que conserva un pedido y un plan accionables.

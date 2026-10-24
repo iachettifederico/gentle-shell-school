@@ -2,7 +2,10 @@ title: Escribe una skill enfocada
 brief: |
   ## Codifica un contrato de ejecución reutilizable
 
-  Crea `skills/<name>/SKILL.md`. Dale frontmatter YAML con `name` y
-  `description`; después agrega las seis secciones exigidas por la guía de estilo:
+  Crea `skills/<name>/SKILL.md`. Dale frontmatter YAML con `name` y una
+  `description` que nombre su disparador con la palabra `Trigger:` sin traducir
+  (por ejemplo `Trigger: ...`); después agrega las seis secciones exigidas por la guía de estilo:
   Activation Contract, Hard Rules, Decision Gates, Execution Steps, Output
   Contract y References. Mantenla enfocada en un flujo de trabajo repetible.
+  `node --test` solo comprueba lo que un script puede observar en la skill; la calificación con rúbrica en
+  contexto nuevo demuestra que da a un agente un flujo de trabajo accionable.

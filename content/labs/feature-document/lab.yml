@@ -8,6 +8,8 @@ brief: |
   Create `odd/tasks/lesson-search.md` with `## Specs`, `## Tasks`, and `## Log`.
   Quote the request **verbatim** in Specs, plan the work in Tasks, and record the
   request in Log. This gives a later session a durable source of truth.
+  `node --test` checks only what a script can observe in the document; the fresh-context rubric grade is
+  the evidence that it preserves an actionable request and plan.
 check: node --test
 rubric:
   - The feature document preserves the request verbatim in Specs.

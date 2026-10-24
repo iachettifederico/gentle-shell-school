@@ -12,7 +12,10 @@ de documentación que una persona revisora puede entender, verificar y revertir 
 desentramar cambios no relacionados. Los commits de unidad de trabajo proporcionan la
 base para porciones de PR revisables cuando una funcionalidad crece.
 
-Esta lección trata sobre estructura, no sobre entrega automática. Un commit o una
+Esta lección trata sobre estructura, no sobre entrega automática. En el trabajo
+ODD grande autorizado, los commits por unidad de trabajo en la rama de la
+funcionalidad son parte de esa autorización: el agente los hace a medida que avanza.
+Un commit o una
 forma de PR elegida no autoriza hacer push, abrir un pull request, fusionar ni cambiar
 el modo de revisión. Esas siguen siendo decisiones separadas de personas y de la
 política del repositorio.

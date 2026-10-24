@@ -10,5 +10,6 @@ test('a skill has valid frontmatter and required sections', () => {
   assert.ok(directory, 'create skills/<name>/SKILL.md');
   const skill = fs.readFileSync(path.join('skills', directory.name, 'SKILL.md'), 'utf8');
   assert.match(skill, /^---\n[\s\S]*^name: [a-z0-9-]+$[\s\S]*^description: .+$/m);
+  assert.match(skill, /^description:\s*["']?.*\bTrigger:\s*\S/m, 'name the skill trigger with the literal word Trigger:');
   sections.forEach((section) => assert.match(skill, new RegExp(`^## ${section}$`, 'm')));
 });

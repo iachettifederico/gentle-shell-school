@@ -14,12 +14,19 @@ agente un lugar para conservar hechos pequeños, reutilizables y verificados, y
 progreso recuperable entre sesiones de Pi.
 
 Primero, mantené claro el límite. **gentle-pi no proporciona memoria persistente
-por sí solo.** Engram lo proporciona el paquete complementario opcional
-`gentle-engram`. El paquete se puede instalar en un inicio de Pi con:
+por sí solo.** Una instalación empaquetada de Gentle Shell ya trae Engram. En Pi,
+Engram lo proporciona el paquete complementario opcional `gentle-engram`, que se
+instala en un inicio de Pi con:
 
 ```bash
 pi install npm:gentle-engram
 ```
+
+Si faltan las herramientas de memoria, averiguá por qué antes de instalar nada.
+Gentle Shell desactiva la memoria, con un aviso, cuando no puede verificar que un
+servidor de Engram en ejecución o su almacén sean compatibles; en ese caso hay que
+actualizar y reiniciar el servidor global de Engram más viejo. Fijate primero qué
+home usa la sesión y leé ese aviso.
 
 La presencia de ese comando no prueba que la memoria esté activa en una sesión en
 particular. Mirá las herramientas disponibles de la sesión antes de depender de

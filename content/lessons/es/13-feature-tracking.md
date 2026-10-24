@@ -119,7 +119,9 @@ registro vivo de intención y evidencia, no como un plan obsoleto que el código
 
 ## Pruébalo
 
-Abre un documento de funcionalidad en `odd/tasks/`. Localiza `S1`, una tarea vinculada a un
+Abre un documento de funcionalidad en `odd/tasks/`. Si todavía no tienes uno, usa el
+[documento de funcionalidad de la fase 11](https://github.com/iachettifederico/gentle-shell-school/blob/main/odd/tasks/phase-11-single-path.md)
+de este mismo curso. Localiza `S1`, una tarea vinculada a un
 `S#` y una entrada de Log con evidencia. Imagina que el archivo local y la copia en memoria entran en
 conflicto después de una interrupción. Enumera qué compararías—requisitos, código
 y verificaciones observadas—antes de decidir el siguiente paso. Ese es el hábito de recuperación

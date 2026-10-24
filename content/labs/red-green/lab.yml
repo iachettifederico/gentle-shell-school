@@ -6,7 +6,8 @@ brief: |
 
   Run `node --test`, implement `double` in `src/double.js`, and make the provided
   test pass. Then add one behavior-level test of your own. The test count check
-  makes the extra example observable.
+  makes the extra example observable. `node --test` checks only what a
+  script can observe in the code and tests; the fresh-context rubric grade is the evidence of the test-first outcome.
 check: node --test
 rubric:
   - The implementation makes the provided behavior pass.

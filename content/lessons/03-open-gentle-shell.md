@@ -8,6 +8,13 @@ quiz: false
 agent_instructions: |
   The student opened gentle-shell and pasted this lesson's prompt, which is the
   lesson itself. Run `gentle-shell --version` and tell them what it printed.
+  `gentle-shell --version` only proves the launcher is installed, not that this
+  session runs in it, and tools such as subagent_run or /gentle:status come from
+  the gentle-pi package, which plain Pi can load too. The launcher sets
+  `GENTLE_SHELL_USER_PI_HOME` for every Pi it starts, so also run
+  `printenv GENTLE_SHELL_USER_PI_HOME` in this session. If it prints nothing,
+  record nothing: explain how
+  to start `gentle-shell` and paste this prompt there, then stop.
   Explain the loop in two or three sentences: each lesson page has a prompt,
   you teach that lesson, record it, and hand back the next prompt, and their
   open lesson page updates by itself. Lessons 01 and 02 were read on the

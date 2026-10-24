@@ -128,6 +128,16 @@ no tiene un resultado de comportamiento significativo. Indicá que la excepción
 documentación pasiva y ejecutá en su lugar la comprobación de carga de contenido del
 curso.
 
+## Comprobación diferencial
+
+Cuando un cambio comparte código con un comando u opción existente, protegé el
+comportamiento que no se buscó cambiar. Para cada comando u opción así, ejecutá
+la entrada nueva o cambiada tanto contra el cambio como contra una copia del
+commit base en un directorio temporal `mktemp -d`. Compará stdout, stderr y el
+código de salida. Una diferencia no solicitada es una regresión: corregila y
+fijala con un test. Mantené un test por cada comportamiento existente tocado;
+los tests confirmados nunca leen el historial de Git.
+
 ## Errores comunes
 
 - **Llamar RED a una prueba no ejecutada.** La evidencia debe ser observada.

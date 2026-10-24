@@ -15,8 +15,16 @@ RSpec.describe "Agent discovery", type: :request do
       expect(body).to include("I'm enrolled in Gentle Shell School as <id>")
       expect(body).to include("`next.prompt`")
       expect(body).to include(
-        "When `agentInstructions` include quiz questions, ask exactly those with the ask_user_question tool. " \
-        "Never invent quiz questions or answer choices."
+        "When `agentInstructions` include quiz questions, ask exactly those with the ask_user_question tool; " \
+        "never invent quiz questions. Write the answer choices yourself, including the correct answer"
+      )
+      expect(body).to include(
+        "keep the wrong choices on the lesson's topic and never misdescribe how this course works"
+      )
+      expect(body).not_to include("Never invent quiz questions or answer choices")
+      expect(body).to include(
+        "If the ask_user_question tool is unavailable, ask the same questions and offer the same choices " \
+        "in plain text, then wait for the answer."
       )
       expect(body).not_to include("Ask quiz questions with the ask_user_question tool")
       expect(body).to include("`next.url`?sid=<id>")
@@ -25,6 +33,13 @@ RSpec.describe "Agent discovery", type: :request do
       expect(body).to include("http://www.example.com/api/openapi.json")
       expect(body).to include("GET http://www.example.com/api/labs/{slug}?locale=en")
       expect(body).to include("Coach with `monitor` while the check runs")
+      expect(body).to include(
+        "The check covers only what a script can observe: passing it alone does not complete the lab."
+      )
+      expect(body).to include(
+        "The fresh-context rubric grade is the evidence for the lab's actual outcome; " \
+        "record both it and the check result."
+      )
       expect(body).to include('"Report it and continue", "Continue without reporting", "Stop here"')
       expect(body).to include("[Course feedback] <lesson-slug>: <short summary>")
       expect(body).to include("gh issue create --repo iachettifederico/gentle-shell-school")

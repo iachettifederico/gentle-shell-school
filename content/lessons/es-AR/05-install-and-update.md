@@ -58,13 +58,38 @@ versión anterior que podés seleccionar con:
 gentle-shell upgrade --rollback
 ```
 
-No confundas `upgrade` con `gentle-shell update [target]`. El segundo reenvía el
-comando de actualización de paquetes de Pi para el home seleccionado. En una
-instalación empaquetada, Pi está fijado junto con Gentle Shell, por lo que una
-actualización de Pi mismo ejecuta `gentle-shell upgrade` en su lugar. Los
+No confundas `upgrade` con `gentle-shell update`. `gentle-shell update` sin
+argumentos actualiza el Pi que corre este lanzador: verifica qué paquete global de
+npm o pnpm provee ese Pi, reinstala exactamente ese paquete e informa si cambió la
+versión de Pi. Cuando el dueño es desconocido o ambiguo, se niega sin cambiar nada;
+actualizá esas instalaciones con el gestor de paquetes que las provee. Con un
+objetivo, o con `--extensions-only`, `update` reenvía el comando de actualización
+de paquetes de Pi para el home seleccionado. Una instalación empaquetada en un
+prefijo fija Pi junto con Gentle Shell, así que ahí Pi se sigue actualizando con
+`gentle-shell upgrade`. Los
 lanzadores más antiguos que no admiten `upgrade` deben usar el instalador más
 reciente descrito en **Instalá Gentle Shell** en vez de tratar `upgrade` como un
 prompt de chat.
+
+## Reutilizá tus inicios de sesión de Pi
+
+Por defecto, Gentle Shell corre en su propio home aislado, `~/.gentle-shell/agent`,
+así que no ve los inicios de sesión que hiciste en Pi. En vez de compartir el home
+de Pi con `--link`, podés copiarlos una vez:
+
+```bash
+gentle-shell home import-pi --dry-run
+gentle-shell home import-pi
+```
+
+`--dry-run` muestra el plan y no escribe nada. La importación copia solo
+`auth.json`, `mcp.json` y tu proveedor, modelo y nivel de razonamiento por defecto,
+y solo donde el destino todavía no los tiene. Nunca sobrescribe, nunca copia
+paquetes, extensiones ni sesiones y nunca escribe en tu home de Pi, así que volver a
+correrla es seguro. La contra: cada home tiene ahora su propia copia de las
+credenciales, y un proveedor que rota los tokens de actualización puede cerrar la
+sesión de la copia que se actualice segunda. Si pasa, volvé a correr `/login` en
+ese home.
 
 ## Eliminá solo lo que pretendés
 

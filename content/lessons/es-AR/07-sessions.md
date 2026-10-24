@@ -16,7 +16,9 @@ enfoque sin destruir el trabajo que dejaste atrás.
 
 Las sesiones persistentes son archivos JSONL: un objeto JSON por línea. De forma
 predeterminada, Pi las guarda en `~/.pi/agent/sessions/`, agrupadas por directorio de
-trabajo. El archivo empieza con metadatos, y sus entradas posteriores usan IDs y enlaces
+trabajo. Gentle Shell corre por defecto en su propio home aislado, así que sus
+sesiones viven en `~/.gentle-shell/agent/sessions/`; si lo arrancás con `--link`,
+comparte el home y las sesiones de Pi. El archivo empieza con metadatos, y sus entradas posteriores usan IDs y enlaces
 `parentId` para formar un árbol. Las entradas de sesión pueden registrar mensajes,
 cambios de modelo, cambios de nivel de razonamiento, resúmenes de compactación,
 resúmenes de ramas, uso, etiquetas y estado de extensiones.
@@ -123,6 +125,37 @@ de modelos futuro sin cambiar el historial sin procesar, la UI, las exportacione
 contabilidad de la sesión. Es un detalle avanzado del formato de sesión, pero refuerza el
 mismo principio: Pi puede revisar el contexto futuro mientras preserva el registro
 subyacente.
+
+## Scratch de sesión
+
+Desde v4.3.0, cada sesión principal de Gentle Shell tiene su propio directorio
+scratch (llamado `gpXXXXXX`) y corre con `TMPDIR` apuntando a él, así que cada
+`mktemp` que corre el agente cae ahí. Cada subagente recibe su propio directorio
+`gaXXXXXX` adentro. Si el scratch no se puede crear, la sesión se queda con el
+`TMPDIR` heredado. Un registro en el directorio de configuración anota el scratch y
+cada clon o worktree que crea en la sesión un `git clone` o `git worktree add`
+exitoso en primer plano.
+
+La limpieza es automática solo para el scratch: al cerrar se borra el scratch de la
+sesión, salvo el `TMPDIR` de un subagente activo o en cuarentena (todavía corriendo,
+o con su salida sin confirmar), que queda junto con el scratch que lo rodea. Un
+inicio de sesión posterior barre el scratch que dejaron sesiones terminadas hace más
+de una hora. Los clones y worktrees registrados quedan hasta que
+los limpiés:
+
+```text
+/gentle:scratch list
+/gentle:scratch clean
+```
+
+`list` muestra el scratch con su tamaño y los clones y worktrees registrados.
+`clean` vacía el scratch de la sesión actual sin preguntar, conservando solo el
+scratch de subagentes, los clones y worktrees registrados y las entradas modificadas
+en el último minuto, y borra el scratch que dejaron las sesiones terminadas. Después
+pregunta una vez antes de borrar clones y worktrees registrados que no tengan
+trabajo sin commitear ni sin pushear. Sin interfaz, solo borra scratch. Nunca borra
+el scratch de otra sesión activa, pero sí el tuyo: guardá cualquier archivo que
+todavía necesités de `TMPDIR` antes de correrlo.
 
 ## Errores comunes
 

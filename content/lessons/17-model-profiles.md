@@ -54,6 +54,14 @@ someone else's setup. What models you can actually select depends on the
 providers and credentials available in your installation. Do not infer that a
 model named in a configuration example is available to you.
 
+## Context-aware runtime limit
+
+The runtime sizes the parent session's context backstop from its resolved model:
+`min(150k tokens, 0.15 × context window)`. You can configure it with
+`GENTLE_PI_CONTEXT_BACKSTOP_TOKENS` and `GENTLE_PI_CONTEXT_BACKSTOP_FRACTION`.
+That makes model context capacity an operational routing input, rather than a
+reason to guess when a long session should delegate its next bounded unit.
+
 ## Two related routing controls
 
 Gentle Shell describes named profiles as a way to route the orchestrator

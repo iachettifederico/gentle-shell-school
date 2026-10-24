@@ -100,8 +100,8 @@ contrato de reemplazo.
 ## RDD y `assess`
 
 RDD es un interruptor controlado por la persona usuaria con dos fuentes, global y clon.
-Cuando ninguna fuente está configurada, gentle-ai lo resuelve como activado (`source: default`);
-cualquier desactivación gana: un repositorio puede desactivarlo para un clon, pero nunca
+Cuando ninguna fuente está configurada, gentle-ai lo resuelve como desactivado (`source: default`):
+RDD se activa solo si lo pedís explícitamente. Cualquier desactivación gana: un repositorio puede desactivarlo para un clon, pero nunca
 puede exigirlo. `gentle-ai review mode status` es de solo lectura e informa ambas fuentes
 más el modo efectivo. El interruptor global es `gentle-ai review mode enable --scope=global`;
 `/gentle:review-mode enable` dentro de gentle-shell solo elimina una anulación local del
@@ -152,6 +152,10 @@ No hagas autoritativa una salida de revisión solo porque está estructurada. La
 los enfoques es data no confiable; el controlador congela filas canónicas y es responsable
 de las transiciones. La negativa de un revisor es evidencia no disponible, no una razón
 para bajar la exigencia ni afirmar que la revisión está limpia.
+
+Llamá a las herramientas de revisión nativa directamente, nunca desde adentro de otra
+herramienta como `codemode`. Desde v4.3.0 el entorno de ejecución rechaza una llamada
+anidada; antes podía colgar la sesión.
 
 ## Probalo
 

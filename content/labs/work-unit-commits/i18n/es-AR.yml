@@ -5,4 +5,6 @@ brief: |
   Primero ejecutá `git init` en este proyecto de práctica. Hacé que la prueba pase y después creá al
   menos dos commits de Conventional Commit. Cada commit debería dejar la suite de pruebas
   pasando. La comprobación se niega a ejecutarse fuera de un repositorio Git, así que su fallo te dice
-  qué hacer primero.
+  qué hacer primero. `node --test` solo comprueba lo que un script puede observar en el repositorio; la
+  calificación con rúbrica en contexto nuevo demuestra que los commits son unidades
+  de trabajo revisables.

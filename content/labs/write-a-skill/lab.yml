@@ -5,9 +5,12 @@ brief: |
   ## Encode a reusable runtime contract
 
   Create `skills/<name>/SKILL.md`. Give it YAML frontmatter with `name` and
-  `description`, then add the six sections required by the style guide:
+  a `description` that names its trigger with the literal word `Trigger:`
+  (for example `Trigger: release note. Draft a concise release note.`), then add the six sections required by the style guide:
   Activation Contract, Hard Rules, Decision Gates, Execution Steps, Output
   Contract, and References. Keep it focused on one repeatable workflow.
+  `node --test` checks only what a script can observe in the skill; the fresh-context rubric grade is
+  the evidence that the skill gives an agent an actionable workflow.
 check: node --test
 rubric:
   - The frontmatter names the skill and describes its trigger.

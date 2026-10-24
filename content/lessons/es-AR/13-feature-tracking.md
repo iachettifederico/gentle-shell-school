@@ -133,7 +133,9 @@ superó.
 
 ## Probalo
 
-Abrí un documento de funcionalidad en `odd/tasks/`. Ubicá `S1`, una tarea vinculada a
+Abrí un documento de funcionalidad en `odd/tasks/`. Si todavía no tenés uno, usá el
+[documento de funcionalidad de la fase 11](https://github.com/iachettifederico/gentle-shell-school/blob/main/odd/tasks/phase-11-single-path.md)
+de este mismo curso. Ubicá `S1`, una tarea vinculada a
 un `S#` y una entrada de Log con evidencia. Imaginá que el archivo local y la copia en
 memoria entran en conflicto después de una interrupción. Enumerá qué compararías —los
 requisitos, el código y las comprobaciones observadas— antes de decidir el siguiente

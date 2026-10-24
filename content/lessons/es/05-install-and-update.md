@@ -54,11 +54,34 @@ el canal release y conserva una versión anterior que se puede seleccionar con:
 gentle-shell upgrade --rollback
 ```
 
-No confundas `upgrade` con `gentle-shell update [target]`. Este último reenvía el comando de
-actualización de paquetes de Pi para el home seleccionado. En una instalación incluida, Pi está
-fijado con Gentle Shell, por lo que una actualización de Pi en sí ejecuta `gentle-shell upgrade`.
+No confundas `upgrade` con `gentle-shell update`. `gentle-shell update` sin argumentos actualiza
+el Pi que ejecuta este iniciador: verifica qué paquete global de npm o pnpm provee ese Pi,
+reinstala exactamente ese paquete e informa si cambió la versión de Pi. Cuando el propietario es
+desconocido o ambiguo, se niega sin cambiar nada; actualiza esas instalaciones con el gestor de
+paquetes que las provee. Con un objetivo, o con `--extensions-only`, `update` reenvía el comando
+de actualización de paquetes de Pi para el home seleccionado. Una instalación incluida en un
+prefijo fija Pi con Gentle Shell, así que allí Pi se sigue actualizando con `gentle-shell upgrade`.
 Los iniciadores antiguos que no admiten `upgrade` deben usar el instalador más reciente descrito en
 **Instala Gentle Shell**, en lugar de tratar `upgrade` como un prompt de chat.
+
+## Reutiliza tus inicios de sesión de Pi
+
+De forma predeterminada, Gentle Shell se ejecuta en su propio home aislado, `~/.gentle-shell/agent`,
+así que no ve los inicios de sesión que hiciste en Pi. En lugar de compartir el home de Pi con
+`--link`, puedes copiarlos una vez:
+
+```bash
+gentle-shell home import-pi --dry-run
+gentle-shell home import-pi
+```
+
+`--dry-run` muestra el plan y no escribe nada. La importación copia solo `auth.json`, `mcp.json` y
+tu proveedor, modelo y nivel de razonamiento predeterminados, y solo donde el destino todavía no
+los tiene. Nunca sobrescribe, nunca copia paquetes, extensiones ni sesiones y nunca escribe en tu
+home de Pi, así que volver a ejecutarla es seguro. La contrapartida: cada home tiene ahora su
+propia copia de las credenciales, y un proveedor que rota los tokens de actualización puede cerrar
+la sesión de la copia que se actualice en segundo lugar. Si eso pasa, vuelve a ejecutar `/login`
+en ese home.
 
 ## Elimina solo lo que pretendes
 

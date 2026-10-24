@@ -59,4 +59,21 @@ RSpec.describe "Course content" do
     welcome = Rails.root.join("content/lessons/01-welcome.md").read
     expect(welcome).to include("`next.prompt` of `open-gentle-shell`")
   end
+
+  it "proves the session runs in gentle-shell before recording the setup lessons" do
+    %w[01-welcome 03-open-gentle-shell].each do |name|
+      text = Rails.root.join("content/lessons/#{name}.md").read
+      expect(text).to include("`gentle-shell --version` only proves the launcher is installed"), name
+      expect(text).not_to include("If it prints version information, you are"), name
+      expect(text).to include("GENTLE_SHELL_USER_PI_HOME"), name
+      expect(text).not_to include("in your own tool list"), name
+    end
+  end
+
+  it "teaches what scratch cleanup really removes and keeps" do
+    text = Rails.root.join("content/lessons/07-sessions.md").read
+    expect(text).to include("a live or quarantined subagent")
+    expect(text).to include("empties the current session's scratch")
+    expect(text).not_to include("It never removes a directory a live session still uses.")
+  end
 end

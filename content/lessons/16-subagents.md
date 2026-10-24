@@ -93,6 +93,17 @@ When an independent high-risk item requires separate verification, the verifier
 is an additional outside view after the writer's own checks, not a substitute
 for those checks.
 
+### Runtime orchestration signals
+
+Gentle Shell also enforces some routing limits. The parent context backstop is
+`min(150k tokens, 0.15 × context window)`; when measured context reaches it, one
+notice tells the parent to delegate the next bounded multi-step unit. Small,
+single edits stay inline, and subagents never receive this notice. Verifier
+launches pass an admission check: the verifier runs for a named high-risk item,
+a task from a feature document, or a parent that reached the backstop, and
+otherwise the parent checks inline. Todo progress comes from task counts, every subagent gets its
+own `TMPDIR`, and a guard lints delivered tests.
+
 ## Make the handoff executable
 
 A useful handoff is a compact contract, not an essay. For tracked work, point

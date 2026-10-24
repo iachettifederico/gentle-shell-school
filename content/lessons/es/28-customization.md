@@ -109,7 +109,9 @@ se agrupan bajo Advanced. Silenciar o deshabilitar descarta eventos pendientes, 
 reanudar no se reproducen de nuevo. Solo el propietario principal de TUI reproduce
 audio: los procesos secundarios, el modo print/JSON y RPC son silenciosos.
 
-El panel puede usar tonos integrados o una ruta local absoluta literal a un WAV. No
+El panel puede usar tonos integrados o una ruta local absoluta literal a un archivo WAV, OGG o
+FLAC (como máximo 2 MiB y 10 segundos; qué formatos se reproducen depende del backend de audio de
+tu plataforma). No
 acepta URLs, rutas relativas, `~`, expansión de entorno, comandos ni ejecutables de
 reproductor configurables. Esto convierte la selección de sonido en una elección de
 archivo local, no en un ejecutor de comandos encubierto. Las preferencias de audio son

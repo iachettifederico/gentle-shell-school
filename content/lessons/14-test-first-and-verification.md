@@ -146,6 +146,15 @@ If the requested task is only to correct a lesson paragraph, the RED step has no
 meaningful behavioral outcome. State that the exception is passive documentation
 and run the course’s content-loading check instead.
 
+## Differential check
+
+When a change shares code with an existing command or option, protect the behavior
+that was not meant to change. For each such command or option, run the new or
+changed input against both the change and a copy of the base commit in a
+`mktemp -d` scratch directory. Compare stdout, stderr, and exit code. An
+unrequested difference is a regression: fix it and pin it with a test. Keep one
+test per touched existing behavior; committed tests never read Git history.
+
 ## Common mistakes
 
 - **Calling an unrun test RED.** Evidence must be observed.

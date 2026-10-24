@@ -119,6 +119,16 @@ Si la tarea solicitada es solo corregir un párrafo de una lección, el paso RED
 resultado de comportamiento significativo. Indica que la excepción es documentación pasiva y ejecuta la
 verificación de carga de contenido del curso en su lugar.
 
+## Comprobación diferencial
+
+Cuando un cambio comparte código con un comando u opción existente, protege el
+comportamiento que no se pretendía cambiar. Para cada comando u opción así,
+ejecuta la entrada nueva o cambiada tanto contra el cambio como contra una copia
+del commit base en un directorio temporal `mktemp -d`. Compara stdout, stderr y
+el código de salida. Una diferencia no solicitada es una regresión: corrígela y
+fíjala con una prueba. Mantén una prueba por cada comportamiento existente tocado;
+las pruebas confirmadas nunca leen el historial de Git.
+
 ## Errores comunes
 
 - **Llamar RED a una prueba no ejecutada.** La evidencia debe observarse.

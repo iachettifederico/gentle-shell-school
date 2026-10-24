@@ -6,3 +6,5 @@ brief: |
   Crea `odd/tasks/lesson-search.md` con `## Specs`, `## Tasks` y `## Log`.
   Cita la solicitud **verbatim** en Specs, planifica el trabajo en Tasks y registra la
   solicitud en Log. Esto proporciona a una sesión posterior una fuente de verdad duradera.
+  `node --test` solo comprueba lo que un script puede observar en el documento; la calificación con rúbrica en
+  contexto nuevo demuestra que conserva una solicitud y un plan accionables.

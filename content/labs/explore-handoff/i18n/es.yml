@@ -5,4 +5,5 @@ brief: |
   Delega una exploración de solo lectura de `src/`. Guarda su entrega como `handoff.md`.
   Incluye al menos tres referencias con la forma `src/path.js:line` que apunten a
   líneas reales. Esto hace útil la exploración sin copiar código fuente en la
-  entrega.
+  entrega. `node --test` solo comprueba lo que un script puede observar en la entrega; la calificación
+  con rúbrica en contexto nuevo demuestra que la exploración se delegó.

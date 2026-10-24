@@ -7,7 +7,8 @@ brief: |
   Delegate a read-only exploration of `src/`. Save its handoff as `handoff.md`.
   Include at least three references in the form `src/path.js:line` that point to
   real lines. This makes the exploration useful without copying source into the
-  handoff.
+  handoff. `node --test` checks only what a script can observe in the handoff; the fresh-context
+  rubric grade is the evidence that the exploration was actually delegated.
 check: node --test
 rubric:
   - The handoff summarizes the exploration in the delegate's own words.
