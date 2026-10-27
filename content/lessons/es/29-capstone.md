@@ -31,8 +31,13 @@ en una afirmación comprobable, pero no puede tomar esa decisión silenciosament
 Luego aplica **Task size and risk**. Tu proyecto final sigue siendo pequeño cuando
 comprendes el código relevante, el efecto esperado y la vía de recuperación. Si la
 exploración revela un segundo comportamiento independiente, divídelo. ¿Podría una nueva
-sesión terminar a partir de la solicitud, el registro de la funcionalidad y el diff
-actual sin volver a descubrir decisiones? Si no, mejora el registro o reduce el alcance.
+sesión terminar a partir de la solicitud original y `git diff` por sí solos sin volver
+a descubrir decisiones? Si no, es grande: regístralo en un documento de funcionalidad
+antes de la primera escritura o reduce el alcance.
+
+Este proyecto final es pequeño, pero el curso te pide que conserves un documento de
+funcionalidad de todos modos para que practiques el registro de recuperación. ODD lo
+permite para una tarea pequeña cuando la persona que dirige el trabajo pide uno.
 
 ## 2. Explora antes de construir
 
@@ -50,8 +55,9 @@ El padre conserva la interpretación, el alcance y la integración final.
 
 ## 3. Crea el registro de la funcionalidad y la vía de recuperación
 
-Para un alcance suficientemente importante, crea el documento de funcionalidad descrito
-en **Feature tracking**. Registra la solicitud aceptada, los criterios de aceptación
+Aunque este proyecto final es pequeño, el curso te pide que crees aquí el documento de
+funcionalidad descrito en **Feature tracking** para practicar el registro de recuperación.
+Registra la solicitud aceptada, los criterios de aceptación
 medibles, las tareas, las decisiones importantes, la evidencia y el siguiente paso.
 Conserva los requisitos exactos en lugar de parafrasear restricciones hasta perderlas.
 Guárdalo en el repositorio temporal donde la siguiente sesión pueda encontrarlo.
@@ -78,10 +84,13 @@ de límite o alternativo que proteja el contrato. Refactoriza solo después de q
 verificaciones enfocadas sigan en verde. Las pruebas son evidencia, no decoración: el
 documento de funcionalidad debe indicar qué se ejecutó y qué observó.
 
-Para cada comando u opción existente que comparta código cambiado, ejecuta también
-la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
-un directorio temporal `mktemp -d`. Compara stdout, stderr y el código de salida;
-corrige y fija toda diferencia no solicitada. Agrega una prueba por cada
+Solo cuando el diff cambia código compartido (opciones, parsers, ayudantes) que
+también usa un comando existente que la solicitud no nombró, ejecuta una
+comprobación diferencial antes de terminar, como un solo script: ejecuta la entrada
+nueva o cambiada contra el cambio y contra una copia del commit base en un
+directorio temporal `mktemp -d`. Compara stdout, stderr y el código de salida;
+corrige y fija toda diferencia no solicitada. Cuando el diff no toca código
+compartido, omite la comprobación. Agrega una prueba por cada
 comportamiento existente tocado y nunca hagas que las pruebas confirmadas lean el
 historial de Git.
 
@@ -128,8 +137,9 @@ trabajo. Su propósito es revisar un candidato congelado con evidencia, no aprob
 formalmente el árbol de trabajo más reciente. Usa **Judgment day** solo cuando el cambio
 requiera su disciplina de revisión ciega y adversarial. La evaluación de revisión nativa
 se aplica por commit de unidad de trabajo (o porción de PR), nunca a la rama de
-funcionalidad acumulada, y se ejecuta solo cuando está habilitado el interruptor RDD
-propiedad del usuario; está desactivado de forma predeterminada.
+funcionalidad acumulada, y se ejecuta solo cuando el interruptor RDD propiedad del usuario está
+activado; está activado de forma predeterminada y puedes desactivarlo con
+`/gentle:review-mode disable`.
 
 Sin importar la ruta de revisión, inspecciona si la prueba demuestra el comportamiento
 indicado, si el documento de funcionalidad coincide con el alcance final y si los commits

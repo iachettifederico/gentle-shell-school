@@ -18,10 +18,11 @@ agent_instructions: |
 
   Have the student run `gentle-ai review mode status` (read-only; it reports
   the global and clone sources plus the effective mode) and explain what they
-  see, without changing it. If they explicitly want to enable receipt-driven
-  development, the global switch is `gentle-ai review mode enable --scope=global`;
-  /gentle:review-mode enable only clears a clone-local override. Otherwise do
-  not change it. The lesson is done when they can distinguish writer
+  see, without changing it. RDD is optional and on by default. If they
+  explicitly want it off, `/gentle:review-mode disable` turns it off for this
+  clone and `gentle-ai review mode disable` turns it off machine-wide;
+  /gentle:review-mode enable only clears a clone-local off. Otherwise do not
+  change it. The lesson is done when they can distinguish writer
   verification, native review evidence, and the human/repository delivery
   decision in their real setup.
 ---
@@ -117,14 +118,18 @@ Pi does not invent a replacement contract.
 
 ## RDD and `assess`
 
-RDD is a user-owned switch with two sources, global and clone. When neither
-source is set, gentle-ai resolves it to off (`source: default`): RDD is
-opt-in. Any off wins: a repository may disable it for one clone but can never require it.
-`gentle-ai review mode status` is read-only and reports both sources plus the
-effective mode. The global switch is `gentle-ai review mode enable --scope=global`;
-`/gentle:review-mode enable` inside gentle-shell only clears a clone-local
-override and cannot turn on RDD while the global setting is off. Enabling
-applies to future candidates only. It adds a receipt-driven native review
+RDD is a user-owned switch with two sources, global and clone. It is optional
+and on by default (since Gentle AI v4.0.0): when neither source is set, the
+effective mode is on. Any off wins: you can turn it off for one clone with
+`/gentle:review-mode disable`, or machine-wide with
+`gentle-ai review mode disable`, and a repository can never require it.
+`gentle-ai review mode status` (or `/gentle:review-mode status`) is read-only
+and reports both sources plus the effective mode. `/gentle:review-mode enable`
+inside gentle-shell only clears a clone-local off and cannot turn on RDD while
+the global setting is off; the global switch is
+`gentle-ai review mode enable --scope=global`. If status reports off with
+`source: default`, the install could not resolve the mode and failed closed;
+status explains why. A mode change applies to future candidates only. It adds a receipt-driven native review
 lifecycle; it does not replace tests or ordinary repository delivery policy.
 The candidate-view parent directory also needs a filesystem that can honor its
 private permission requirements. Some WSL DrvFS mounts without metadata can
@@ -181,8 +186,16 @@ Check whether RDD is on, without changing it just to complete the lesson:
 gentle-ai review mode status
 ```
 
-If you deliberately choose to opt in, turn on the global switch, then clear a
-clone-local disable if `status` shows one:
+RDD is on unless something turned it off. If you deliberately want it off for
+this clone, or for every clone on the machine:
+
+```text
+/gentle:review-mode disable
+gentle-ai review mode disable
+```
+
+To turn it back on, enable the global switch, then clear a clone-local off if
+`status` shows one:
 
 ```text
 gentle-ai review mode enable --scope=global

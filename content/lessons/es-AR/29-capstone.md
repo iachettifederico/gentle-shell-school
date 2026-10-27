@@ -31,8 +31,13 @@ una afirmación comprobable, pero no puede tomar esa elección en silencio.
 Luego aplicá **Task size and risk**. Tu capstone se mantiene pequeño cuando entendés
 el código relevante, el efecto esperado y la ruta de recuperación. Si la exploración
 revela un segundo comportamiento independiente, dividilo. ¿Podría una nueva sesión
-terminar a partir del pedido, registro de funcionalidad y diff actual sin redescubrir
-decisiones? Si no, mejorá el registro o reducí el alcance.
+terminar a partir del pedido original y `git diff` por sí solos sin redescubrir
+decisiones? Si no, es grande: registralo en un documento de funcionalidad antes de la
+primera escritura o reducí el alcance.
+
+Este capstone es pequeño, pero el curso te pide que igual mantengas un feature document
+para que practiques el registro de recuperación. ODD lo permite para una tarea pequeña
+cuando la persona que lidera el trabajo pide uno.
 
 ## 2. Explorá antes de construir
 
@@ -50,8 +55,9 @@ la interpretación, el alcance y la integración final.
 
 ## 3. Creá el registro de la funcionalidad y la ruta de recuperación
 
-Para un alcance suficientemente sustancial, creá el feature document descrito en
-**Feature tracking**. Capturá el pedido aceptado, criterios de aceptación medibles,
+Aunque este capstone es pequeño, el curso te pide que crees acá el feature document
+descrito en **Feature tracking** para practicar el registro de recuperación. Capturá el
+pedido aceptado, criterios de aceptación medibles,
 tareas, decisiones importantes, evidencia y próximo paso. Conservá los requisitos
 exactos en lugar de parafrasear y perder restricciones. Mantenelo en el repositorio
 de práctica donde la próxima sesión pueda encontrarlo.
@@ -78,11 +84,15 @@ alternativo que proteja el contrato. Refactorizá solo después de que las compr
 enfocadas sigan en verde. Los tests son evidencia, no decoración: el feature document
 debe indicar qué se ejecutó y qué observó.
 
-Para cada comando u opción existente que comparta código cambiado, ejecutá también
-la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
-un directorio temporal `mktemp -d`. Compará stdout, stderr y el código de salida;
-corregí y fijá toda diferencia no solicitada. Agregá un test por cada comportamiento
-existente tocado y nunca hagas que los tests confirmados lean el historial de Git.
+Solo cuando el diff cambia código compartido (opciones, parsers, helpers) que
+también usa un comando existente que la solicitud no nombró, ejecutá una
+comprobación diferencial antes de terminar como un solo script: para cada comando
+así, ejecutá la entrada nueva o cambiada contra el cambio y contra una copia del
+commit base en un directorio temporal `mktemp -d`. Compará stdout, stderr y el
+código de salida; corregí y fijá toda diferencia no solicitada. Cuando el diff no
+toca código compartido, salteá la comprobación. Agregá un test por cada
+comportamiento existente tocado y nunca hagas que los tests confirmados lean el
+historial de Git.
 
 ## 5. Delegá para ahorrar sin ceder el liderazgo
 
@@ -127,8 +137,9 @@ propósito es revisar un candidato congelado con evidencia, no aprobar automáti
 el árbol de trabajo más nuevo. Usá **Judgment day** solo cuando el cambio requiera su
 disciplina de revisión ciega y adversarial. La evaluación de revisión nativa se aplica
 por commit de unidad de trabajo (o corte de PR), nunca a la rama de funcionalidad
-acumulada, y corre solo cuando está habilitado el interruptor RDD que pertenece a la
-persona usuaria; está desactivado de forma predeterminada.
+acumulada, y corre solo cuando está activado el interruptor RDD que pertenece a la
+persona usuaria; está activado de forma predeterminada, y podés desactivarlo con
+`/gentle:review-mode disable`.
 
 Sin importar la ruta de revisión, inspeccioná si el test demuestra el comportamiento
 declarado, si el feature document coincide con el alcance final y si los commits
