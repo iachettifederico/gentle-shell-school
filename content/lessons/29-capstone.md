@@ -123,13 +123,11 @@ alternate case that protects the contract. Only refactor after the focused
 checks remain green. Tests are evidence, not decoration: the feature document
 should say what ran and what it observed.
 
-Only when your diff changes shared code (options, parsers, helpers) that an
-existing command the request did not name also uses, run one differential check
-before finishing, as a single script: run the new or changed input against the
-change and against a base-commit copy in a `mktemp -d` scratch directory.
-Compare stdout, stderr, and exit code; fix and pin any unrequested difference.
-When the diff touches no shared code, skip the check. Add one test for each
-touched existing behavior, and never make committed tests read Git history.
+For each existing command or option that shares changed code, also run the new
+or changed input against the change and against a base-commit copy in a
+`mktemp -d` scratch directory. Compare stdout, stderr, and exit code; fix and
+pin any unrequested difference. Add one test for each touched existing behavior,
+and never make committed tests read Git history.
 
 ## 5. Delegate for savings without giving away leadership
 
@@ -172,8 +170,7 @@ to review a frozen candidate with evidence, not to rubber-stamp the newest
 working tree. Use **Judgment day** only when the change calls for its blind,
 adversarial review discipline. Native review assessment is per work-unit commit
 (or PR slice), never the accumulated feature branch, and runs only when the
-user-owned RDD switch is on; it is on by default, and you can turn it off
-with `/gentle:review-mode disable`.
+user-owned RDD switch is enabled; it is off by default.
 
 Regardless of review route, inspect whether the test demonstrates the stated
 behavior, whether the feature document matches the final scope, and whether

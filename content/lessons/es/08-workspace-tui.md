@@ -103,12 +103,9 @@ siempre?”.
 
 ## Gentle Agents mantiene observable el trabajo delegado
 
-Gentle Agents es una vista separada para el trabajo de subagentes. Mientras se muestra el
-rail de pantalla completa, su tarjeta activa se mueve allí, que se desplaza en el orden
-**Status → Changes → Agents → TODO**; sin el rail (pantalla completa estrecha o modo regular),
-la tarjeta permanece encima del editor. `ctrl+shift+a` o un clic en el encabezado `▾ Collapse`
-de la tarjeta la contrae, y `/gentle:agents` o **Alt+A** abre una superposición de terminal
-completa. La superposición conserva hilos de tareas, modelo, tokens, costo, tiempo transcurrido,
+Gentle Agents es una vista separada para el trabajo de subagentes. Su tarjeta activa permanece
+encima del editor, y `/gentle:agents` o **Alt+A** abre una superposición de terminal completa.
+La superposición conserva hilos de tareas, modelo, tokens, costo, tiempo transcurrido,
 resultados e historial. Los resultados en segundo plano regresan como tarjetas que inician un
 nuevo turno; el padre no necesita sondear para descubrirlos.
 
@@ -117,22 +114,6 @@ propio proceso hijo de Pi, y la sesión padre sigue siendo el lugar donde se coo
 alcance, la evidencia y las siguientes acciones. La lección posterior **Delegación** explica
 los roles y límites; aquí, usa la vista para ver qué está ejecutándose realmente en lugar de
 adivinar a partir de una terminal silenciosa.
-
-## Pega imágenes y usa otras herramientas de entrada
-
-La tecla para pegar imágenes de Pi (`ctrl+v`, o `alt+v` en Windows) convierte una imagen del
-portapapeles en un chip `[Image#N]` en el borrador en lugar de una ruta de archivo temporal. Una
-pulsación de Backspace elimina el chip completo, y una franja encima del prompt muestra cada chip
-con su formato, tamaño y una miniatura en terminales compatibles con imágenes. Si el modelo actual
-no acepta imágenes, la franja te avisa antes de enviar.
-
-Gentle Shell también tiene herramientas opcionales que se inician solo cuando las pides:
-
-- `/gentle:design <brief>` hace que el modelo de la sesión escriba varias propuestas de diseño
-  HTML en `design/<slug>/` y las abre en un lienzo local, donde puedes comentar cualquier elemento.
-- `/gentle:voice` descarga una vez el dictado local, luego pega lo que dices en el borrador sin
-  enviarlo; mantener Space en el editor activa pulsar para hablar.
-- `/gentle:music [mood]` reproduce gentle-stream dentro de la shell.
 
 ## Configura sin confundir la configuración con el comportamiento
 

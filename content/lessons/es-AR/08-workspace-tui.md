@@ -103,40 +103,17 @@ para siempre?”.
 
 ## Gentle Agents mantiene observable el trabajo delegado
 
-Gentle Agents es una vista separada para el trabajo de subagentes. Mientras se
-muestra el riel de pantalla completa, su tarjeta en vivo pasa al riel, que se desplaza
-**Estado → Cambios → Agentes → TODO**; sin el riel (pantalla completa angosta o modo
-normal), la tarjeta queda sobre el editor. `ctrl+shift+a` o un clic en el encabezado
-`▾ Collapse` de la tarjeta la contrae, y `/gentle:agents` o **Alt+A** abre una
-superposición de terminal completa. La superposición conserva hilos de tareas, modelo,
-tokens, costo, tiempo transcurrido, resultados e historial. Los resultados en segundo
-plano vuelven como tarjetas que inician un nuevo turno; el padre no necesita consultar
-para descubrirlos.
+Gentle Agents es una vista separada para el trabajo de subagentes. Su tarjeta en vivo se
+mantiene sobre el editor, y `/gentle:agents` o **Alt+A** abre una superposición de terminal
+completa. La superposición conserva hilos de tareas, modelo, tokens, costo, tiempo
+transcurrido, resultados e historial. Los resultados en segundo plano vuelven como tarjetas
+que inician un nuevo turno; el padre no necesita consultar para descubrirlos.
 
 Esto hace legible la delegación, pero no transfiere la responsabilidad. Cada subagente es su
 propio proceso hijo de Pi, y la sesión padre sigue siendo el lugar donde se coordinan el
 alcance, la evidencia y las próximas acciones. La lección posterior **Delegación** explica
 los roles y límites; acá, usá la vista para ver qué se está ejecutando realmente en lugar de
 adivinar desde una terminal silenciosa.
-
-## Pegá imágenes y usá otras herramientas de entrada
-
-La tecla de pegar imágenes de Pi (`ctrl+v`, o `alt+v` en Windows) convierte una
-imagen del portapapeles en un chip `[Image#N]` en el borrador, en vez de una ruta de
-archivo temporal. Un Backspace elimina el chip entero, y una franja sobre el prompt
-lista cada chip con su formato, tamaño y una miniatura en terminales que admiten
-imágenes. Si el modelo actual no acepta imágenes, la franja te advierte antes de que
-lo envíes.
-
-Gentle Shell también tiene herramientas opcionales que se inician solo cuando las
-pedís:
-
-- `/gentle:design <brief>` hace que el modelo de la sesión escriba varias
-  direcciones de diseño HTML bajo `design/<slug>/` y las abre en un canvas local,
-  donde podés comentar cualquier elemento.
-- `/gentle:voice` descarga una vez el dictado local y después pega lo que decís en
-  el borrador sin enviarlo; mantener Espacio en el editor activa pulsar para hablar.
-- `/gentle:music [mood]` reproduce gentle-stream dentro de la shell.
 
 ## Configurá sin confundir configuración con comportamiento
 

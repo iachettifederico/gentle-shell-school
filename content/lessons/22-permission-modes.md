@@ -1,15 +1,14 @@
 ---
 title: "Permission modes"
 slug: permission-modes
-description: "Choose Normal, Auto, YOLO, or Super Yolo without confusing convenience for a security boundary."
+description: "Choose Normal, Auto, or YOLO without confusing convenience for a security boundary."
 order: 22
 module: "Safety and review"
 quiz: true
 agent_instructions: |
-  Teach the student how Normal, Auto, YOLO, and Super Yolo differ, what each
-  mode does and does not authorize, and why permissions are not a sandbox.
-  Emphasize that current-session mode and the default for future sessions are
-  separate, and that Super Yolo waives even data-loss confirmations.
+  Teach the student how Normal, Auto, and YOLO differ, what each mode does
+  and does not authorize, and why permissions are not a sandbox. Emphasize
+  that current-session mode and the default for future sessions are separate.
 
   Ask these questions with ask_user_question, checking each answer:
   1. Which mode uses a separate check with the current session model before eligible actions? Correct answer: Auto.
@@ -19,16 +18,16 @@ agent_instructions: |
 
   Have the student run /gentle:mode status in their live primary session and
   explain the displayed current mode and saved default. Do not ask them to
-  enable Auto, YOLO, or Super Yolo; that is their decision. The lesson is done when they
+  enable Auto or YOLO; that is their decision. The lesson is done when they
   can choose an appropriate mode for a scoped task, name one boundary that
   still needs human consent, and have checked their actual status.
 ---
 
 Permission prompts are a coordination problem: a coding agent can make many
 small actions while you still need meaningful control over the consequential
-ones. Gentle Shell offers four ways to handle those questions in the current
-**primary** session: **Normal**, **Auto**, **YOLO**, and **Super Yolo**. They
-are not four security levels and none is an operating-system sandbox. Pi processes, tools,
+ones. Gentle Shell offers three ways to handle those questions in the current
+**primary** session: **Normal**, **Auto**, and **YOLO**. They are not three
+security levels and none is an operating-system sandbox. Pi processes, tools,
 and extensions still act with the permissions of the account that started Pi.
 Isolation, limited credentials, and limited network access remain the controls
 that contain a bad or hostile action.
@@ -38,7 +37,7 @@ up in **Authorize and explore**: changing a mode does not enlarge the task you
 authorized, make a remote destination known, or decide an unresolved product
 choice.
 
-## The four modes
+## The three modes
 
 **Normal** preserves the existing permission behavior and is the fallback when
 there is no valid saved global preference. Use it when you want to make
@@ -73,19 +72,6 @@ disclosure, or a consequential decision that the task leaves open. It also does
 not give delegated children its elevated permission or independent delivery
 permission.
 
-**Super Yolo** is deliberate maximum autonomy for a workspace whose
-consequences you accept. It removes every permission prompt, including
-data-loss confirmations and configured guardrail `confirm` and `block` rules:
-recursive `rm`, SQL drops, rebases, forced branch deletion, and `npm publish`
-run without a dialog. The Auto classifier does not run. Two lines remain. The
-sensitive-path guard stays hard-blocked: reading, writing, or editing `.env`
-files, `.ssh`, keychains, `*.pem`/`*.key`/`*.p12`/`*.pfx` files, `secrets/`
-directories, and cloud credential files is refused in every mode. Code-level
-catastrophic denies also remain: `rm -rf /`, `rm -rf ~`, `--no-preserve-root`,
-`git reset --hard`, forced clean, and force push are blocked without a dialog.
-User-question tools, provider consent, and opaque-token decisions are still
-never answered automatically, and children never inherit Super Yolo.
-
 ## Change the live mode deliberately
 
 Use the mode commands in an interactive primary session:
@@ -95,7 +81,6 @@ Use the mode commands in an interactive primary session:
 /gentle:mode auto
 /gentle:mode normal
 /gentle:mode yolo
-/gentle:mode super-yolo
 ```
 
 The first command is a useful no-change check: it shows the current mode and
@@ -110,8 +95,7 @@ interactive primary session. You can also use the older YOLO shortcut:
 
 `enable` selects YOLO for the live session; `disable` selects Normal. With no
 argument, `/gentle:yolo` opens its interactive menu when that UI is available,
-or reports status otherwise. Invalid arguments change nothing. The toggle shows
-**ON** while Super Yolo is active, and turning it off returns to Normal.
+or reports status otherwise. Invalid arguments change nothing.
 
 The Customize interface exposes the same distinction. In
 `/gentle:customize` → **Editor**, **Session permissions** changes the current
@@ -124,7 +108,6 @@ To save a default for a *new* primary session, use a separate command:
 ```text
 /gentle:mode default auto
 /gentle:mode default yolo
-/gentle:mode default super-yolo
 /gentle:mode default normal
 ```
 
@@ -144,9 +127,7 @@ grant.
 ## The boundaries that remain
 
 Auto and YOLO reduce repeated routine questions; they do not remove the
-independent guards. Super Yolo goes further and is the exception described
-above: only the sensitive-path guard and the code-level catastrophic denies
-remain. Existing hard denials, configured restrictions, sensitive
+independent guards. Existing hard denials, configured restrictions, sensitive
 paths, and explicit user constraints still apply. User-question tools,
 opaque-token choices, maintenance or recovery consent, delegation control, and
 native-review consent keep their own contracts. Neither mode discovers ambient
@@ -185,9 +166,6 @@ after startup.
 
 - **Treating YOLO as unlimited autonomy.** It is standing permission for
   ordinary *already-authorized* work, not scope expansion.
-- **Choosing Super Yolo for convenience.** It waives data-loss confirmations;
-  use it only in a workspace where you accept those consequences, ideally an
-  isolated one.
 - **Treating Auto denial as a verdict on the task.** A timeout or unavailable
   classifier means the action did not run, not that the action is unsafe.
 - **Saving a default by accident.** Session and default commands are separate.
@@ -207,8 +185,8 @@ In an interactive primary session, run:
 Read both fields before changing anything: the live mode tells you how this
 session will handle eligible actions, while the saved default affects future
 primary sessions. For a routine, tightly scoped task, explain which of Normal,
-Auto, YOLO, or Super Yolo you would choose and name the decision that would
-still require you.
+Auto, or YOLO you would choose and name the decision that would still require
+you.
 
 Next, **Native review** explains a different kind of control: evidence about a
 frozen code candidate. It does not grant permission to deliver that candidate.

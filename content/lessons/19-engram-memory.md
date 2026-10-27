@@ -30,18 +30,11 @@ agent_instructions: |
   tools in their running session and identify whether mem_context, mem_search,
   and mem_save are present. Do not ask them to expose memory contents. If they
   are absent, diagnose before prescribing: check which home the session uses and
-  whether startup or /gentle:status shows a memory notice. Shell shares the
-  global Engram server on 127.0.0.1:7437 and starts its verified bundled core
-  only when nothing listens. It disables memory with a notice when nothing
-  listens and the core is missing or unverified, a listener cannot be verified
-  or never reports ready, the store has a newer schema, or an explicit
-  ENGRAM_BIN, ENGRAM_URL,
-  ENGRAM_PORT, ENGRAM_SOCKET, ENGRAM_DATA_DIR, ENGRAM_DATABASE_URL,
-  ENGRAM_SERVER_MODE, or invalid ENGRAM_STARTUP_POLICY is set; those explicit
-  selections are never probed or started. Suggest installing the companion only
-  for a plain gentle-pi install in Pi. Done means the student can explain when
-  durable memory helps, name the local source of truth, and safely describe the
-  recovery order.
+  whether startup or /gentle:status shows a memory notice. Shell disables memory
+  with a notice when it cannot verify a running Engram server or store, for
+  example an older global server that must be updated and restarted. Suggest
+  installing the companion only for a plain gentle-pi install in Pi. Done means the student can explain when durable memory
+  helps, name the local source of truth, and safely describe the recovery order.
 ---
 
 # Engram Memory
@@ -62,23 +55,10 @@ pi install npm:gentle-engram
 ```
 
 If the memory tools are missing, find out why before installing anything.
-Gentle Shell shares the global Engram server on `127.0.0.1:7437`, the same one
-other agents' hooks use. When nothing listens there and its pinned Engram core
-is verified, Shell starts it as a detached `engram serve`, so in that normal
-case you never start the server yourself. An existing store does not disable
-memory by itself, whoever created it. Shell disables memory for that launch,
-with a notice, when nothing listens and the bundled core is missing or
-unverified, it cannot verify a listener (for example an older or
-token-protected one), the server never reports ready, or the store comes from
-a newer Engram schema; no server is
-started for the newer-schema case. It also disables memory when an explicit
-`ENGRAM_BIN`, `ENGRAM_URL`, `ENGRAM_PORT`, `ENGRAM_SOCKET`,
-`ENGRAM_DATA_DIR`, `ENGRAM_DATABASE_URL`, `ENGRAM_SERVER_MODE`, or invalid
-`ENGRAM_STARTUP_POLICY` is set; Shell never probes or starts a server for those
-explicit selections. Shell never stops or replaces a listening server, so an
-older global server has to be updated and restarted by you, and a newer-schema
-store requires starting the newer server yourself. Check which home the session
-uses and read that notice first.
+Gentle Shell disables memory, with a notice, when it cannot verify that a
+running Engram server or its store is compatible; an older global Engram server
+then has to be updated and restarted. Check which home the session uses and
+read that notice first.
 
 The presence of that command is not proof that memory is active in a particular
 session. Look at the session's available tools before relying on it. When the

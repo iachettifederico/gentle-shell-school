@@ -135,22 +135,6 @@ configuration lets the user's selected profile override the accidental nature
 of that default. The result is predictable: the role stays recognizable while
 the model choice remains yours.
 
-## Choose the profile orchestrator in `/gentle:models`
-
-`/gentle:models` assigns global model and effort routing to agents, and it has
-an explicit `orchestrator` row. That row selects the model and thinking effort
-that `u` will store in the current profile. Its first value is the target
-profile's saved entry, or **leave untouched** when that profile has no
-orchestrator key. Choosing **leave untouched** (or pressing `i` on the row)
-stores no `orchestrator` key at all. Changing the row never switches the live
-session, and **Set all agents** never changes it.
-
-The two save keys do different jobs. `ctrl+s` saves only agent routing: it
-neither updates a profile nor applies the chosen orchestrator. `u` saves the
-same agent routing and then snapshots it, together with the explicit
-orchestrator choice, into the current profile. Neither key changes the
-orchestrator defaults in `settings.json` or the live model and effort.
-
 ## Common mistakes
 
 The first mistake is omitting the provider prefix. `model-name` alone does not

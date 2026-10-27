@@ -50,12 +50,10 @@ A task is small only when **all three** conditions hold:
 3. **Resumable from the diff:** if the session stopped now, someone could finish
    using the original request and `git diff` alone.
 
-If all three are true, use the small path: direct inline work that reads only
-what changes and its helpers, in one batch; the focused test and the suite run
-inline in one command; and no feature document, memory mirror, or commits unless
-the user asks for them. The small path uses no todo list: do the work and report.
-It is deliberately lightweight because it already has enough context to
-recover.
+If all three are true, use the small path: direct inline work, applicable
+focused checks and suite checks, and no feature document or memory mirror unless
+the user asks for them. A todo is optional. The small path is deliberately
+lightweight because it already has enough context to recover.
 
 Work is large only when the resume test fails. Several sessions may be needed;
 an external wait may interrupt it; requirements may be lost through compaction;
@@ -83,10 +81,9 @@ review budget is used after classification.
 A change is high risk when a mistake would be difficult to find, difficult to
 reverse, or reach beyond the local change. ODD names six categories:
 
-1. **Data or irreversible effects that cannot be rebuilt:** migrations,
-   deleting or rewriting stored data, format changes, or writing data without
-   validation. Saving new records is not on this list, and neither is a
-   development or test database that a seed or backup rebuilds.
+1. **Data or irreversible effects:** migrations, deleting or rewriting stored
+   data, format changes, or writing data without validation. Saving new
+   records is not on this list.
 2. **Security:** authentication, permissions, credentials, secrets, guards, or
    sandbox boundaries.
 3. **Existing contracts:** changing or removing a public API, CLI flag,

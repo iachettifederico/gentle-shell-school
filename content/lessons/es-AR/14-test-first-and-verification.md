@@ -130,15 +130,13 @@ curso.
 
 ## Comprobación diferencial
 
-Cuando el diff cambia código compartido (opciones, parsers, helpers) que también
-usa un comando existente que la solicitud no nombró, protegé el comportamiento que
-no se buscó cambiar. Antes de terminar, ejecutá una comprobación diferencial como
-un solo script: para cada comando así, ejecutá la entrada nueva o cambiada tanto
-contra el cambio como contra una copia del commit base en un directorio temporal
-`mktemp -d`, y compará stdout, stderr y el código de salida. Una diferencia no
-solicitada es una regresión: corregila y fijala con un test. Cuando el diff no toca
-código compartido, salteá la comprobación. Mantené un test por cada comportamiento
-existente tocado; los tests confirmados nunca leen el historial de Git.
+Cuando un cambio comparte código con un comando u opción existente, protegé el
+comportamiento que no se buscó cambiar. Para cada comando u opción así, ejecutá
+la entrada nueva o cambiada tanto contra el cambio como contra una copia del
+commit base en un directorio temporal `mktemp -d`. Compará stdout, stderr y el
+código de salida. Una diferencia no solicitada es una regresión: corregila y
+fijala con un test. Mantené un test por cada comportamiento existente tocado;
+los tests confirmados nunca leen el historial de Git.
 
 ## Errores comunes
 
