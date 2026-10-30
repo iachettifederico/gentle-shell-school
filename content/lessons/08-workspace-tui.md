@@ -128,7 +128,9 @@ because its directory is gone. The view answers “what is uncommitted here?”�
 
 Gentle Agents is a separate view for subagent work. While the fullscreen rail
 is showing, its live card moves into the rail, which scrolls **Status →
-Changes → Agents → TODO**; without the rail (narrow fullscreen or regular mode)
+Jobs → Agents → TODO** (the Status card carries the project, a Changes summary,
+and other extensions' statuses; Jobs appears only while jobs run or just
+finished); without the rail (narrow fullscreen or regular mode)
 the card stays above the editor. `ctrl+shift+a` or a click on the card's
 `▾ Collapse` header collapses it, and `/gentle:agents` or **Alt+A** opens a
 full-terminal overlay.
@@ -157,7 +159,9 @@ Gentle Shell also has optional tools that start only when you ask for them:
   can comment on any element.
 - `/gentle:voice` downloads local dictation once, then pastes what you say into
   the draft without sending it; holding Space in the editor is push-to-talk.
-- `/gentle:music [mood]` plays gentle-stream inside the shell.
+- `/gentle:music [mood]` plays gentle-stream inside the shell on macOS and
+  Linux (including WSL); on native Windows it only says it is not available
+  yet. A bundled Gentle Shell offers to install the player the first time.
 
 ## Configure without confusing configuration with behavior
 

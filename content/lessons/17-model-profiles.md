@@ -20,9 +20,10 @@ agent_instructions: |
   4. Why is assigning the cheapest model to every role a mistake? Correct
      answer: routing must still meet the role's accuracy and reasoning needs.
 
-  Check the student's real setup: have them open the model/profile controls
-  available in their Gentle Shell session and identify the effective routing
-  shown there. If those controls are unavailable, have them inspect the shape
+  Check the student's real setup: have them open `/gentle:profiles` (the one
+  models screen; `/gentle:models` is retired) and identify the effective
+  routing shown there and which tab carries `◉` and `★`. Teach the difference
+  between Use in this session, Make default, and Save. If those controls are unavailable, have them inspect the shape
   of ~/.gentle-shell/agent/subagents.json without revealing credentials or
   personal model choices.
 
@@ -135,21 +136,41 @@ configuration lets the user's selected profile override the accidental nature
 of that default. The result is predictable: the role stays recognizable while
 the model choice remains yours.
 
-## Choose the profile orchestrator in `/gentle:models`
+## One models screen: `/gentle:profiles`
 
-`/gentle:models` assigns global model and effort routing to agents, and it has
-an explicit `orchestrator` row. That row selects the model and thinking effort
-that `u` will store in the current profile. Its first value is the target
-profile's saved entry, or **leave untouched** when that profile has no
-orchestrator key. Choosing **leave untouched** (or pressing `i` on the row)
-stores no `orchestrator` key at all. Changing the row never switches the live
-session, and **Set all agents** never changes it.
+```text
+/gentle:profiles
+```
 
-The two save keys do different jobs. `ctrl+s` saves only agent routing: it
-neither updates a profile nor applies the chosen orchestrator. `u` saves the
-same agent routing and then snapshots it, together with the explicit
-orchestrator choice, into the current profile. Neither key changes the
-orchestrator defaults in `settings.json` or the live model and effort.
+opens the models screen on the profile this repository resolves: one table,
+with your profiles as tabs across the top. It replaces the retired
+`/gentle:models`. Tab symbols show where a profile is in effect: `◉` this
+session, `★` the default for new sessions, `⌂` this repository. Leaving a tab
+with unsaved edits asks first: **Save and switch**, **Discard**, or **Stay**.
+
+The table is that profile's routing. The orchestrator is the first row and the
+agents follow; `enter` picks a model and `e` picks an effort from the levels
+that model supports. Changing every agent at once through the `Model ▾` or
+`Effort ▾` header never touches the orchestrator row.
+
+Three buttons decide where the profile applies, and they are the heart of this
+lesson:
+
+- **Use in this session** (`u`) binds the profile to this Pi session only and
+  switches its orchestrator; nothing shared is written.
+- **Make default** (`d`) makes it the default for new sessions through a
+  guarded global apply (diff confirmation, rollback). Inside a repository
+  pinned to a profile it re-pins that repository instead of moving global
+  routing.
+- **Save** (`s` or `ctrl+s`) writes what you see into the profile, nothing
+  more.
+
+The profile menu (`▾` on the active tab, or `m`) holds **Rename**,
+**Duplicate**, **Use in this repo** (the clone-local pin), and **Delete**;
+**+ New** (`n`) copies the current profile, captures what is running now, or
+starts empty. File operations are subcommands: `/gentle:profiles export
+<name>`, `import`, and `publish <name>` (the shared repository declaration),
+plus `export-routing` and `restore-routing` for the global routing file.
 
 ## Common mistakes
 

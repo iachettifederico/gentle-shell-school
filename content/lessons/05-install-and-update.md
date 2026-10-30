@@ -89,7 +89,18 @@ changing anything; update such setups with the package manager that supplies
 them. With a target, or with `--extensions-only`, `update` forwards Pi's own
 package-update command for the selected home. A prefix-bundled installation
 pins Pi with Gentle Shell, so there Pi still updates with `gentle-shell
-upgrade`. Older launchers that do not support `upgrade` should use the
+upgrade`. To reach a newer published Pi than the release verified, a bundled
+installation can run:
+
+```bash
+gentle-shell update --latest
+```
+
+It warns first that features relying on audited Pi internals (such as the Vim
+editor) may turn off until a Gentle Shell release verifies that Pi, then
+verifies and switches to it like `upgrade`, keeping the previous version for
+`gentle-shell upgrade --rollback`. Outside a bundled installation `--latest`
+changes nothing extra: `update` already installs the newest Pi. Older launchers that do not support `upgrade` should use the
 latest installer described in **Install Gentle Shell** rather than treating
 `upgrade` as a chat prompt.
 
