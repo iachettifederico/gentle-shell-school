@@ -16,8 +16,8 @@ English lessons first; `es` and `es-AR` mirror the same facts. Source of truth: 
 - T1 S1 restore post-4.3.0 content (revert of 5e836e3) — inline — commit: 3935f86
 - T2 S2-S5 English lessons — inline — commit: 188d69e
 - T3 S2-S5 `es` and `es-AR` mirrors — inline — commit: eedd172
-- T4 checks (`bin/ci`) and close — inline — commit: pending
-- T5 GPT 6.1 Sol review, apply agreed fixes — jd-judge-a (Sol) — commit: pending
+- T4 checks (`bin/ci`) and close — inline — commit: eedd172 (bin/ci green: 135 examples, 0 failures)
+- T5 GPT 6.1 Sol review, apply agreed fixes — jd-judge-a (Sol) — commit: see L5
 
 ## Log
 
@@ -25,3 +25,4 @@ English lessons first; `es` and `es-AR` mirror the same facts. Source of truth: 
 - L2: installed `gentle-shell 4.5.1`, `pi 1.4.0`; GitHub latest release v4.5.1. Course on main teaches v4.3.0 (5e836e3). f60e4c9f (snapshot of `course-gentle-shell-main`) is an ancestor of v4.5.1; 19 commits between them.
 - L3 (user): "sorry, I just activated yolo mode. Go ahead and when you finish run a review using GPT 6.1 Sol and implement the fixes it discovered if you agree. We'll check back tomorrow the ones you don't"
 - L4: slice boundary: 3935f86 is a reviewed revert of bfb92eb (Judgment Day approved earlier), so the branch exceeds ~400 authored lines while new authored content is ~150 lines. gentle-ai-verify refused admission (no high-risk item); review routed to jd-judge-a, also openai-codex/gpt-6.1-sol.
+- L5: Sol review: 3 findings, all confirmed against upstream and fixed in en/es/es-AR: JD-A-001 (MAJOR) lesson 17 "Use in this session" saves pending table edits to the profile first (docs/readme-reference.md:1101); JD-A-002 (MINOR) lesson 19 shared Engram server is bundled-install behavior (docs/bundled-install.md:251); JD-A-003 (MINOR) lesson 18 jobs card keeps only the 3 newest finished jobs (lib/jobs-widget.ts:17-20). None disagreed.
