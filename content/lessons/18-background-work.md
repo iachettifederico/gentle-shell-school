@@ -97,10 +97,13 @@ Open the session's jobs inspector with:
 It shows background jobs with running work first and newest jobs first within
 each group. The view includes status, command, and output tail. On a narrow
 terminal, `Tab` opens details. `s` stops the selected running job, and `q`
-closes the modal. Completed jobs remain available for inspection, while the
-status panel shows a Jobs section only while jobs are active. When the panel is
-hidden or unavailable in a compact layout, the bar shows the running count
-instead.
+closes the modal. Completed jobs remain available for inspection there. The
+footer shows `⧗ N jobs` while any job runs. In fullscreen at 140 columns or
+wider, running jobs also get their own collapsible `⧗ Jobs` card in the rail,
+one row per job with its elapsed time, newest first. Up to three of the newest
+finished jobs stay on that card for up to 60 seconds with their result (`✓` clean exit, `✗` failure, `–`
+stopped), then the card clears itself. `ctrl+shift+j` or a click on the card's
+header collapses it.
 
 Those details are deliberately observability features. A command that has been
 placed in the background should not become invisible. Before acting on a

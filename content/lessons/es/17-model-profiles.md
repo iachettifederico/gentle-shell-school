@@ -110,6 +110,39 @@ configuración de enrutamiento permite que el perfil seleccionado por el usuario
 accidental de ese valor predeterminado. El resultado es predecible: el rol sigue siendo reconocible
 mientras la elección del modelo sigue siendo tuya.
 
+## Una sola pantalla de modelos: `/gentle:profiles`
+
+```text
+/gentle:profiles
+```
+
+abre la pantalla de modelos en el perfil que resuelve este repositorio: una tabla, con tus perfiles
+como pestañas en la parte superior. Reemplaza al retirado `/gentle:models`. Los símbolos de las
+pestañas muestran dónde rige un perfil: `◉` esta sesión, `★` el predeterminado para sesiones
+nuevas, `⌂` este repositorio. Salir de una pestaña con ediciones sin guardar pregunta primero:
+**Save and switch**, **Discard** o **Stay**.
+
+La tabla es el enrutamiento de ese perfil. El orquestador es la primera fila y los agentes le
+siguen; `enter` elige un modelo y `e` elige un esfuerzo entre los niveles que ese modelo admite.
+Cambiar todos los agentes a la vez con el encabezado `Model ▾` o `Effort ▾` nunca toca la fila del
+orquestador.
+
+Tres botones deciden dónde se aplica el perfil, y son el centro de esta lección:
+
+- **Use in this session** (`u`) vincula el perfil solo a esta sesión de Pi y cambia su
+  orquestador. No escribe enrutamiento compartido, valores predeterminados ni fijaciones, pero
+  las ediciones pendientes de la tabla se guardan primero en el perfil, como haría **Save**.
+- **Make default** (`d`) lo convierte en el predeterminado para sesiones nuevas mediante una
+  aplicación global protegida (confirmación del diff, reversión). Dentro de un repositorio fijado
+  a un perfil, vuelve a fijar ese repositorio en lugar de mover el enrutamiento global.
+- **Save** (`s` o `ctrl+s`) escribe lo que ves en el perfil, nada más.
+
+El menú del perfil (`▾` en la pestaña activa, o `m`) contiene **Rename**, **Duplicate**, **Use in
+this repo** (la fijación local del clon) y **Delete**; **+ New** (`n`) copia el perfil actual,
+captura lo que se está ejecutando o empieza vacío. Las operaciones de archivo son subcomandos:
+`/gentle:profiles export <name>`, `import` y `publish <name>` (la declaración compartida del
+repositorio), más `export-routing` y `restore-routing` para el archivo de enrutamiento global.
+
 ## Errores comunes
 
 El primer error es omitir el prefijo del proveedor. `model-name` por sí solo no indica qué ruta de

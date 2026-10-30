@@ -1,15 +1,15 @@
 ---
 title: "Modos de permisos"
-description: "Elegí Normal, Auto o YOLO sin confundir la comodidad con un límite de seguridad."
+description: "Elegí Normal, Auto, YOLO o Super Yolo sin confundir la comodidad con un límite de seguridad."
 module: "Seguridad y revisión"
 ---
 
 Los avisos de permisos son un problema de coordinación: un agente de
 programación puede realizar muchas acciones pequeñas mientras vos todavía
 necesitás un control significativo sobre las que tienen consecuencias. Gentle
-Shell ofrece tres formas de manejar esas preguntas en la sesión **principal**
-actual: **Normal**, **Auto** y **YOLO**. No son tres niveles de seguridad y
-ninguno es un sandbox del sistema operativo. Los procesos, herramientas y
+Shell ofrece cuatro formas de manejar esas preguntas en la sesión **principal**
+actual: **Normal**, **Auto**, **YOLO** y **Super Yolo**. No son cuatro niveles de
+seguridad y ninguno es un sandbox del sistema operativo. Los procesos, herramientas y
 extensiones de Pi todavía actúan con los permisos de la cuenta que inició Pi.
 El aislamiento, las credenciales limitadas y el acceso de red limitado siguen
 siendo los controles que contienen una acción mala u hostil.
@@ -19,7 +19,7 @@ establecido en **Autorizar y explorar**: cambiar un modo no amplía la tarea que
 autorizaste, no vuelve conocido un destino remoto ni decide una elección de
 producto sin resolver.
 
-## Los tres modos
+## Los cuatro modos
 
 **Normal** conserva el comportamiento de permisos existente y es el respaldo
 cuando no hay una preferencia global guardada válida. Usalo cuando quieras tomar
@@ -55,6 +55,21 @@ destino remoto, destino de despliegue, divulgación sensible para la privacidad 
 una decisión con consecuencias que la tarea deja abierta. Tampoco les da a los
 hijos delegados su permiso elevado ni permiso de entrega independiente.
 
+**Super Yolo** es autonomía máxima deliberada para un espacio de trabajo cuyas
+consecuencias aceptás. Elimina todos los avisos de permisos, incluso las
+confirmaciones de pérdida de datos y las reglas configuradas de guardarraíles
+`confirm` y `block`: `rm` recursivo, drops SQL, rebases, borrado forzado de ramas
+y `npm publish` se ejecutan sin diálogo. El clasificador Auto no se ejecuta.
+Quedan dos líneas. La guarda de rutas sensibles sigue bloqueada de forma estricta:
+leer, escribir o editar archivos `.env`, `.ssh`, keychains, archivos
+`*.pem`/`*.key`/`*.p12`/`*.pfx`, directorios `secrets/` y archivos de credenciales
+de nube se rechaza en todos los modos. Las denegaciones catastróficas a nivel de
+código también permanecen: `rm -rf /`, `rm -rf ~`, `--no-preserve-root`,
+`git reset --hard`, forced clean y force push se bloquean sin diálogo. Las
+herramientas de preguntas a usuarios, el consentimiento de proveedores y las
+decisiones de tokens opacos nunca se responden automáticamente, y los hijos nunca
+heredan Super Yolo.
+
 ## Cambiá el modo activo deliberadamente
 
 Usá los comandos de modo en una sesión principal interactiva:
@@ -64,6 +79,7 @@ Usá los comandos de modo en una sesión principal interactiva:
 /gentle:mode auto
 /gentle:mode normal
 /gentle:mode yolo
+/gentle:mode super-yolo
 ```
 
 El primer comando es una comprobación útil sin cambios: muestra el modo actual
@@ -80,7 +96,8 @@ atajo YOLO más antiguo:
 `enable` selecciona YOLO para la sesión activa; `disable` selecciona Normal.
 Sin argumento, `/gentle:yolo` abre su menú interactivo cuando esa UI está
 disponible, o informa el estado en caso contrario. Los argumentos inválidos no
-cambian nada.
+cambian nada. El interruptor muestra **ON** mientras Super Yolo está activo, y
+apagarlo vuelve a Normal.
 
 La interfaz Customize expone la misma distinción. En
 `/gentle:customize` → **Editor**, **Session permissions** cambia el modo actual,
@@ -94,6 +111,7 @@ comando separado:
 ```text
 /gentle:mode default auto
 /gentle:mode default yolo
+/gentle:mode default super-yolo
 /gentle:mode default normal
 ```
 
@@ -115,9 +133,11 @@ anterior.
 ## Los límites que permanecen
 
 Auto y YOLO reducen las preguntas rutinarias repetidas; no eliminan las guardas
-independientes. Las denegaciones estrictas existentes, las restricciones
-configuradas, las rutas sensibles y las restricciones explícitas de la persona
-usuaria siguen aplicándose. Las herramientas de preguntas a usuarios, las
+independientes. Super Yolo va más lejos y es la excepción descripta arriba: solo
+permanecen la guarda de rutas sensibles y las denegaciones catastróficas a nivel
+de código. Las denegaciones estrictas existentes, las restricciones configuradas,
+las rutas sensibles y las restricciones explícitas de la persona usuaria siguen
+aplicándose. Las herramientas de preguntas a usuarios, las
 elecciones de tokens opacos, el consentimiento de mantenimiento o recuperación,
 el control de delegación y el consentimiento de revisión nativa conservan sus
 propios contratos. Ningún modo descubre credenciales de ambiente ni elige por
@@ -162,6 +182,9 @@ acceder después del inicio.
 
 - **Tratar YOLO como autonomía ilimitada.** Es permiso permanente para trabajo
   común *ya autorizado*, no una ampliación del alcance.
+- **Elegir Super Yolo por comodidad.** Renuncia a las confirmaciones de pérdida
+  de datos; usalo solo en un espacio de trabajo donde aceptes esas consecuencias,
+  idealmente uno aislado.
 - **Tratar una denegación de Auto como veredicto sobre la tarea.** Un timeout o
   clasificador no disponible significa que la acción no se ejecutó, no que sea
   insegura.
@@ -183,8 +206,8 @@ En una sesión principal interactiva, ejecutá:
 Leé ambos campos antes de cambiar nada: el modo activo te indica cómo esta
 sesión manejará las acciones elegibles, mientras que el valor predeterminado
 guardado afecta las sesiones principales futuras. Para una tarea rutinaria y
-estrechamente acotada, explicá cuál de Normal, Auto o YOLO elegirías y nombrá la
-decisión que todavía requeriría de vos.
+estrechamente acotada, explicá cuál de Normal, Auto, YOLO o Super Yolo elegirías y
+nombrá la decisión que todavía requeriría de vos.
 
 A continuación, **Revisión nativa** explica un tipo diferente de control:
 evidencia sobre un candidato de código congelado. No concede permiso para

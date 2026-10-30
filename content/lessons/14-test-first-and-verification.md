@@ -148,12 +148,15 @@ and run the course’s content-loading check instead.
 
 ## Differential check
 
-When a change shares code with an existing command or option, protect the behavior
-that was not meant to change. For each such command or option, run the new or
-changed input against both the change and a copy of the base commit in a
-`mktemp -d` scratch directory. Compare stdout, stderr, and exit code. An
-unrequested difference is a regression: fix it and pin it with a test. Keep one
-test per touched existing behavior; committed tests never read Git history.
+When a diff changes shared code (options, parsers, helpers) that an existing
+command the request did not name also uses, protect the behavior that was not
+meant to change. Before finishing, run one differential check as a single
+script: for each such command, run the new or changed input against both the
+change and a copy of the base commit in a `mktemp -d` scratch directory, and
+compare stdout, stderr, and exit code. An unrequested difference is a
+regression: fix it and pin it with a test. When the diff touches no shared code,
+skip the check. Keep one test per touched existing behavior; committed tests
+never read Git history.
 
 ## Common mistakes
 

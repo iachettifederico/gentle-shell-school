@@ -22,10 +22,11 @@ Una tarea es pequeña solo cuando se cumplen **las tres** condiciones:
 3. **Reanudable desde el diff:** si la sesión se detuviera ahora, alguien podría terminar
    usando solo la solicitud original y `git diff`.
 
-Si las tres son verdaderas, usa el camino pequeño: trabajo directo en línea, comprobaciones
-focalizadas aplicables y comprobaciones de la suite, y ningún documento de funcionalidad ni
-réplica en memoria salvo que la persona usuaria los solicite. Una tarea pendiente es opcional. El
-camino pequeño es deliberadamente ligero porque ya tiene suficiente contexto para recuperarse.
+Si las tres son verdaderas, usa el camino pequeño: trabajo directo en línea que lee solo lo que
+cambia y sus ayudantes, en un lote; la prueba enfocada y la suite se ejecutan en línea en un solo
+comando; y ningún documento de funcionalidad, réplica en memoria ni commits salvo que la persona
+usuaria los solicite. El camino pequeño no usa una lista de tareas: haz el trabajo e informa. Es
+deliberadamente ligero porque ya tiene suficiente contexto para recuperarse.
 
 El trabajo es grande solo cuando falla la prueba de reanudación. Podrían necesitarse varias
 sesiones; una espera externa podría interrumpirlo; los requisitos podrían perderse por la
@@ -53,9 +54,10 @@ segmentos** explica cómo se usa el presupuesto de revisión después de la clas
 Un cambio es de alto riesgo cuando un error sería difícil de encontrar, difícil de revertir o
 llegaría más allá del cambio local. ODD nombra seis categorías:
 
-1. **Datos o efectos irreversibles:** migraciones, borrar o reescribir datos almacenados,
-   cambios de formato o escribir datos sin validación. Guardar registros nuevos no está en
-   esta lista.
+1. **Datos o efectos irreversibles que no se pueden reconstruir:** migraciones, borrar o
+   reescribir datos almacenados, cambios de formato o escribir datos sin validación. Guardar
+   registros nuevos no está en esta lista, ni tampoco una base de datos de desarrollo o prueba
+   que una semilla o copia de respaldo pueda reconstruir.
 2. **Seguridad:** autenticación, permisos, credenciales, secretos, protecciones o límites de
    sandbox.
 3. **Contratos existentes:** cambiar o eliminar una API pública, flag de CLI, formato de

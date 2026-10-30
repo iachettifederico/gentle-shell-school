@@ -84,11 +84,15 @@ alternativo que proteja el contrato. Refactorizá solo después de que las compr
 enfocadas sigan en verde. Los tests son evidencia, no decoración: el feature document
 debe indicar qué se ejecutó y qué observó.
 
-Para cada comando u opción existente que comparta código cambiado, ejecutá también
-la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
-un directorio temporal `mktemp -d`. Compará stdout, stderr y el código de salida;
-corregí y fijá toda diferencia no solicitada. Agregá un test por cada comportamiento
-existente tocado y nunca hagas que los tests confirmados lean el historial de Git.
+Solo cuando el diff cambia código compartido (opciones, parsers, helpers) que
+también usa un comando existente que la solicitud no nombró, ejecutá una
+comprobación diferencial antes de terminar como un solo script: para cada comando
+así, ejecutá la entrada nueva o cambiada contra el cambio y contra una copia del
+commit base en un directorio temporal `mktemp -d`. Compará stdout, stderr y el
+código de salida; corregí y fijá toda diferencia no solicitada. Cuando el diff no
+toca código compartido, salteá la comprobación. Agregá un test por cada
+comportamiento existente tocado y nunca hagas que los tests confirmados lean el
+historial de Git.
 
 ## 5. Delegá para ahorrar sin ceder el liderazgo
 
@@ -133,8 +137,9 @@ propósito es revisar un candidato congelado con evidencia, no aprobar automáti
 el árbol de trabajo más nuevo. Usá **Judgment day** solo cuando el cambio requiera su
 disciplina de revisión ciega y adversarial. La evaluación de revisión nativa se aplica
 por commit de unidad de trabajo (o corte de PR), nunca a la rama de funcionalidad
-acumulada, y corre solo cuando está habilitado el interruptor RDD que pertenece a la
-persona usuaria; está desactivado de forma predeterminada.
+acumulada, y corre solo cuando está activado el interruptor RDD que pertenece a la
+persona usuaria; está activado de forma predeterminada, y podés desactivarlo con
+`/gentle:review-mode disable`.
 
 Sin importar la ruta de revisión, inspeccioná si el test demuestra el comportamiento
 declarado, si el feature document coincide con el alcance final y si los commits

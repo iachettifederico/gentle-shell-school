@@ -23,10 +23,23 @@ pi install npm:gentle-engram
 ```
 
 Si faltan las herramientas de memoria, averiguá por qué antes de instalar nada.
-Gentle Shell desactiva la memoria, con un aviso, cuando no puede verificar que un
-servidor de Engram en ejecución o su almacén sean compatibles; en ese caso hay que
-actualizar y reiniciar el servidor global de Engram más viejo. Fijate primero qué
-home usa la sesión y leé ese aviso.
+Un Gentle Shell empaquetado (el que instala el instalador web) comparte el
+servidor global de Engram en `127.0.0.1:7437`, el mismo
+que usan los hooks de otros agentes. Cuando no hay nadie escuchando ahí y su núcleo
+de Engram fijado está verificado, Shell lo inicia como un `engram serve` desacoplado,
+así que en ese caso normal nunca iniciás el servidor vos mismo. Un almacén existente
+no desactiva la memoria por sí solo, sin importar quién lo creó. Shell desactiva la
+memoria para ese inicio, con un aviso, cuando no hay nadie escuchando y falta el núcleo
+incluido o no está verificado, no puede verificar un servidor que escucha (por ejemplo,
+uno más viejo o protegido con token), el servidor nunca informa que está listo, o el
+almacén proviene de un esquema de Engram más nuevo; en el caso de esquema más nuevo no
+inicia ningún servidor. También desactiva la memoria cuando se establece `ENGRAM_BIN`, `ENGRAM_URL`,
+`ENGRAM_PORT`, `ENGRAM_SOCKET`, `ENGRAM_DATA_DIR`, `ENGRAM_DATABASE_URL`,
+`ENGRAM_SERVER_MODE` o una `ENGRAM_STARTUP_POLICY` no válida; Shell nunca sondea ni
+inicia un servidor para esas selecciones explícitas. Shell nunca detiene ni reemplaza
+un servidor que está escuchando, así que tenés que actualizar y reiniciar vos un
+servidor global más viejo, y un almacén con esquema más nuevo requiere que inicies
+vos mismo el servidor más nuevo. Fijate primero qué home usa la sesión y leé ese aviso.
 
 La presencia de ese comando no prueba que la memoria esté activa en una sesión en
 particular. Mirá las herramientas disponibles de la sesión antes de depender de

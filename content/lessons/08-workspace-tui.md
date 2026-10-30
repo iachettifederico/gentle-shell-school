@@ -126,8 +126,14 @@ because its directory is gone. The view answers “what is uncommitted here?”�
 
 ## Gentle Agents keeps delegated work observable
 
-Gentle Agents is a separate view for subagent work. Its live card stays above
-the editor, and `/gentle:agents` or **Alt+A** opens a full-terminal overlay.
+Gentle Agents is a separate view for subagent work. While the fullscreen rail
+is showing, its live card moves into the rail, which scrolls **Status →
+Jobs → Agents → TODO** (the Status card carries the project, a Changes summary,
+and other extensions' statuses; Jobs appears only while jobs run or just
+finished); without the rail (narrow fullscreen or regular mode)
+the card stays above the editor. `ctrl+shift+a` or a click on the card's
+`▾ Collapse` header collapses it, and `/gentle:agents` or **Alt+A** opens a
+full-terminal overlay.
 The overlay preserves task threads, model, token, cost, elapsed time, outcomes,
 and history. Background results return as cards that start a new turn; the
 parent need not poll to discover them.
@@ -137,6 +143,25 @@ subagent is its own Pi child process, and the parent session remains the place
 where scope, evidence, and next actions are coordinated. The later lesson
 **Delegation** explains roles and boundaries; here, use the view to see what is
 actually running rather than guessing from a quiet terminal.
+
+## Paste images and other input tools
+
+Pi's paste-image key (`ctrl+v`, or `alt+v` on Windows) turns a clipboard image
+into an `[Image#N]` chip in the draft instead of a temporary file path. One
+Backspace removes the whole chip, and a strip above the prompt lists each chip
+with its format, size, and a thumbnail in terminals that support images. If the
+current model does not accept images, the strip warns you before you send.
+
+Gentle Shell also has optional tools that start only when you ask for them:
+
+- `/gentle:design <brief>` has the session model write several HTML design
+  directions under `design/<slug>/` and opens them on a local canvas, where you
+  can comment on any element.
+- `/gentle:voice` downloads local dictation once, then pastes what you say into
+  the draft without sending it; holding Space in the editor is push-to-talk.
+- `/gentle:music [mood]` plays gentle-stream inside the shell on macOS and
+  Linux (including WSL); on native Windows it only says it is not available
+  yet. A bundled Gentle Shell offers to install the player the first time.
 
 ## Configure without confusing configuration with behavior
 
