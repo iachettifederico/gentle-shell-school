@@ -100,8 +100,8 @@ terminal, `Tab` opens details. `s` stops the selected running job, and `q`
 closes the modal. Completed jobs remain available for inspection there. The
 footer shows `⧗ N jobs` while any job runs. In fullscreen at 140 columns or
 wider, running jobs also get their own collapsible `⧗ Jobs` card in the rail,
-one row per job with its elapsed time, newest first. Finished jobs stay on that
-card for 60 seconds with their result (`✓` clean exit, `✗` failure, `–`
+one row per job with its elapsed time, newest first. Up to three of the newest
+finished jobs stay on that card for up to 60 seconds with their result (`✓` clean exit, `✗` failure, `–`
 stopped), then the card clears itself. `ctrl+shift+j` or a click on the card's
 header collapses it.
 

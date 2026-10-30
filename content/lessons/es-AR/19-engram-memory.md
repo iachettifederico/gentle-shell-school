@@ -23,7 +23,8 @@ pi install npm:gentle-engram
 ```
 
 Si faltan las herramientas de memoria, averiguá por qué antes de instalar nada.
-Gentle Shell comparte el servidor global de Engram en `127.0.0.1:7437`, el mismo
+Un Gentle Shell empaquetado (el que instala el instalador web) comparte el
+servidor global de Engram en `127.0.0.1:7437`, el mismo
 que usan los hooks de otros agentes. Cuando no hay nadie escuchando ahí y su núcleo
 de Engram fijado está verificado, Shell lo inicia como un `engram serve` desacoplado,
 así que en ese caso normal nunca iniciás el servidor vos mismo. Un almacén existente

@@ -21,8 +21,8 @@ directorio de inicio de Pi con:
 pi install npm:gentle-engram
 ```
 
-Si faltan las herramientas de memoria, averigua por qué antes de instalar nada. Gentle Shell
-comparte el servidor global de Engram en `127.0.0.1:7437`, el mismo que usan los hooks de otros
+Si faltan las herramientas de memoria, averigua por qué antes de instalar nada. Un Gentle Shell
+incluido (el que instala el instalador web) comparte el servidor global de Engram en `127.0.0.1:7437`, el mismo que usan los hooks de otros
 agentes. Cuando no hay nada escuchando allí y su núcleo de Engram fijado está verificado, Shell lo
 inicia como un `engram serve` independiente, por lo que en ese caso normal nunca inicias el
 servidor tú mismo. Un almacén existente no desactiva la memoria por sí solo, sin importar quién lo

@@ -82,8 +82,8 @@ trabajo en ejecución seleccionado y `q` cierra el modal. Los trabajos completad
 siguen disponibles ahí para inspección. El pie muestra `⧗ N jobs` mientras algún
 trabajo corre. En pantalla completa con 140 columnas o más, los trabajos en
 ejecución también tienen su propia tarjeta plegable `⧗ Jobs` en el riel, una fila
-por trabajo con su tiempo transcurrido, el más nuevo primero. Los trabajos
-terminados quedan en esa tarjeta 60 segundos con su resultado (`✓` salida limpia,
+por trabajo con su tiempo transcurrido, el más nuevo primero. Hasta tres de los
+trabajos terminados más nuevos quedan en esa tarjeta hasta 60 segundos con su resultado (`✓` salida limpia,
 `✗` falla, `–` detenido) y después la tarjeta se vacía sola. `ctrl+shift+j` o un
 clic en su encabezado la contrae.
 

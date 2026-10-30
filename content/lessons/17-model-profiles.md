@@ -157,7 +157,8 @@ Three buttons decide where the profile applies, and they are the heart of this
 lesson:
 
 - **Use in this session** (`u`) binds the profile to this Pi session only and
-  switches its orchestrator; nothing shared is written.
+  switches its orchestrator. It writes no shared routing, defaults, or pins,
+  but pending table edits are saved to the profile first, as **Save** would.
 - **Make default** (`d`) makes it the default for new sessions through a
   guarded global apply (diff confirmation, rollback). Inside a repository
   pinned to a profile it re-pins that repository instead of moving global

@@ -138,7 +138,9 @@ encabezado `Model ▾` o `Effort ▾` nunca toca la fila del orquestador.
 Tres botones deciden dónde se aplica el perfil, y son el centro de esta lección:
 
 - **Use in this session** (`u`) vincula el perfil solo a esta sesión de Pi y
-  cambia su orquestador; no se escribe nada compartido.
+  cambia su orquestador. No escribe enrutamiento compartido, valores
+  predeterminados ni fijaciones, pero las ediciones pendientes de la tabla se
+  guardan primero en el perfil, como haría **Save**.
 - **Make default** (`d`) lo vuelve el predeterminado para sesiones nuevas con una
   aplicación global protegida (confirmación del diff, reversión). Dentro de un
   repositorio fijado a un perfil, vuelve a fijar ese repositorio en vez de mover

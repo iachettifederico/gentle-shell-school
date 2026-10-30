@@ -30,8 +30,8 @@ agent_instructions: |
   tools in their running session and identify whether mem_context, mem_search,
   and mem_save are present. Do not ask them to expose memory contents. If they
   are absent, diagnose before prescribing: check which home the session uses and
-  whether startup or /gentle:status shows a memory notice. Shell shares the
-  global Engram server on 127.0.0.1:7437 and starts its verified bundled core
+  whether startup or /gentle:status shows a memory notice. A bundled Shell (the
+  web installer's) shares the global Engram server on 127.0.0.1:7437 and starts its verified bundled core
   only when nothing listens. It disables memory with a notice when nothing
   listens and the core is missing or unverified, a listener cannot be verified
   or never reports ready, the store has a newer schema, or an explicit
@@ -62,8 +62,8 @@ pi install npm:gentle-engram
 ```
 
 If the memory tools are missing, find out why before installing anything.
-Gentle Shell shares the global Engram server on `127.0.0.1:7437`, the same one
-other agents' hooks use. When nothing listens there and its pinned Engram core
+A bundled Gentle Shell (the one the web installer sets up) shares the global
+Engram server on `127.0.0.1:7437`, the same one other agents' hooks use. When nothing listens there and its pinned Engram core
 is verified, Shell starts it as a detached `engram serve`, so in that normal
 case you never start the server yourself. An existing store does not disable
 memory by itself, whoever created it. Shell disables memory for that launch,

@@ -130,7 +130,8 @@ orquestador.
 Tres botones deciden dónde se aplica el perfil, y son el centro de esta lección:
 
 - **Use in this session** (`u`) vincula el perfil solo a esta sesión de Pi y cambia su
-  orquestador; no se escribe nada compartido.
+  orquestador. No escribe enrutamiento compartido, valores predeterminados ni fijaciones, pero
+  las ediciones pendientes de la tabla se guardan primero en el perfil, como haría **Save**.
 - **Make default** (`d`) lo convierte en el predeterminado para sesiones nuevas mediante una
   aplicación global protegida (confirmación del diff, reversión). Dentro de un repositorio fijado
   a un perfil, vuelve a fijar ese repositorio en lugar de mover el enrutamiento global.

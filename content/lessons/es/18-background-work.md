@@ -74,8 +74,8 @@ estrecha, `Tab` abre los detalles. `s` detiene el trabajo en ejecución seleccio
 cierra el modal. Los trabajos completados permanecen disponibles allí para inspección. El pie
 muestra `⧗ N jobs` mientras algún trabajo se ejecuta. En pantalla completa con 140 columnas o más,
 los trabajos en ejecución también tienen su propia tarjeta plegable `⧗ Jobs` en el rail, una fila
-por trabajo con su tiempo transcurrido, el más nuevo primero. Los trabajos terminados quedan en esa
-tarjeta 60 segundos con su resultado (`✓` salida correcta, `✗` fallo, `–` detenido) y luego la
+por trabajo con su tiempo transcurrido, el más nuevo primero. Hasta tres de los trabajos terminados más
+recientes quedan en esa tarjeta hasta 60 segundos con su resultado (`✓` salida correcta, `✗` fallo, `–` detenido) y luego la
 tarjeta se vacía sola. `ctrl+shift+j` o un clic en su encabezado la contrae.
 
 Esos detalles son deliberadamente características de observabilidad. Un comando que se ha puesto
