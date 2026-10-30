@@ -1,13 +1,13 @@
 ---
 title: "Modos de permisos"
-description: "Elige Normal, Auto o YOLO sin confundir la conveniencia con un límite de seguridad."
+description: "Elige Normal, Auto, YOLO o Super Yolo sin confundir la conveniencia con un límite de seguridad."
 module: "Seguridad y revisión"
 ---
 
 Las solicitudes de permiso son un problema de coordinación: un agente de programación puede realizar muchas
-acciones pequeñas mientras tú aún necesitas un control significativo sobre las importantes. Gentle Shell ofrece tres
-formas de gestionar esas preguntas en la sesión **principal** actual: **Normal**, **Auto** y **YOLO**. No son tres
-niveles de seguridad y ninguna es un sandbox del sistema operativo. Los procesos, herramientas y extensiones de Pi
+acciones pequeñas mientras tú aún necesitas un control significativo sobre las importantes. Gentle Shell ofrece cuatro
+formas de gestionar esas preguntas en la sesión **principal** actual: **Normal**, **Auto**, **YOLO** y **Super Yolo**.
+No son cuatro niveles de seguridad y ninguna es un sandbox del sistema operativo. Los procesos, herramientas y extensiones de Pi
 siguen actuando con los permisos de la cuenta que inició Pi. El aislamiento, las credenciales limitadas y el acceso a
 la red limitado siguen siendo los controles que contienen una acción dañina u hostil.
 
@@ -15,7 +15,7 @@ Esta lección trata sobre la ruta de decisión de permisos. Sigue el límite est
 cambiar un modo no amplía la tarea que autorizaste, no hace conocido un destino remoto ni decide una elección de
 producto sin resolver.
 
-## Los tres modos
+## Los cuatro modos
 
 **Normal** conserva el comportamiento de permisos existente y es la alternativa cuando no hay una preferencia
 global guardada válida. Úsalo cuando quieras tomar decisiones individuales en el flujo de interacción normal.
@@ -43,6 +43,18 @@ La palabra importante es *acotado*. YOLO no autoriza una cuenta nueva, credencia
 despliegue, divulgación sensible para la privacidad ni una decisión importante que la tarea deje abierta. Tampoco
 otorga a los hijos delegados su permiso elevado ni permiso de entrega independiente.
 
+**Super Yolo** es autonomía máxima deliberada para un espacio de trabajo cuyas consecuencias
+aceptas. Elimina todas las solicitudes de permiso, incluidas las confirmaciones de pérdida de datos
+y las reglas configuradas de protección `confirm` y `block`: `rm` recursivo, SQL drops, rebases,
+eliminación forzada de ramas y `npm publish` se ejecutan sin diálogo. El clasificador Auto no se
+ejecuta. Quedan dos líneas. La protección de rutas sensibles sigue bloqueada estrictamente: se
+rechaza leer, escribir o editar archivos `.env`, `.ssh`, llaveros, archivos `*.pem`/`*.key`/`*.p12`/`*.pfx`,
+directorios `secrets/` y archivos de credenciales de nube en todos los modos. También permanecen
+las denegaciones catastróficas a nivel de código: `rm -rf /`, `rm -rf ~`, `--no-preserve-root`,
+`git reset --hard`, forced clean y force push se bloquean sin diálogo. Las herramientas de
+preguntas al usuario, el consentimiento del proveedor y las decisiones de token opaco nunca se
+responden automáticamente, y los hijos nunca heredan Super Yolo.
+
 ## Cambia el modo activo deliberadamente
 
 Usa los comandos de modo en una sesión principal interactiva:
@@ -52,6 +64,7 @@ Usa los comandos de modo en una sesión principal interactiva:
 /gentle:mode auto
 /gentle:mode normal
 /gentle:mode yolo
+/gentle:mode super-yolo
 ```
 
 El primer comando es una comprobación útil sin cambios: muestra el modo actual y el valor predeterminado guardado.
@@ -66,7 +79,8 @@ el atajo antiguo de YOLO:
 
 `enable` selecciona YOLO para la sesión activa; `disable` selecciona Normal. Sin argumentos, `/gentle:yolo` abre
 su menú interactivo cuando esa interfaz está disponible, o informa el estado de lo contrario. Los argumentos no
-válidos no cambian nada.
+válidos no cambian nada. El interruptor muestra **ON** mientras Super Yolo está activo, y al
+desactivarlo vuelve a Normal.
 
 La interfaz Customize expone la misma distinción. En
 `/gentle:customize` → **Editor**, **Session permissions** cambia el modo actual, mientras que **Default permissions**
@@ -78,6 +92,7 @@ Para guardar un valor predeterminado para una sesión principal *nueva*, usa un 
 ```text
 /gentle:mode default auto
 /gentle:mode default yolo
+/gentle:mode default super-yolo
 /gentle:mode default normal
 ```
 
@@ -94,9 +109,10 @@ restauración de una concesión de una transcripción anterior.
 
 ## Los límites que permanecen
 
-Auto y YOLO reducen las preguntas rutinarias repetidas; no eliminan las protecciones independientes. Las denegaciones
-estrictas existentes, las restricciones configuradas, las rutas sensibles y las limitaciones explícitas del usuario
-siguen aplicándose. Las herramientas de preguntas al usuario, las opciones de token opaco, el consentimiento de
+Auto y YOLO reducen las preguntas rutinarias repetidas; no eliminan las protecciones independientes. Super Yolo va
+más allá y es la excepción descrita antes: solo permanecen la protección de rutas sensibles y las denegaciones
+catastróficas a nivel de código. Las denegaciones estrictas existentes, las restricciones configuradas, las rutas
+sensibles y las limitaciones explícitas del usuario siguen aplicándose. Las herramientas de preguntas al usuario, las opciones de token opaco, el consentimiento de
 mantenimiento o recuperación, el control de delegación y el consentimiento de revisión nativa conservan sus propios
 contratos. Ninguno de los modos descubre credenciales ambientales ni elige por ti un destino remoto desconocido.
 
@@ -130,6 +146,8 @@ acceder después del inicio.
 
 - **Tratar YOLO como autonomía ilimitada.** Es permiso permanente para trabajo ordinario *ya autorizado*, no una
   ampliación de alcance.
+- **Elegir Super Yolo por conveniencia.** Renuncia a las confirmaciones de pérdida de datos; úsalo solo en un
+  espacio de trabajo donde aceptes esas consecuencias, idealmente aislado.
 - **Tratar una denegación de Auto como un veredicto sobre la tarea.** Un timeout o un clasificador no disponible
   significa que la acción no se ejecutó, no que sea insegura.
 - **Guardar un valor predeterminado por accidente.** Los comandos de sesión y predeterminados son distintos.
@@ -148,7 +166,8 @@ En una sesión principal interactiva, ejecuta:
 
 Lee ambos campos antes de cambiar algo: el modo activo indica cómo esta sesión gestionará las acciones elegibles,
 mientras que el valor predeterminado guardado afecta las sesiones principales futuras. Para una tarea rutinaria y
-estrictamente acotada, explica cuál de Normal, Auto o YOLO elegirías y nombra la decisión que aún te requeriría.
+estrictamente acotada, explica cuál de Normal, Auto, YOLO o Super Yolo elegirías y nombra la decisión que aún te
+requeriría.
 
 A continuación, **Revisión nativa** explica un tipo de control diferente: evidencia sobre un candidato de código
 congelado. No otorga permiso para entregar ese candidato.

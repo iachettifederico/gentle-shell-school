@@ -84,16 +84,19 @@ reemplazo.
 
 ## RDD y `assess`
 
-RDD es un interruptor propiedad del usuario con dos fuentes, global y clon. Cuando ninguna fuente está establecida,
-gentle-ai lo resuelve como desactivado (`source: default`): RDD es opcional y se activa explícitamente. Cualquier desactivación prevalece: un repositorio puede
-deshabilitarlo para un clon, pero nunca puede exigirlo. `gentle-ai review mode status` es de solo lectura e informa
-ambas fuentes junto con el modo efectivo. El interruptor global es `gentle-ai review mode enable --scope=global`;
-`/gentle:review-mode enable` dentro de gentle-shell solo elimina una anulación local del clon y no puede activar RDD
-mientras la configuración global está desactivada. La activación se aplica solo a candidatos futuros. Agrega un ciclo
-de vida de revisión nativa basado en recibos; no reemplaza las pruebas ni la política ordinaria de entrega del
-repositorio. El directorio padre de la vista de candidato también necesita un sistema de archivos que pueda respetar
-sus requisitos de permisos privados. Algunos montajes WSL DrvFS sin metadatos pueden rechazar START antes de que
-exista el linaje.
+RDD es un interruptor propiedad del usuario con dos fuentes, global y clon. Es opcional y está activado de forma
+predeterminada (desde Gentle AI v4.0.0): cuando ninguna fuente está establecida, el modo efectivo está activado.
+Cualquier desactivación prevalece: puedes desactivarlo para un clon con `/gentle:review-mode disable` o para toda la
+máquina con `gentle-ai review mode disable`, y un repositorio nunca puede exigirlo. `gentle-ai review mode status`
+(o `/gentle:review-mode status`) es de solo lectura e informa ambas fuentes junto con el modo efectivo.
+`/gentle:review-mode enable` dentro de gentle-shell solo elimina una desactivación local del clon y no puede activar
+RDD mientras la configuración global está desactivada; el interruptor global es
+`gentle-ai review mode enable --scope=global`. Si status informa desactivado con `source: default`, la instalación no
+pudo resolver el modo y falló de forma cerrada; status explica por qué. Un cambio de modo se aplica solo a candidatos
+futuros. Agrega un ciclo de vida de revisión nativa basado en recibos; no reemplaza las pruebas ni la política
+ordinaria de entrega del repositorio. El directorio padre de la vista de candidato también necesita un sistema de
+archivos que pueda respetar sus requisitos de permisos privados. Algunos montajes WSL DrvFS sin metadatos pueden
+rechazar START antes de que exista el linaje.
 
 Después de que un escritor acotado regresa, el escritor ya debe haber ejecutado cada comando listado en
 `## Verification` e informar el resultado observado. El progenitor luego llama a `assess`. La revisión nativa es una
@@ -142,8 +145,16 @@ Comprueba si RDD está activado, sin cambiarlo solo para completar la lección:
 gentle-ai review mode status
 ```
 
-Si eliges deliberadamente participar, activa el interruptor global y luego elimina una desactivación local del clon
-si `status` muestra una:
+RDD está activado salvo que algo lo haya desactivado. Si deliberadamente quieres desactivarlo para este clon o para
+todos los clones de la máquina:
+
+```text
+/gentle:review-mode disable
+gentle-ai review mode disable
+```
+
+Para volver a activarlo, activa el interruptor global y luego elimina una desactivación local del clon si `status`
+muestra una:
 
 ```text
 gentle-ai review mode enable --scope=global

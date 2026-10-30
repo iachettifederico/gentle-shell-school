@@ -110,6 +110,21 @@ configuración de enrutamiento permite que el perfil seleccionado por el usuario
 accidental de ese valor predeterminado. El resultado es predecible: el rol sigue siendo reconocible
 mientras la elección del modelo sigue siendo tuya.
 
+## Elige el orquestador del perfil en `/gentle:models`
+
+`/gentle:models` asigna el enrutamiento global de modelo y esfuerzo a los agentes, y tiene una
+fila explícita `orchestrator`. Esa fila selecciona el modelo y el esfuerzo de razonamiento que
+`u` guardará en el perfil actual. Su primer valor es la entrada guardada del perfil objetivo, o
+**leave untouched** cuando ese perfil no tiene clave `orchestrator`. Elegir **leave untouched**
+(o pulsar `i` en la fila) no guarda ninguna clave `orchestrator`. Cambiar la fila nunca cambia la
+sesión activa, y **Set all agents** nunca la modifica.
+
+Las dos teclas de guardado realizan trabajos distintos. `ctrl+s` guarda solo el enrutamiento de
+agentes: no actualiza un perfil ni aplica el orquestador elegido. `u` guarda el mismo enrutamiento
+de agentes y luego lo captura, junto con la elección explícita de orquestador, en el perfil actual.
+Ninguna tecla cambia los valores predeterminados del orquestador en `settings.json` ni el modelo y
+esfuerzo activos.
+
 ## Errores comunes
 
 El primer error es omitir el prefijo del proveedor. `model-name` por sí solo no indica qué ruta de

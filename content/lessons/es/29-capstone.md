@@ -84,10 +84,13 @@ de límite o alternativo que proteja el contrato. Refactoriza solo después de q
 verificaciones enfocadas sigan en verde. Las pruebas son evidencia, no decoración: el
 documento de funcionalidad debe indicar qué se ejecutó y qué observó.
 
-Para cada comando u opción existente que comparta código cambiado, ejecuta también
-la entrada nueva o cambiada contra el cambio y contra una copia del commit base en
-un directorio temporal `mktemp -d`. Compara stdout, stderr y el código de salida;
-corrige y fija toda diferencia no solicitada. Agrega una prueba por cada
+Solo cuando el diff cambia código compartido (opciones, parsers, ayudantes) que
+también usa un comando existente que la solicitud no nombró, ejecuta una
+comprobación diferencial antes de terminar, como un solo script: ejecuta la entrada
+nueva o cambiada contra el cambio y contra una copia del commit base en un
+directorio temporal `mktemp -d`. Compara stdout, stderr y el código de salida;
+corrige y fija toda diferencia no solicitada. Cuando el diff no toca código
+compartido, omite la comprobación. Agrega una prueba por cada
 comportamiento existente tocado y nunca hagas que las pruebas confirmadas lean el
 historial de Git.
 
@@ -134,8 +137,9 @@ trabajo. Su propósito es revisar un candidato congelado con evidencia, no aprob
 formalmente el árbol de trabajo más reciente. Usa **Judgment day** solo cuando el cambio
 requiera su disciplina de revisión ciega y adversarial. La evaluación de revisión nativa
 se aplica por commit de unidad de trabajo (o porción de PR), nunca a la rama de
-funcionalidad acumulada, y se ejecuta solo cuando está habilitado el interruptor RDD
-propiedad del usuario; está desactivado de forma predeterminada.
+funcionalidad acumulada, y se ejecuta solo cuando el interruptor RDD propiedad del usuario está
+activado; está activado de forma predeterminada y puedes desactivarlo con
+`/gentle:review-mode disable`.
 
 Sin importar la ruta de revisión, inspecciona si la prueba demuestra el comportamiento
 indicado, si el documento de funcionalidad coincide con el alcance final y si los commits
