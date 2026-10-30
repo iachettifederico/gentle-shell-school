@@ -2,13 +2,13 @@
 <% completed_placeholder = [ "%", "{completed}" ].join %><% total_placeholder = [ "%", "{total}" ].join %><% title_placeholder = [ "%", "{title}" ].join %>
 <div data-controller="progress" data-progress-copy-label-value="<%= t("home.copy") %>" data-progress-copied-label-value="<%= t("progress.copied") %>" data-progress-not-completed-label-value="<%= t("progress.not_completed") %>" data-progress-mark-incomplete-label-value="<%= t("progress.mark_incomplete") %>" data-progress-mark-complete-label-value="<%= t("progress.mark_complete") %>" data-progress-verified-label-value="<%= t("progress.verified") %>" data-progress-independently-verified-label-value="<%= t("progress.independently_verified") %>" data-progress-all-complete-label-value="<%= t("progress.all_complete") %>" data-progress-complete-count-label-value="<%= t("progress.complete_count", completed: completed_placeholder, total: total_placeholder) %>" data-progress-continue-label-value="<%= t("progress.continue", title: title_placeholder) %>" data-progress-module-count-label-value="<%= t("progress.module_count", completed: completed_placeholder, total: total_placeholder) %>">
   <section data-hero class="relative isolate grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
-    <div aria-hidden="true" class="pointer-events-none absolute -top-24 -left-24 -z-10 h-80 w-[36rem] max-w-full rounded-full bg-brand-600/20 blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -top-32 -left-32 -z-10 h-96 w-[42rem] max-w-full rounded-full bg-[radial-gradient(circle_at_center,rgb(255_118_195_/_0.18),transparent_68%)] blur-2xl"></div>
     <div class="min-w-0">
-      <p class="inline-flex rounded-full bg-brand-950 px-3 py-1 font-mono text-xs font-medium text-brand-300 ring-1 ring-brand-500/30"><%= t("home.badge") %></p>
+      <p class="eyebrow"><%= t("home.badge") %></p>
       <h1 class="mt-6 text-5xl leading-[0.95] font-extrabold tracking-[-0.055em] text-fg sm:text-7xl">Gentle <span class="text-brand-500">Shell</span><br>School</h1>
       <p class="mt-6 max-w-xl text-lg leading-8 text-pretty text-fg-muted"><%= t("home.intro") %></p>
       <p class="mt-8 max-w-xl text-lg leading-8 font-semibold text-pretty text-fg"><%= t("home.cta_lead") %></p>
-      <p class="mt-2 max-w-xl text-base leading-7 text-pretty text-fg-subtle"><%= t("home.cta_note") %></p>
+      <p class="mt-2 max-w-xl text-base leading-7 text-pretty text-fg-muted"><%= t("home.cta_note") %></p>
     </div>
     <div class="grid min-w-0 gap-6">
     <section aria-labelledby="course-heading" class="card p-5 sm:p-7">
@@ -62,13 +62,13 @@
           <ol class="border-t border-line">
             <% lessons.each do |lesson| %>
               <li data-progress-target="lesson" data-lesson-slug="<%= lesson.slug %>" data-module-name="<%= module_name %>" class="group relative flex items-start gap-4 border-line px-5 py-4 transition-colors not-first:border-t hover:bg-raised sm:px-6">
-                <span aria-hidden="true" class="w-6 shrink-0 pt-0.5 font-mono text-xs leading-6 text-fg-subtle"><%= format("%02d", lesson.order) %></span>
+                <span aria-hidden="true" class="w-6 shrink-0 pt-0.5 font-mono text-xs leading-6 text-fg-muted"><%= format("%02d", lesson.order) %></span>
                 <div class="min-w-0 flex-1">
                   <a href="<%= locale_context.lesson_path(lesson.slug) %>" data-lesson class="font-semibold text-fg transition-colors group-hover:text-brand-300 after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-brand-300 focus-visible:after:ring-inset"><%= lesson.title %></a>
                   <p class="mt-1 text-sm leading-6 text-pretty text-fg-muted"><%= lesson.description %></p>
                 </div>
                 <span data-progress-target="completion" data-lesson-slug="<%= lesson.slug %>" data-completed-label="<%= t("home.completed") %>" hidden role="img" aria-label="<%= t("home.completed") %>" class="badge-success mt-0.5 shrink-0">✓</span>
-                <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 size-5 shrink-0 text-fg-subtle transition group-hover:translate-x-0.5 group-hover:text-brand-300"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.17 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z" clip-rule="evenodd" /></svg>
+                <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 size-5 shrink-0 text-fg-muted transition group-hover:translate-x-0.5 group-hover:text-brand-300"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.17 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z" clip-rule="evenodd" /></svg>
               </li>
             <% end %>
           </ol>

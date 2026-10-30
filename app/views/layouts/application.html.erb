@@ -19,11 +19,11 @@
   </head>
   <body class="flex min-h-dvh flex-col bg-canvas font-sans text-fg antialiased">
     <a href="#main" class="skip-link"><%= t("site.skip") %></a>
-    <header class="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur-md">
+    <header class="sticky top-0 z-40 border-b border-line bg-canvas/95 backdrop-blur-md">
       <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-1 px-5 py-3 sm:gap-x-6 sm:px-8">
-        <a href="<%= locale_context.root_path %>" class="order-1 flex items-center gap-2.5 rounded-lg text-base font-bold tracking-[-0.03em] text-fg">
-          <span aria-hidden="true" class="grid size-8 place-items-center rounded-lg bg-brand-950 font-mono text-sm font-semibold text-brand-400 ring-1 ring-brand-500/30">&gt;_</span>
-          <span>Gentle <span class="text-brand-500">Shell</span> <span class="text-fg-muted max-sm:sr-only">School</span></span>
+        <a href="<%= locale_context.root_path %>" class="order-1 flex items-center gap-2.5 rounded-lg font-mono text-sm font-semibold tracking-[-0.03em] text-brand-400">
+          <span aria-hidden="true" class="grid size-8 place-items-center rounded-lg bg-brand-950 text-sm ring-1 ring-brand-500/30">&gt;_</span>
+          <span>Gentle Shell <span class="text-fg-muted max-sm:sr-only">School</span></span>
         </a>
         <nav aria-label="<%= t("site.main_navigation") %>" class="order-3 -ml-3 w-full sm:order-2 sm:ml-auto sm:w-auto">
           <ul class="flex items-center gap-1 text-sm font-medium">
@@ -35,7 +35,7 @@
           <ul class="flex items-center gap-0.5 rounded-full bg-surface p-1 text-xs font-semibold ring-1 ring-line">
             <% locale_context.switcher_entries.each do |entry| %>
               <li>
-                <a href="<%= entry[:path] %>" lang="<%= entry[:locale] %>" hreflang="<%= entry[:locale] %>" aria-current="<%= entry[:current] ? "page" : "false" %>" class="block rounded-full px-2 py-1.5 transition-colors sm:px-3 <%= entry[:current] ? "bg-brand-600 text-white" : "text-fg-muted hover:bg-raised hover:text-fg" %>">
+                <a href="<%= entry[:path] %>" lang="<%= entry[:locale] %>" hreflang="<%= entry[:locale] %>" aria-current="<%= entry[:current] ? "page" : "false" %>" class="block rounded-full px-2 py-1.5 transition-colors sm:px-3 <%= entry[:current] ? "bg-brand-500 text-canvas" : "text-fg-muted hover:bg-raised hover:text-fg" %>">
                   <span class="lg:hidden"><%= entry[:locale].upcase %></span>
                   <span class="max-lg:sr-only"><%= entry[:label] %></span>
                 </a>
@@ -47,7 +47,7 @@
     </header>
     <main id="main" tabindex="-1" class="mx-auto w-full max-w-6xl flex-1 px-5 py-12 outline-none sm:px-8 sm:py-16"><%= yield %></main>
     <footer class="border-t border-line">
-      <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-sm text-fg-subtle sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p><%= t("site.footer") %></p>
         <a href="https://github.com/<%= Rails.configuration.x.course.feedback_repository %>/issues/new?template=course-feedback.yml&lesson=site" class="link self-start sm:self-auto"><%= t("site.report_problem") %></a>
       </div>
