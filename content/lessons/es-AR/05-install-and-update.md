@@ -66,7 +66,20 @@ actualizá esas instalaciones con el gestor de paquetes que las provee. Con un
 objetivo, o con `--extensions-only`, `update` reenvía el comando de actualización
 de paquetes de Pi para el home seleccionado. Una instalación empaquetada en un
 prefijo fija Pi junto con Gentle Shell, así que ahí Pi se sigue actualizando con
-`gentle-shell upgrade`. Los
+`gentle-shell upgrade`. Para llegar a un Pi publicado más nuevo que el que
+verificó la versión, una instalación empaquetada puede ejecutar:
+
+```bash
+gentle-shell update --latest
+```
+
+Primero avisa que las funciones que dependen de partes internas auditadas de Pi
+(como el editor Vim) pueden apagarse hasta que una versión de Gentle Shell
+verifique ese Pi; después lo verifica y cambia a él como `upgrade`, guardando la
+versión anterior para `gentle-shell upgrade --rollback`. Fuera de una instalación
+empaquetada, `--latest` no cambia nada extra: `update` ya instala el Pi más nuevo.
+
+Los
 lanzadores más antiguos que no admiten `upgrade` deben usar el instalador más
 reciente descrito en **Instalá Gentle Shell** en vez de tratar `upgrade` como un
 prompt de chat.

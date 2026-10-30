@@ -61,6 +61,19 @@ desconocido o ambiguo, se niega sin cambiar nada; actualiza esas instalaciones c
 paquetes que las provee. Con un objetivo, o con `--extensions-only`, `update` reenvía el comando
 de actualización de paquetes de Pi para el home seleccionado. Una instalación incluida en un
 prefijo fija Pi con Gentle Shell, así que allí Pi se sigue actualizando con `gentle-shell upgrade`.
+Para llegar a un Pi publicado más nuevo que el que verificó la versión, una instalación incluida
+puede ejecutar:
+
+```bash
+gentle-shell update --latest
+```
+
+Primero advierte que las funciones que dependen de partes internas auditadas de Pi (como el editor
+Vim) pueden desactivarse hasta que una versión de Gentle Shell verifique ese Pi; luego lo verifica
+y cambia a él como `upgrade`, conservando la versión anterior para `gentle-shell upgrade
+--rollback`. Fuera de una instalación incluida, `--latest` no cambia nada extra: `update` ya
+instala el Pi más nuevo.
+
 Los iniciadores antiguos que no admiten `upgrade` deben usar el instalador más reciente descrito en
 **Instala Gentle Shell**, en lugar de tratar `upgrade` como un prompt de chat.
 

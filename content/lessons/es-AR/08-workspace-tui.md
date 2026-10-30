@@ -105,7 +105,9 @@ para siempre?”.
 
 Gentle Agents es una vista separada para el trabajo de subagentes. Mientras se
 muestra el riel de pantalla completa, su tarjeta en vivo pasa al riel, que se desplaza
-**Estado → Cambios → Agentes → TODO**; sin el riel (pantalla completa angosta o modo
+**Status → Jobs → Agents → TODO** (la tarjeta Status lleva el proyecto, un resumen
+de Changes y los estados de otras extensiones; Jobs aparece solo mientras hay
+trabajos corriendo o recién terminados); sin el riel (pantalla completa angosta o modo
 normal), la tarjeta queda sobre el editor. `ctrl+shift+a` o un clic en el encabezado
 `▾ Collapse` de la tarjeta la contrae, y `/gentle:agents` o **Alt+A** abre una
 superposición de terminal completa. La superposición conserva hilos de tareas, modelo,
@@ -136,7 +138,10 @@ pedís:
   donde podés comentar cualquier elemento.
 - `/gentle:voice` descarga una vez el dictado local y después pega lo que decís en
   el borrador sin enviarlo; mantener Espacio en el editor activa pulsar para hablar.
-- `/gentle:music [mood]` reproduce gentle-stream dentro de la shell.
+- `/gentle:music [mood]` reproduce gentle-stream dentro de la shell en macOS y
+  Linux (incluido WSL); en Windows nativo solo dice que todavía no está
+  disponible. Un Gentle Shell empaquetado ofrece instalar el reproductor la
+  primera vez.
 
 ## Configurá sin confundir configuración con comportamiento
 

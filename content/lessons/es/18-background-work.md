@@ -71,10 +71,12 @@ Abre el inspector de trabajos de la sesión con:
 Muestra los trabajos en segundo plano con el trabajo en ejecución primero y los trabajos más nuevos
 primero dentro de cada grupo. La vista incluye estado, comando y final de la salida. En una terminal
 estrecha, `Tab` abre los detalles. `s` detiene el trabajo en ejecución seleccionado y `q`
-cierra el modal. Los trabajos completados permanecen disponibles para inspección, mientras que el
-panel de estado muestra una sección Jobs solo mientras los trabajos están activos. Cuando el panel
-está oculto o no está disponible en un diseño compacto, la barra muestra en su lugar la cantidad en
-ejecución.
+cierra el modal. Los trabajos completados permanecen disponibles allí para inspección. El pie
+muestra `⧗ N jobs` mientras algún trabajo se ejecuta. En pantalla completa con 140 columnas o más,
+los trabajos en ejecución también tienen su propia tarjeta plegable `⧗ Jobs` en el rail, una fila
+por trabajo con su tiempo transcurrido, el más nuevo primero. Los trabajos terminados quedan en esa
+tarjeta 60 segundos con su resultado (`✓` salida correcta, `✗` fallo, `–` detenido) y luego la
+tarjeta se vacía sola. `ctrl+shift+j` o un clic en su encabezado la contrae.
 
 Esos detalles son deliberadamente características de observabilidad. Un comando que se ha puesto
 en segundo plano no debería volverse invisible. Antes de actuar sobre una finalización, inspecciona
